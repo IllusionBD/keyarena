@@ -135,9 +135,11 @@ startBtn.addEventListener("click", function () {
 
     resetGame();
 
-    gameArea.style.display = "block";
-
     startBtn.style.display = "none";
+
+restartBtn.style.display = "inline-block";
+
+gameArea.style.display = "block";
 
     typingInput.focus();
 
