@@ -59,6 +59,8 @@ const settingsBtn = document.getElementById("settingsBtn");
 const settingsArea = document.getElementById("settingsArea");
 
 const timeOptions = document.getElementsByName("gameTime");
+const menuTimeOptions = document.getElementsByName("menuGameTime");
+
 const categoryOptions = document.getElementsByName("storyCategory");
 const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
 
@@ -82,6 +84,11 @@ function getSelectedCategory(){
         }
     });
     return selectedCategory;
+}
+
+function syncTimeSelection(timeVal) {
+    timeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
+    menuTimeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
 }
 
 function syncCategorySelection(category) {
@@ -147,8 +154,12 @@ typingInput.addEventListener("input", function () {
 
 startBtn.addEventListener("click", function () {
     const selectedCategory = getSelectedCategory();
+    const selectedTime = getSelectedTime();
+
     words = stories[selectedCategory];
+    
     syncCategorySelection(selectedCategory);
+    syncTimeSelection(selectedTime);
 
     resetGame();
 
@@ -200,10 +211,24 @@ menuBtn.addEventListener("click", function () {
     }
 });
 
+menuTimeOptions.forEach(function(option){
+    option.addEventListener("change", function(){
+        const selectedTime = Number(option.value);
+        
+        syncTimeSelection(selectedTime);
+
+        menuArea.style.display = "none";
+        resetGame();
+        typingInput.focus();
+        startTimer();
+    });
+});
+
 menuCategoryOptions.forEach(function(option){
     option.addEventListener("change", function(){
         const selectedCategory = option.value;
         words = stories[selectedCategory];
+        
         syncCategorySelection(selectedCategory);
 
         menuArea.style.display = "none";
