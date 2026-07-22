@@ -148,18 +148,22 @@ startBtn.addEventListener("click", function () {
 
 
 
-restartBtn.addEventListener("click", function () {
+if (restartBtn) {
 
+    restartBtn.addEventListener("click", function () {
 
-    resetGame();
+        resetGame();
 
-    gameArea.style.display = "block";
+        gameArea.style.display = "block";
 
-    startBtn.style.display = "none";
+        startBtn.style.display = "none";
 
-    typingInput.focus();
+        typingInput.disabled = false;
 
-    startTimer();
+        typingInput.focus();
 
+        startTimer();
 
-});
+    });
+
+}
