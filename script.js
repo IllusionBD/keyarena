@@ -1,4 +1,4 @@
-// ১. একাধিক গল্পসহ স্টোরি অবজেক্ট
+// Stories dataset with categories and multiple story variations
 const stories = {
     funny: [
         [
@@ -110,25 +110,24 @@ function getSelectedCategory(){
     return selectedCategory;
 }
 
-// টাইম এবং র্যান্ডম স্টোরি অনুযায়ী শব্দের সংখ্যা ফিল্টার করার লজিক
+// Dynamically select a story and adjust word count based on selected time
 function prepareStoryWords(category, time) {
     const categoryStories = stories[category];
-    // র্যান্ডমলি একটি স্টোরি পিক করা
+    // Select a random story variation
     const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
 
-    // সাধারণ প্লেয়ারের জন্য আনুমানিক টাইপিং স্পিড হিসাব করে শব্দের সংখ্যা নির্ধারণ
+    // Determine target word length according to timer duration
     let wordCount;
     if (time <= 15) {
-        wordCount = 12;  // ১৫ সেকেন্ডের জন্য ১২টি শব্দ
+        wordCount = 12;
     } else if (time <= 30) {
-        wordCount = 25;  // ৩০ সেকেন্ডের জন্য ২৫টি শব্দ
+        wordCount = 25;
     } else if (time <= 60) {
-        wordCount = 45;  // ৬০ সেকেন্ডের জন্য ৪৫টি শব্দ
+        wordCount = 45;
     } else {
-        wordCount = randomStory.length; // ১২০ সেকেন্ডের জন্য পুরো স্টোরি
+        wordCount = randomStory.length;
     }
 
-    // গল্পের প্রথম থেকে ঠিক ততটি শব্দ নেওয়া হবে
     return randomStory.slice(0, wordCount);
 }
 
@@ -149,7 +148,6 @@ function resetGame(){
     const selectedCategory = getSelectedCategory();
     timeLeft = getSelectedTime();
 
-    // টাইম এবং ক্যাটাগরি অনুযায়ী নতুন ও অটো-অ্যাডজাস্টেড শব্দ লোড করা
     words = prepareStoryWords(selectedCategory, timeLeft);
 
     currentWord = 0;
