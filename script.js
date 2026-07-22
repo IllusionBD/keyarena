@@ -38,8 +38,18 @@ typingInput.addEventListener("input", function () {
         currentWord++;
 
         if (currentWord < words.length) {
-            wordElement.textContent = words[currentWord];
-        }
+
+    wordElement.textContent = words[currentWord];
+
+} else {
+
+    wordElement.textContent = "Game Over! 🎮";
+    messageElement.textContent = "Final Score: " + score;
+
+    typingInput.disabled = true;
+
+}
+        
 
         typingInput.value = "";
 
