@@ -19,6 +19,7 @@ let timeLeft = 60;
 let timer;
 
 
+
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
@@ -26,6 +27,7 @@ const timerElement = document.getElementById("timer");
 
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
+
 const gameArea = document.getElementById("gameArea");
 const typingInput = document.getElementById("typingInput");
 
@@ -33,17 +35,25 @@ const settingsBtn = document.getElementById("settingsBtn");
 const settingsArea = document.getElementById("settingsArea");
 
 
+
 wordElement.textContent = words[currentWord];
+
+
 
 
 
 function resetGame() {
 
+
     clearInterval(timer);
 
+
     currentWord = 0;
+
     score = 0;
+
     timeLeft = 60;
+
 
 
     scoreElement.textContent = "Score: 0";
@@ -58,13 +68,18 @@ function resetGame() {
 
     typingInput.value = "";
 
+
 }
+
+
 
 
 
 function startTimer() {
 
+
     clearInterval(timer);
+
 
 
     timer = setInterval(function () {
@@ -95,16 +110,22 @@ function startTimer() {
         }
 
 
-    }, 1000);
+    },1000);
+
 
 }
+
+
+
 
 
 
 typingInput.addEventListener("input", function () {
 
 
+
     if (typingInput.value === words[currentWord]) {
+
 
 
         messageElement.textContent = "Correct! 🎉";
@@ -116,6 +137,7 @@ typingInput.addEventListener("input", function () {
         scoreElement.textContent = "Score: " + score;
 
 
+
         currentWord++;
 
 
@@ -123,13 +145,17 @@ typingInput.addEventListener("input", function () {
         if (currentWord < words.length) {
 
 
+
             wordElement.textContent = words[currentWord];
+
 
 
         } else {
 
 
+
             clearInterval(timer);
+
 
 
             wordElement.textContent = "Game Over! 🎮";
@@ -144,13 +170,17 @@ typingInput.addEventListener("input", function () {
         }
 
 
+
         typingInput.value = "";
+
 
 
     } else {
 
 
+
         messageElement.textContent = "Keep trying! ❌";
+
 
 
     }
@@ -162,10 +192,15 @@ typingInput.addEventListener("input", function () {
 
 
 
+
+
+
 startBtn.addEventListener("click", function () {
 
 
+
     resetGame();
+
 
 
     gameArea.style.display = "block";
@@ -183,7 +218,11 @@ startBtn.addEventListener("click", function () {
     startTimer();
 
 
+
 });
+
+
+
 
 
 
@@ -192,7 +231,9 @@ startBtn.addEventListener("click", function () {
 restartBtn.addEventListener("click", function () {
 
 
+
     resetGame();
+
 
 
     gameArea.style.display = "block";
@@ -207,32 +248,46 @@ restartBtn.addEventListener("click", function () {
     startTimer();
 
 
+
 });
 
 
 
 
 
-if (settingsBtn) {
+
+
+
+// Settings Button
+
+if (settingsBtn && settingsArea) {
+
 
     settingsBtn.addEventListener("click", function () {
 
 
-        if (settingsArea.style.display === "none") {
 
+        if (settingsArea.style.display === "block") {
 
-            settingsArea.style.display = "block";
-
-
-        } else {
 
 
             settingsArea.style.display = "none";
 
 
+
+        } else {
+
+
+
+            settingsArea.style.display = "block";
+
+
+
         }
 
 
+
     });
+
 
 }
