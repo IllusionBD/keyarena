@@ -11,6 +11,7 @@ const words = [
     "winner"
 ];
 
+
 let currentWord = 0;
 let score = 0;
 let timeLeft = 30;
@@ -31,6 +32,7 @@ const typingInput = document.getElementById("typingInput");
 wordElement.textContent = words[currentWord];
 
 
+
 function resetGame() {
 
     clearInterval(timer);
@@ -40,6 +42,7 @@ function resetGame() {
     timeLeft = 30;
 
     scoreElement.textContent = "Score: 0";
+
     timerElement.textContent = "Time: 30";
 
     wordElement.textContent = words[currentWord];
@@ -47,6 +50,7 @@ function resetGame() {
     messageElement.textContent = "";
 
     typingInput.disabled = false;
+
     typingInput.value = "";
 
 }
@@ -76,6 +80,7 @@ function startTimer() {
 
         }
 
+
     }, 1000);
 
 }
@@ -101,9 +106,12 @@ typingInput.addEventListener("input", function () {
 
         if (currentWord < words.length) {
 
+
             wordElement.textContent = words[currentWord];
 
+
         } else {
+
 
             clearInterval(timer);
 
@@ -113,6 +121,7 @@ typingInput.addEventListener("input", function () {
 
             typingInput.disabled = true;
 
+
         }
 
 
@@ -121,7 +130,9 @@ typingInput.addEventListener("input", function () {
 
     } else {
 
+
         messageElement.textContent = "Keep trying! ❌";
+
 
     }
 
@@ -135,13 +146,16 @@ startBtn.addEventListener("click", function () {
 
     resetGame();
 
+
+    gameArea.style.display = "block";
+
     startBtn.style.display = "none";
 
-restartBtn.style.display = "inline-block";
+    restartBtn.style.display = "inline-block";
 
-gameArea.style.display = "block";
 
     typingInput.focus();
+
 
     startTimer();
 
@@ -150,22 +164,23 @@ gameArea.style.display = "block";
 
 
 
-if (restartBtn) {
+restartBtn.addEventListener("click", function () {
 
-    restartBtn.addEventListener("click", function () {
 
-        resetGame();
+    resetGame();
 
-        gameArea.style.display = "block";
 
-        startBtn.style.display = "none";
+    gameArea.style.display = "block";
 
-        typingInput.disabled = false;
+    startBtn.style.display = "none";
 
-        typingInput.focus();
+    restartBtn.style.display = "inline-block";
 
-        startTimer();
 
-    });
+    typingInput.focus();
 
-}
+
+    startTimer();
+
+
+});
