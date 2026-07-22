@@ -90,6 +90,13 @@ const menuTimeOptions = document.getElementsByName("menuGameTime");
 const categoryOptions = document.getElementsByName("storyCategory");
 const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
 
+const pauseBtn = document.getElementById("pauseBtn");
+const menuBtn = document.getElementById("menuBtn");
+const menuArea = document.getElementById("menuArea");
+
+const homeBtn = document.getElementById("homeBtn");
+const resumeBtn = document.getElementById("resumeBtn");
+
 function getSelectedTime() {
     let selectedTime = 60;
     timeOptions.forEach(function(option){
@@ -113,10 +120,8 @@ function getSelectedCategory(){
 // Dynamically select a story and adjust word count based on selected time
 function prepareStoryWords(category, time) {
     const categoryStories = stories[category];
-    // Select a random story variation
     const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
 
-    // Determine target word length according to timer duration
     let wordCount;
     if (time <= 15) {
         wordCount = 12;
@@ -141,6 +146,10 @@ function syncCategorySelection(category) {
     menuCategoryOptions.forEach(opt => opt.checked = (opt.value === category));
 }
 
+function updatePauseBtnIcon() {
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+}
+
 function resetGame(){
     clearInterval(timer);
     isPaused = false;
@@ -162,6 +171,8 @@ function resetGame(){
 
     typingInput.disabled = false;
     typingInput.value = "";
+    
+    updatePauseBtnIcon();
 }
 
 function startTimer(){
@@ -231,11 +242,23 @@ settingsBtn.addEventListener("click", function () {
     }
 });
 
-const menuBtn = document.getElementById("menuBtn");
-const menuArea = document.getElementById("menuArea");
-
-const homeBtn = document.getElementById("homeBtn");
-const resumeBtn = document.getElementById("resumeBtn");
+// Pause / Resume Button Handler
+pauseBtn.addEventListener("click", function () {
+    if (!isPaused && timeLeft > 0) {
+        clearInterval(timer);
+        isPaused = true;
+        typingInput.disabled = true;
+        pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+        messageElement.textContent = "Game Paused ⏸";
+    } else if (isPaused && timeLeft > 0) {
+        startTimer();
+        isPaused = false;
+        typingInput.disabled = false;
+        typingInput.focus();
+        pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        messageElement.textContent = "";
+    }
+});
 
 menuBtn.addEventListener("click", function () {
     if (menuArea.style.display === "block") {
@@ -245,12 +268,14 @@ menuBtn.addEventListener("click", function () {
             isPaused = false;
             typingInput.disabled = false;
             typingInput.focus();
+            pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
     } else {
         menuArea.style.display = "block";
         clearInterval(timer);
         isPaused = true;
         typingInput.disabled = true;
+        pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
     }
 });
 
@@ -288,6 +313,8 @@ resumeBtn.addEventListener("click", function () {
         isPaused = false;
         typingInput.disabled = false;
         typingInput.focus();
+        pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        messageElement.textContent = "";
     }
 });
 
