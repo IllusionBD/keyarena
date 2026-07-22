@@ -16,7 +16,7 @@ const words = [
 
 let currentWord = 0;
 let score = 0;
-let timeLeft = 30;
+let timeLeft = 60;
 let timer;
 
 
@@ -41,11 +41,11 @@ function resetGame() {
 
     currentWord = 0;
     score = 0;
-    timeLeft = 30;
+    timeLeft = 60;
 
     scoreElement.textContent = "Score: 0";
 
-    timerElement.textContent = "Time: 30";
+    timerElement.textContent = "Time: 60";
 
     wordElement.textContent = words[currentWord];
 
