@@ -2,164 +2,85 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-
     <title>KeyArena</title>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
-
     <h1>🎮 KeyArena</h1>
-
     <p>Type Faster. Fight Smarter.</p>
 
-
-
-
     <!-- START SCREEN -->
-
     <div id="startScreen">
 
-
-        <button id="settingsBtn" class="settings-icon">
-            ⚙️
-        </button>
-
-
-
-        <div id="settingsArea" style="display:none; margin-top:20px;">
-
-
-            <h3>
-                Game Time Settings
-            </h3>
-
-
-            <label>
-                <input 
-                type="radio" 
-                name="gameTime" 
-                value="15">
-
-                15 Seconds
-            </label>
-
-
-            <br>
-
-
-            <label>
-                <input 
-                type="radio" 
-                name="gameTime" 
-                value="30">
-
-                30 Seconds
-            </label>
-
-
-            <br>
-
-
-            <label>
-                <input 
-                type="radio" 
-                name="gameTime" 
-                value="60"
-                checked>
-
-                60 Seconds
-            </label>
-
-
-            <br>
-
-
-            <label>
-                <input 
-                type="radio" 
-                name="gameTime" 
-                value="120">
-
-                120 Seconds
-            </label>
-
-
-        </div>
-
-
-
-
-        <br><br>
-
-
-
+        <!-- Start Button -->
         <button id="startBtn">
             Start Game
         </button>
 
+        <br><br>
+
+        <!-- Settings Button -->
+        <button id="settingsBtn">
+            ⚙️ Settings
+        </button>
+
+        <!-- Settings Menu -->
+        <div id="settingsArea" style="display:none; margin-top:20px;">
+
+            <h3>Game Time Settings</h3>
+
+            <label>
+                <input type="radio" name="gameTime" value="15">
+                15 Seconds
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="gameTime" value="30">
+                30 Seconds
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="gameTime" value="60" checked>
+                60 Seconds
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="gameTime" value="120">
+                120 Seconds
+            </label>
+
+        </div>
 
     </div>
 
-
-
-
-
-
-
     <!-- GAME SCREEN -->
-
-
     <div id="gameArea" style="display:none; margin-top:40px;">
-
-
 
         <button id="restartBtn">
             Restart Game
         </button>
 
+        <h2>Typing Arena</h2>
 
+        <p id="word">apple</p>
 
+        <p id="score">Score: 0</p>
 
-        <h2>
-            Typing Arena
-        </h2>
-
-
-
-        <p id="word">
-            apple
-        </p>
-
-
-
-        <p id="score">
-            Score: 0
-        </p>
-
-
-
-        <p id="timer">
-            Time: 60
-        </p>
-
-
+        <p id="timer">Time: 60</p>
 
         <p id="message"></p>
-
-
-
 
         <input
             type="text"
@@ -167,21 +88,11 @@
             placeholder="Type here..."
         >
 
-
-
     </div>
-
-
-
-
 
 </div>
 
-
-
-
 <script src="script.js"></script>
-
 
 </body>
 
