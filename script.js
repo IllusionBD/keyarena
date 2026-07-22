@@ -36,13 +36,10 @@ function resetGame() {
     clearInterval(timer);
 
     currentWord = 0;
-
     score = 0;
-
     timeLeft = 30;
 
     scoreElement.textContent = "Score: 0";
-
     timerElement.textContent = "Time: 30";
 
     wordElement.textContent = words[currentWord];
@@ -50,7 +47,6 @@ function resetGame() {
     messageElement.textContent = "";
 
     typingInput.disabled = false;
-
     typingInput.value = "";
 
 }
@@ -125,9 +121,7 @@ typingInput.addEventListener("input", function () {
 
     } else {
 
-
         messageElement.textContent = "Keep trying! ❌";
-
 
     }
 
@@ -140,7 +134,6 @@ startBtn.addEventListener("click", function () {
 
 
     resetGame();
-
 
     gameArea.style.display = "block";
 
@@ -160,8 +153,9 @@ restartBtn.addEventListener("click", function () {
 
     resetGame();
 
-
     gameArea.style.display = "block";
+
+    startBtn.style.display = "none";
 
     typingInput.focus();
 
