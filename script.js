@@ -9,6 +9,7 @@ const words = [
     "typing",
     "battle",
     "winner"
+    
 ];
 
 let currentWord = 0;
