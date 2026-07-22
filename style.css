@@ -205,3 +205,103 @@ button:hover{
     color:#e2e8f0;
 
 }
+
+/* ==========================
+   Game Menu Design
+========================== */
+
+.menu-icon{
+
+    position:absolute;
+    top:15px;
+    left:15px;
+
+    width:55px;
+    height:55px;
+
+    padding:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:24px;
+
+    border-radius:50%;
+
+    background:linear-gradient(145deg,#60a5fa,#2563eb);
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.35),
+    inset 0 2px 5px rgba(255,255,255,.3);
+
+    transition:.3s;
+
+}
+
+
+.menu-icon:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 15px 30px rgba(59,130,246,.45);
+
+}
+
+
+
+/* Menu Box */
+
+#menuArea{
+
+    position:absolute;
+
+    top:80px;
+    left:15px;
+
+    width:180px;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    background:rgba(30,41,59,.95);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.45);
+
+    z-index:10;
+
+}
+
+
+
+/* Menu Buttons */
+
+#menuArea button{
+
+    width:100%;
+
+    margin:8px 0;
+
+    padding:12px;
+
+    font-size:16px;
+
+    border-radius:12px;
+
+    background:#3b82f6;
+
+}
+
+
+#menuArea button:hover{
+
+    background:#2563eb;
+
+    transform:translateX(5px);
+
+}
