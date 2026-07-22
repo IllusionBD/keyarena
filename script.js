@@ -28,6 +28,7 @@ const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 const gameArea = document.getElementById("gameArea");
 const typingInput = document.getElementById("typingInput");
+
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsArea = document.getElementById("settingsArea");
 
@@ -96,7 +97,6 @@ function startTimer() {
 
     }, 1000);
 
-
 }
 
 
@@ -114,7 +114,6 @@ typingInput.addEventListener("input", function () {
 
 
         scoreElement.textContent = "Score: " + score;
-
 
 
         currentWord++;
@@ -145,9 +144,7 @@ typingInput.addEventListener("input", function () {
         }
 
 
-
         typingInput.value = "";
-
 
 
     } else {
@@ -201,9 +198,6 @@ restartBtn.addEventListener("click", function () {
     gameArea.style.display = "block";
 
 
-    startBtn.style.display = "none";
-
-
     restartBtn.style.display = "inline-block";
 
 
@@ -214,16 +208,31 @@ restartBtn.addEventListener("click", function () {
 
 
 });
-settingsBtn.addEventListener("click", function () {
 
-    if (settingsArea.style.display === "none") {
 
-        settingsArea.style.display = "block";
 
-    } else {
 
-        settingsArea.style.display = "none";
 
-    }
+if (settingsBtn) {
 
-});
+    settingsBtn.addEventListener("click", function () {
+
+
+        if (settingsArea.style.display === "none") {
+
+
+            settingsArea.style.display = "block";
+
+
+        } else {
+
+
+            settingsArea.style.display = "none";
+
+
+        }
+
+
+    });
+
+}
