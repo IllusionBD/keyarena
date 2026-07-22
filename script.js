@@ -28,6 +28,8 @@ const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 const gameArea = document.getElementById("gameArea");
 const typingInput = document.getElementById("typingInput");
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsArea = document.getElementById("settingsArea");
 
 
 wordElement.textContent = words[currentWord];
@@ -210,5 +212,18 @@ restartBtn.addEventListener("click", function () {
 
     startTimer();
 
+
+});
+settingsBtn.addEventListener("click", function () {
+
+    if (settingsArea.style.display === "none") {
+
+        settingsArea.style.display = "block";
+
+    } else {
+
+        settingsArea.style.display = "none";
+
+    }
 
 });
