@@ -29,7 +29,10 @@ const typingInput = document.getElementById("typingInput");
 
 wordElement.textContent = words[currentWord];
 
+
 function resetGame() {
+
+    clearInterval(timer);
 
     currentWord = 0;
 
@@ -50,7 +53,10 @@ function resetGame() {
     typingInput.value = "";
 
 }
+
+
 function startTimer() {
+
     clearInterval(timer);
 
     timer = setInterval(function () {
@@ -58,6 +64,7 @@ function startTimer() {
         timeLeft--;
 
         timerElement.textContent = "Time: " + timeLeft;
+
 
         if (timeLeft <= 0) {
 
@@ -96,9 +103,7 @@ typingInput.addEventListener("input", function () {
 
         if (currentWord < words.length) {
 
-
             wordElement.textContent = words[currentWord];
-
 
         } else {
 
@@ -110,7 +115,6 @@ typingInput.addEventListener("input", function () {
             messageElement.textContent = "Final Score: " + score;
 
             typingInput.disabled = true;
-
 
         }
 
@@ -132,7 +136,10 @@ typingInput.addEventListener("input", function () {
 
 
 startBtn.addEventListener("click", function () {
-resetGame();
+
+
+    resetGame();
+
 
     gameArea.style.display = "block";
 
