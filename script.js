@@ -1,5 +1,6 @@
 const words = [
     "apple",
+     "joynal",
     "banana",
     "orange",
     "keyboard",
@@ -7,6 +8,7 @@ const words = [
     "mouse",
     "monitor",
     "typing",
+     "typing",
     "battle",
     "winner"
 ];
