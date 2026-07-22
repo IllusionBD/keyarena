@@ -15,25 +15,78 @@
     <h1>🎮 KeyArena</h1>
     <p>Type Faster. Fight Smarter.</p>
 
-    <!-- START SCREEN -->
-    <div id="startScreen">
+   <!-- START SCREEN -->
+<div id="startScreen">
 
-        <!-- Start Button -->
-        <button id="startBtn">
-            Start Game
-        </button>
+    <!-- Start Button -->
+    <button id="startBtn">
+        Start Game
+    </button>
 
-        <br><br>
+    <br><br>
 
-        <!-- Settings Button -->
-        <button id="settingsBtn">
-            ⚙️ Settings
-        </button>
+    <!-- Settings Button -->
+    <button id="settingsBtn">
+        ⚙️ Settings
+    </button>
 
-        <!-- Settings Menu -->
-        <div id="settingsArea" style="display:none; margin-top:20px;">
+    <!-- Settings Menu -->
+    <div id="settingsArea" style="display:none; margin-top:20px;">
 
-            <h3>Game Time Settings</h3>
+        <h3>Game Time Settings</h3>
+
+        <label>
+            <input type="radio" name="gameTime" value="15">
+            15 Seconds
+        </label>
+
+        <br>
+
+        <label>
+            <input type="radio" name="gameTime" value="30">
+            30 Seconds
+        </label>
+
+        <br>
+
+        <label>
+            <input type="radio" name="gameTime" value="60" checked>
+            60 Seconds
+        </label>
+
+        <br>
+
+        <label>
+            <input type="radio" name="gameTime" value="120">
+            120 Seconds
+        </label>
+
+        <hr style="margin:20px 0;">
+
+        <h3>Story Category</h3>
+
+        <label>
+            <input type="radio" name="storyCategory" value="funny" checked>
+            😂 Funny
+        </label>
+
+        <br>
+
+        <label>
+            <input type="radio" name="storyCategory" value="horror">
+            👻 Horror
+        </label>
+
+        <br>
+
+        <label>
+            <input type="radio" name="storyCategory" value="adventure">
+            🏕️ Adventure
+        </label>
+
+    </div>
+
+</div>
 
             <label>
                 <input type="radio" name="gameTime" value="15">
