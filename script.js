@@ -1,6 +1,6 @@
 const words = [
     "apple",
-     "joynal",
+    "joynal",
     "banana",
     "orange",
     "keyboard",
@@ -8,7 +8,6 @@ const words = [
     "mouse",
     "monitor",
     "typing",
-     "typing",
     "battle",
     "winner"
 ];
@@ -43,6 +42,7 @@ function resetGame() {
     score = 0;
     timeLeft = 60;
 
+
     scoreElement.textContent = "Score: 0";
 
     timerElement.textContent = "Time: 60";
@@ -63,27 +63,37 @@ function startTimer() {
 
     clearInterval(timer);
 
+
     timer = setInterval(function () {
 
+
         timeLeft--;
+
 
         timerElement.textContent = "Time: " + timeLeft;
 
 
+
         if (timeLeft <= 0) {
+
 
             clearInterval(timer);
 
+
             wordElement.textContent = "Time Over! ⏰";
+
 
             messageElement.textContent = "Final Score: " + score;
 
+
             typingInput.disabled = true;
+
 
         }
 
 
     }, 1000);
+
 
 }
 
@@ -100,10 +110,13 @@ typingInput.addEventListener("input", function () {
 
         score++;
 
+
         scoreElement.textContent = "Score: " + score;
 
 
+
         currentWord++;
+
 
 
         if (currentWord < words.length) {
@@ -117,9 +130,12 @@ typingInput.addEventListener("input", function () {
 
             clearInterval(timer);
 
+
             wordElement.textContent = "Game Over! 🎮";
 
+
             messageElement.textContent = "Final Score: " + score;
+
 
             typingInput.disabled = true;
 
@@ -127,7 +143,9 @@ typingInput.addEventListener("input", function () {
         }
 
 
+
         typingInput.value = "";
+
 
 
     } else {
@@ -143,6 +161,8 @@ typingInput.addEventListener("input", function () {
 
 
 
+
+
 startBtn.addEventListener("click", function () {
 
 
@@ -151,7 +171,9 @@ startBtn.addEventListener("click", function () {
 
     gameArea.style.display = "block";
 
+
     startBtn.style.display = "none";
+
 
     restartBtn.style.display = "inline-block";
 
@@ -166,6 +188,8 @@ startBtn.addEventListener("click", function () {
 
 
 
+
+
 restartBtn.addEventListener("click", function () {
 
 
@@ -174,7 +198,9 @@ restartBtn.addEventListener("click", function () {
 
     gameArea.style.display = "block";
 
+
     startBtn.style.display = "none";
+
 
     restartBtn.style.display = "inline-block";
 
