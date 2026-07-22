@@ -50,7 +50,6 @@ const typingInput = document.getElementById("typingInput");
 const timeOptions = document.getElementsByName("gameTime");
 const menuTimeOptions = document.getElementsByName("menuGameTime");
 
-const categoryOptions = document.getElementsByName("storyCategory");
 const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
 
 const pauseBtn = document.getElementById("pauseBtn");
@@ -77,7 +76,7 @@ function getSelectedTime() {
 
 function getSelectedCategory(){
     let selectedCategory = "lifehacks";
-    categoryOptions.forEach(function(option){
+    menuCategoryOptions.forEach(function(option){
         if(option.checked){
             selectedCategory = option.value;
         }
@@ -87,7 +86,6 @@ function getSelectedCategory(){
 
 function prepareStoryWords(category, time) {
     const categoryStories = stories[category];
-    // Random selection from stories array
     const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
 
     currentFullStoryArray = randomStory;
@@ -112,7 +110,6 @@ function syncTimeSelection(timeVal) {
 }
 
 function syncCategorySelection(category) {
-    categoryOptions.forEach(opt => opt.checked = (opt.value === category));
     menuCategoryOptions.forEach(opt => opt.checked = (opt.value === category));
 }
 
@@ -174,7 +171,7 @@ typingInput.addEventListener("input", function () {
             wordElement.textContent = words[currentWord];
         } else {
             clearInterval(timer);
-            wordElement.textContent = "Tip Complete! 📖";
+            wordElement.textContent = "Story Complete! 📖";
             messageElement.textContent = "Final Score: " + score;
             typingInput.disabled = true;
             readStoryBtn.style.display = "inline-block";
@@ -186,10 +183,8 @@ typingInput.addEventListener("input", function () {
 });
 
 startBtn.addEventListener("click", function () {
-    const selectedCategory = getSelectedCategory();
     const selectedTime = getSelectedTime();
 
-    syncCategorySelection(selectedCategory);
     syncTimeSelection(selectedTime);
 
     resetGame();
@@ -291,7 +286,6 @@ homeBtn.addEventListener("click", function () {
     menuArea.style.display = "none";
 });
 
-// Modal Logic
 readStoryBtn.addEventListener("click", function () {
     const formattedStory = currentFullStoryArray.join(" ");
     fullStoryText.textContent = formattedStory;
