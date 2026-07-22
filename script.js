@@ -60,6 +60,7 @@ const settingsArea = document.getElementById("settingsArea");
 
 const timeOptions = document.getElementsByName("gameTime");
 const categoryOptions = document.getElementsByName("storyCategory");
+const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
 
 wordElement.textContent = words[currentWord];
 
@@ -81,6 +82,11 @@ function getSelectedCategory(){
         }
     });
     return selectedCategory;
+}
+
+function syncCategorySelection(category) {
+    categoryOptions.forEach(opt => opt.checked = (opt.value === category));
+    menuCategoryOptions.forEach(opt => opt.checked = (opt.value === category));
 }
 
 function resetGame(){
@@ -142,6 +148,7 @@ typingInput.addEventListener("input", function () {
 startBtn.addEventListener("click", function () {
     const selectedCategory = getSelectedCategory();
     words = stories[selectedCategory];
+    syncCategorySelection(selectedCategory);
 
     resetGame();
 
@@ -191,6 +198,19 @@ menuBtn.addEventListener("click", function () {
         isPaused = true;
         typingInput.disabled = true;
     }
+});
+
+menuCategoryOptions.forEach(function(option){
+    option.addEventListener("change", function(){
+        const selectedCategory = option.value;
+        words = stories[selectedCategory];
+        syncCategorySelection(selectedCategory);
+
+        menuArea.style.display = "none";
+        resetGame();
+        typingInput.focus();
+        startTimer();
+    });
 });
 
 resumeBtn.addEventListener("click", function () {
