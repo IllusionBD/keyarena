@@ -235,24 +235,21 @@ typingInput.addEventListener("input", function(){
 
 startBtn.addEventListener("click", function(){
 
-
     resetGame();
-
 
     gameArea.style.display = "block";
 
-
     startBtn.style.display = "none";
 
+    // Hide settings after game starts
+    settingsBtn.style.display = "none";
+    settingsArea.style.display = "none";
 
     restartBtn.style.display = "inline-block";
 
-
     typingInput.focus();
 
-
     startTimer();
-
 
 });
 
