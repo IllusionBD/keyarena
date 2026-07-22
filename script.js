@@ -1,74 +1,39 @@
-// Stories dataset with categories and multiple story variations
+// Daily Life Improvement Data
 const stories = {
-    funny: [
-        [
-            "the", "cat", "ate", "my", "burger", "and", "ran", "away", "laughing",
-            "it", "wore", "a", "tiny", "hat", "and", "danced", "on", "the", "table",
-            "then", "it", "spilled", "the", "milk", "all", "over", "the", "clean", "floor",
-            "my", "dog", "just", "sat", "there", "watching", "the", "funny", "show",
-            "everyone", "in", "the", "house", "could", "not", "stop", "laughing", "today",
-            "after", "that", "the", "cat", "tried", "to", "fly", "out", "the", "window",
-            "it", "landed", "softly", "on", "a", "giant", "fluffy", "pillow", "outside"
-        ],
-        [
-            "a", "monkey", "stole", "my", "sunglasses", "at", "the", "local", "zoo",
-            "it", "put", "them", "on", "and", "started", "taking", "cool", "selfies",
-            "the", "zookeeper", "offered", "a", "banana", "to", "get", "them", "back",
-            "but", "the", "smart", "monkey", "wanted", "an", "ice", "cream", "instead",
-            "all", "the", "tourists", "clapped", "and", "cheered", "for", "the", "stylish", "ape",
-            "it", "was", "the", "funniest", "moment", "of", "our", "entire", "weekend", "trip"
-        ]
+    lifehacks: [
+        ["drink", "a", "glass", "of", "water", "first", "thing", "in", "the", "morning", "it", "wakes", "up", "your", "organs", "boosts", "your", "metabolism", "and", "keeps", "you", "hydrated", "after", "hours", "of", "sleep", "this", "simple", "habit", "improves", "your", "overall", "energy", "levels", "throughout", "the", "entire", "day"],
+        ["always", "make", "your", "bed", "right", "after", "you", "wake", "up", "it", "gives", "you", "a", "small", "sense", "of", "accomplishment", "at", "the", "very", "start", "of", "your", "day", "a", "clean", "room", "also", "helps", "reduce", "mental", "stress", "and", "improves", "focus"],
+        ["if", "a", "task", "takes", "less", "than", "two", "minutes", "to", "do", "finish", "it", "immediately", "do", "not", "delay", "it", "putting", "away", "dishes", "or", "replying", "to", "an", "email", "right", "away", "prevents", "small", "chores", "from", "piling", "up", "later"],
+        ["take", "a", "short", "five", "minute", "walk", "every", "hour", "sitting", "for", "too", "long", "harms", "your", "posture", "and", "slows", "down", "blood", "circulation", "moving", "around", "refreshes", "your", "brain", "and", "keeps", "your", "body", "active", "and", "healthy"],
+        ["write", "down", "your", "thoughts", "in", "a", "journal", "before", "going", "to", "sleep", "releasing", "your", "worries", "onto", "paper", "clears", "your", "mind", "helps", "you", "sleep", "much", "faster", "and", "reduces", "late", "night", "overthinking", "and", "anxiety"]
     ],
 
-    horror: [
-        [
-            "dark", "night", "ghost", "was", "behind", "the", "door", "silently",
-            "a", "cold", "wind", "blew", "through", "the", "broken", "window",
-            "suddenly", "the", "lights", "went", "out", "and", "a", "scream", "was", "heard",
-            "shadows", "started", "moving", "slowly", "across", "the", "old", "hallway",
-            "no", "one", "dared", "to", "look", "back", "in", "that", "scary", "house",
-            "footsteps", "echoed", "closer", "and", "closer", "from", "the", "dark", "basement",
-            "the", "door", "locked", "itself", "and", "the", "whispers", "grew", "louder"
-        ],
-        [
-            "an", "old", "abandoned", "mansion", "stood", "alone", "on", "the", "foggy", "hill",
-            "strange", "red", "lights", "flickered", "from", "the", "top", "floor", "windows",
-            "we", "heard", "a", "piano", "playing", "a", "creepy", "melody", "by", "itself",
-            "the", "air", "became", "heavy", "and", "it", "was", "hard", "to", "breathe",
-            "a", "shadowy", "figure", "appeared", "at", "the", "end", "of", "the", "corridor",
-            "running", "away", "was", "our", "only", "chance", "to", "survive", "that", "night"
-        ]
+    productivity: [
+        ["focus", "on", "only", "one", "important", "task", "at", "a", "time", "multitasking", "reduces", "your", "efficiency", "and", "brain", "power", "give", "your", "full", "attention", "to", "a", "single", "goal", "and", "you", "will", "finish", "it", "much", "faster", "with", "fewer", "mistakes"],
+        ["use", "the", "twenty", "minute", "rule", "work", "with", "full", "focus", "for", "twenty", "five", "minutes", "then", "take", "a", "five", "minute", "break", "this", "technique", "keeps", "your", "mind", "fresh", "prevents", "burnout", "and", "boosts", "daily", "output"],
+        ["keep", "your", "phone", "in", "another", "room", "while", "working", "or", "studying", "constant", "notifications", "destroy", "your", "focus", "and", "train", "your", "brain", "to", "be", "distracted", "quiet", "environment", "leads", "to", "deep", "work", "and", "better", "results"],
+        ["plan", "your", "top", "three", "priorities", "the", "night", "before", "when", "you", "wake", "up", "you", "already", "know", "exactly", "what", "to", "do", "without", "wasting", "time", "thinking", "this", "gives", "you", "a", "clear", "roadmap", "for", "success"],
+        ["learn", "to", "say", "no", "to", "things", "that", "do", "not", "align", "with", "your", "goals", "your", "time", "and", "energy", "are", "limited", "protect", "them", "by", "focusing", "only", "on", "what", "truly", "matters", "for", "your", "future", "growth"]
     ],
 
-    adventure: [
-        [
-            "we", "crossed", "the", "deep", "river", "and", "found", "hidden", "treasure",
-            "the", "map", "led", "us", "through", "a", "dense", "and", "mysterious", "jungle",
-            "we", "climbed", "the", "highest", "mountain", "before", "the", "sun", "went", "down",
-            "ancient", "secrets", "were", "waiting", "for", "us", "inside", "the", "cave",
-            "it", "was", "the", "most", "exciting", "journey", "of", "our", "entire", "lives",
-            "wild", "animals", "watched", "us", "from", "the", "trees", "as", "we", "marched",
-            "finally", "a", "golden", "chest", "sparkled", "under", "the", "bright", "moonlight"
-        ],
-        [
-            "sailing", "across", "the", "stormy", "ocean", "the", "pirates", "spotted", "an", "island",
-            "thick", "fog", "covered", "the", "shores", "of", "the", "unexplored", "land",
-            "we", "unloaded", "our", "gear", "and", "stepped", "onto", "the", "golden", "sand",
-            "strange", "birds", "were", "singing", "high", "up", "in", "the", "palm", "trees",
-            "a", "hidden", "pathway", "guided", "us", "towards", "an", "ancient", "temple",
-            "every", "step", "brought", "a", "new", "challenge", "and", "a", "thrilling", "discovery"
-        ]
+    health: [
+        ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight", "every", "morning", "sunlight", "helps", "regulate", "your", "sleep", "cycle", "boosts", "vitamin", "d", "levels", "and", "improves", "your", "overall", "mood", "naturally"],
+        ["practice", "deep", "breathing", "when", "you", "feel", "stressed", "inhale", "slowly", "for", "four", "seconds", "hold", "for", "four", "seconds", "and", "exhale", "slowly", "this", "instantly", "calms", "your", "nervous", "system", "and", "lowers", "heart", "rate"],
+        ["screen", "time", "before", "bed", "ruins", "your", "sleep", "quality", "turn", "off", "your", "phone", "and", "laptop", "at", "least", "thirty", "minutes", "before", "sleeping", "read", "a", "book", "instead", "to", "relax", "your", "eyes", "and", "mind"],
+        ["eating", "slowly", "and", "chewing", "your", "food", "properly", "improves", "digestion", "and", "prevents", "overeating", "it", "takes", "twenty", "minutes", "for", "your", "brain", "to", "realize", "your", "stomach", "is", "full", "enjoy", "every", "bite"],
+        ["regular", "stretching", "improves", "body", "flexibility", "and", "relieves", "muscle", "tension", "spend", "few", "minutes", "stretching", "your", "neck", "back", "and", "legs", "daily", "to", "prevent", "body", "pain", "from", "long", "hours", "of", "sitting"]
     ]
 };
 
 let words = [];
-let currentFullStoryArray = []; // Store full story text
+let currentFullStoryArray = [];
 let currentWord = 0;
 let score = 0;
 let timeLeft = 60;
 let timer;
 let isPaused = false;
 
+// DOM Elements
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
@@ -81,9 +46,6 @@ const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 
 const typingInput = document.getElementById("typingInput");
-
-const settingsBtn = document.getElementById("settingsBtn");
-const settingsArea = document.getElementById("settingsArea");
 
 const timeOptions = document.getElementsByName("gameTime");
 const menuTimeOptions = document.getElementsByName("menuGameTime");
@@ -114,7 +76,7 @@ function getSelectedTime() {
 }
 
 function getSelectedCategory(){
-    let selectedCategory = "funny";
+    let selectedCategory = "lifehacks";
     categoryOptions.forEach(function(option){
         if(option.checked){
             selectedCategory = option.value;
@@ -123,9 +85,9 @@ function getSelectedCategory(){
     return selectedCategory;
 }
 
-// Dynamically select a story and adjust word count based on selected time
 function prepareStoryWords(category, time) {
     const categoryStories = stories[category];
+    // Random selection from stories array
     const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
 
     currentFullStoryArray = randomStory;
@@ -212,7 +174,7 @@ typingInput.addEventListener("input", function () {
             wordElement.textContent = words[currentWord];
         } else {
             clearInterval(timer);
-            wordElement.textContent = "Story Complete! 📖";
+            wordElement.textContent = "Tip Complete! 📖";
             messageElement.textContent = "Final Score: " + score;
             typingInput.disabled = true;
             readStoryBtn.style.display = "inline-block";
@@ -245,15 +207,6 @@ restartBtn.addEventListener("click", function () {
     startTimer();
 });
 
-settingsBtn.addEventListener("click", function () {
-    if (settingsArea.style.display === "block") {
-        settingsArea.style.display = "none";
-    } else {
-        settingsArea.style.display = "block";
-    }
-});
-
-// Pause / Resume Button Handler
 pauseBtn.addEventListener("click", function () {
     if (!isPaused && timeLeft > 0) {
         clearInterval(timer);
@@ -338,10 +291,7 @@ homeBtn.addEventListener("click", function () {
     menuArea.style.display = "none";
 });
 
-// ==================================
-// Read Full Story Modal Logic
-// ==================================
-
+// Modal Logic
 readStoryBtn.addEventListener("click", function () {
     const formattedStory = currentFullStoryArray.join(" ");
     fullStoryText.textContent = formattedStory;
