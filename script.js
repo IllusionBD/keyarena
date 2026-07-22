@@ -23,6 +23,7 @@ const messageElement = document.getElementById("message");
 const timerElement = document.getElementById("timer");
 
 const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
 const gameArea = document.getElementById("gameArea");
 const typingInput = document.getElementById("typingInput");
 
@@ -53,6 +54,7 @@ function resetGame() {
     typingInput.value = "";
 
 }
+
 
 
 function startTimer() {
@@ -107,7 +109,6 @@ typingInput.addEventListener("input", function () {
 
         } else {
 
-
             clearInterval(timer);
 
             wordElement.textContent = "Game Over! 🎮";
@@ -144,6 +145,23 @@ startBtn.addEventListener("click", function () {
     gameArea.style.display = "block";
 
     startBtn.style.display = "none";
+
+    typingInput.focus();
+
+    startTimer();
+
+
+});
+
+
+
+restartBtn.addEventListener("click", function () {
+
+
+    resetGame();
+
+
+    gameArea.style.display = "block";
 
     typingInput.focus();
 
