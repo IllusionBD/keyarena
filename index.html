@@ -2,17 +2,11 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>KeyArena</title>
-
     <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
@@ -26,9 +20,7 @@
     <div id="startScreen">
 
         <!-- Start Button -->
-        <button id="startBtn">
-            Start Game
-        </button>
+        <button id="startBtn">Start Game</button>
 
         <br><br>
 
@@ -106,19 +98,36 @@
         <!-- Menu Panel -->
         <div id="menuArea" style="display:none;">
 
-            <button id="homeBtn">
-                🏠 Home
-            </button>
+            <button id="homeBtn">🏠 Home</button>
 
-            <button id="resumeBtn">
-                ▶ Resume
-            </button>
+            <button id="resumeBtn">▶ Resume</button>
+
+            <hr style="margin:12px 0; border: 0.5px solid rgba(255,255,255,0.2);">
+
+            <h4 style="margin-bottom:8px;">📖 Category</h4>
+
+            <label>
+                <input type="radio" name="menuStoryCategory" value="funny" checked>
+                😂 Funny
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuStoryCategory" value="horror">
+                👻 Horror
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuStoryCategory" value="adventure">
+                🏕 Adventure
+            </label>
 
         </div>
 
-        <button id="restartBtn">
-            Restart Game
-        </button>
+        <button id="restartBtn">Restart Game</button>
 
         <h2>Typing Arena</h2>
 
