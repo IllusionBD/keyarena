@@ -42,3 +42,13 @@ button{
 button:hover{
     background:#2563eb;
 }
+
+.settings-icon {
+    float: right;
+    font-size: 18px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+}
