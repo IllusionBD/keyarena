@@ -51,6 +51,7 @@ function resetGame() {
 
 }
 function startTimer() {
+    clearInterval(timer);
 
     timer = setInterval(function () {
 
@@ -131,7 +132,7 @@ typingInput.addEventListener("input", function () {
 
 
 startBtn.addEventListener("click", function () {
-
+resetGame();
 
     gameArea.style.display = "block";
 
