@@ -1,41 +1,67 @@
+// ১. একাধিক গল্পসহ স্টোরি অবজেক্ট
 const stories = {
     funny: [
-        "the",
-        "cat",
-        "ate",
-        "my",
-        "burger",
-        "and",
-        "ran",
-        "away",
-        "laughing"
+        [
+            "the", "cat", "ate", "my", "burger", "and", "ran", "away", "laughing",
+            "it", "wore", "a", "tiny", "hat", "and", "danced", "on", "the", "table",
+            "then", "it", "spilled", "the", "milk", "all", "over", "the", "clean", "floor",
+            "my", "dog", "just", "sat", "there", "watching", "the", "funny", "show",
+            "everyone", "in", "the", "house", "could", "not", "stop", "laughing", "today",
+            "after", "that", "the", "cat", "tried", "to", "fly", "out", "the", "window",
+            "it", "landed", "softly", "on", "a", "giant", "fluffy", "pillow", "outside"
+        ],
+        [
+            "a", "monkey", "stole", "my", "sunglasses", "at", "the", "local", "zoo",
+            "it", "put", "them", "on", "and", "started", "taking", "cool", "selfies",
+            "the", "zookeeper", "offered", "a", "banana", "to", "get", "them", "back",
+            "but", "the", "smart", "monkey", "wanted", "an", "ice", "cream", "instead",
+            "all", "the", "tourists", "clapped", "and", "cheered", "for", "the", "stylish", "ape",
+            "it", "was", "the", "funniest", "moment", "of", "our", "entire", "weekend", "trip"
+        ]
     ],
 
     horror: [
-        "dark",
-        "night",
-        "ghost",
-        "was",
-        "behind",
-        "the",
-        "door",
-        "silently"
+        [
+            "dark", "night", "ghost", "was", "behind", "the", "door", "silently",
+            "a", "cold", "wind", "blew", "through", "the", "broken", "window",
+            "suddenly", "the", "lights", "went", "out", "and", "a", "scream", "was", "heard",
+            "shadows", "started", "moving", "slowly", "across", "the", "old", "hallway",
+            "no", "one", "dared", "to", "look", "back", "in", "that", "scary", "house",
+            "footsteps", "echoed", "closer", "and", "closer", "from", "the", "dark", "basement",
+            "the", "door", "locked", "itself", "and", "the", "whispers", "grew", "louder"
+        ],
+        [
+            "an", "old", "abandoned", "mansion", "stood", "alone", "on", "the", "foggy", "hill",
+            "strange", "red", "lights", "flickered", "from", "the", "top", "floor", "windows",
+            "we", "heard", "a", "piano", "playing", "a", "creepy", "melody", "by", "itself",
+            "the", "air", "became", "heavy", "and", "it", "was", "hard", "to", "breathe",
+            "a", "shadowy", "figure", "appeared", "at", "the", "end", "of", "the", "corridor",
+            "running", "away", "was", "our", "only", "chance", "to", "survive", "that", "night"
+        ]
     ],
 
     adventure: [
-        "we",
-        "crossed",
-        "the",
-        "river",
-        "and",
-        "found",
-        "hidden",
-        "treasure"
+        [
+            "we", "crossed", "the", "deep", "river", "and", "found", "hidden", "treasure",
+            "the", "map", "led", "us", "through", "a", "dense", "and", "mysterious", "jungle",
+            "we", "climbed", "the", "highest", "mountain", "before", "the", "sun", "went", "down",
+            "ancient", "secrets", "were", "waiting", "for", "us", "inside", "the", "cave",
+            "it", "was", "the", "most", "exciting", "journey", "of", "our", "entire", "lives",
+            "wild", "animals", "watched", "us", "from", "the", "trees", "as", "we", "marched",
+            "finally", "a", "golden", "chest", "sparkled", "under", "the", "bright", "moonlight"
+        ],
+        [
+            "sailing", "across", "the", "stormy", "ocean", "the", "pirates", "spotted", "an", "island",
+            "thick", "fog", "covered", "the", "shores", "of", "the", "unexplored", "land",
+            "we", "unloaded", "our", "gear", "and", "stepped", "onto", "the", "golden", "sand",
+            "strange", "birds", "were", "singing", "high", "up", "in", "the", "palm", "trees",
+            "a", "hidden", "pathway", "guided", "us", "towards", "an", "ancient", "temple",
+            "every", "step", "brought", "a", "new", "challenge", "and", "a", "thrilling", "discovery"
+        ]
     ]
 };
 
-let words = stories.funny;
-
+let words = [];
 let currentWord = 0;
 let score = 0;
 let timeLeft = 60;
@@ -64,8 +90,6 @@ const menuTimeOptions = document.getElementsByName("menuGameTime");
 const categoryOptions = document.getElementsByName("storyCategory");
 const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
 
-wordElement.textContent = words[currentWord];
-
 function getSelectedTime() {
     let selectedTime = 60;
     timeOptions.forEach(function(option){
@@ -86,6 +110,28 @@ function getSelectedCategory(){
     return selectedCategory;
 }
 
+// টাইম এবং র্যান্ডম স্টোরি অনুযায়ী শব্দের সংখ্যা ফিল্টার করার লজিক
+function prepareStoryWords(category, time) {
+    const categoryStories = stories[category];
+    // র্যান্ডমলি একটি স্টোরি পিক করা
+    const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
+
+    // সাধারণ প্লেয়ারের জন্য আনুমানিক টাইপিং স্পিড হিসাব করে শব্দের সংখ্যা নির্ধারণ
+    let wordCount;
+    if (time <= 15) {
+        wordCount = 12;  // ১৫ সেকেন্ডের জন্য ১২টি শব্দ
+    } else if (time <= 30) {
+        wordCount = 25;  // ৩০ সেকেন্ডের জন্য ২৫টি শব্দ
+    } else if (time <= 60) {
+        wordCount = 45;  // ৬০ সেকেন্ডের জন্য ৪৫টি শব্দ
+    } else {
+        wordCount = randomStory.length; // ১২০ সেকেন্ডের জন্য পুরো স্টোরি
+    }
+
+    // গল্পের প্রথম থেকে ঠিক ততটি শব্দ নেওয়া হবে
+    return randomStory.slice(0, wordCount);
+}
+
 function syncTimeSelection(timeVal) {
     timeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
     menuTimeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
@@ -100,14 +146,19 @@ function resetGame(){
     clearInterval(timer);
     isPaused = false;
 
+    const selectedCategory = getSelectedCategory();
+    timeLeft = getSelectedTime();
+
+    // টাইম এবং ক্যাটাগরি অনুযায়ী নতুন ও অটো-অ্যাডজাস্টেড শব্দ লোড করা
+    words = prepareStoryWords(selectedCategory, timeLeft);
+
     currentWord = 0;
     score = 0;
-    timeLeft = getSelectedTime();
 
     scoreElement.textContent = "Score: 0";
     timerElement.textContent = "Time: " + timeLeft;
 
-    wordElement.textContent = words[currentWord];
+    wordElement.textContent = words[currentWord] || "";
 
     messageElement.textContent = "";
 
@@ -156,8 +207,6 @@ startBtn.addEventListener("click", function () {
     const selectedCategory = getSelectedCategory();
     const selectedTime = getSelectedTime();
 
-    words = stories[selectedCategory];
-    
     syncCategorySelection(selectedCategory);
     syncTimeSelection(selectedTime);
 
@@ -171,11 +220,7 @@ startBtn.addEventListener("click", function () {
 });
 
 restartBtn.addEventListener("click", function () {
-    const selectedCategory = getSelectedCategory();
-    words = stories[selectedCategory];
-
     resetGame();
-
     typingInput.focus();
     startTimer();
 });
@@ -227,7 +272,6 @@ menuTimeOptions.forEach(function(option){
 menuCategoryOptions.forEach(function(option){
     option.addEventListener("change", function(){
         const selectedCategory = option.value;
-        words = stories[selectedCategory];
         
         syncCategorySelection(selectedCategory);
 
