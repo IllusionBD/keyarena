@@ -1,98 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Habits Typing Game</title>
+    <title>KeyArena</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <!-- Start Screen -->
-        <div id="startScreen" class="screen">
-            <h1>Typing & Life Habits</h1>
-            <p>Improve your typing speed while learning useful daily life tips!</p>
-            
-            <div class="options-group">
-                <h3>Select Category:</h3>
-                <label><input type="radio" name="storyCategory" value="lifehacks" checked> Life Hacks</label>
-                <label><input type="radio" name="storyCategory" value="productivity"> Productivity</label>
-                <label><input type="radio" name="storyCategory" value="health"> Health & Mind</label>
-            </div>
+<div class="container">
 
-            <div class="options-group">
-                <h3>Select Timer:</h3>
-                <label><input type="radio" name="gameTime" value="15"> 15s</label>
-                <label><input type="radio" name="gameTime" value="30"> 30s</label>
-                <label><input type="radio" name="gameTime" value="60" checked> 60s</label>
-            </div>
+    <h1>🎮 KeyArena</h1>
+    <p>Type Faster. Fight Smarter.</p>
 
-            <button id="startBtn" class="btn">Start Game</button>
+    <!-- START SCREEN -->
+    <div id="startScreen">
+
+        <!-- Start Button -->
+        <button id="startBtn">Start Game</button>
+
+        <br><br>
+
+        <!-- Settings Button -->
+        <button id="settingsBtn" class="settings-icon">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+
+        <!-- Settings Menu -->
+        <div id="settingsArea" style="display:none; margin-top:20px;">
+
+            <h3>⏱ Game Time Settings</h3>
+
+            <label>
+                <input type="radio" name="gameTime" value="15">
+                15 Seconds
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="gameTime" value="30">
+                30 Seconds
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="gameTime" value="60" checked>
+                60 Seconds
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="gameTime" value="120">
+                120 Seconds
+            </label>
+
+            <hr style="margin:20px 0;">
+
+            <h3>📖 Story Category</h3>
+
+            <label>
+                <input type="radio" name="storyCategory" value="funny" checked>
+                😂 Funny
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="storyCategory" value="horror">
+                👻 Horror
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="storyCategory" value="adventure">
+                🏕 Adventure
+            </label>
+
         </div>
 
-        <!-- Game Area -->
-        <div id="gameArea" class="screen" style="display: none;">
-            <div class="top-bar">
-                <button id="pauseBtn" class="icon-btn"><i class="fa-solid fa-pause"></i></button>
-                <button id="menuBtn" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
-            </div>
+    </div>
 
-            <div class="status-bar">
-                <span id="score">Score: 0</span>
-                <span id="timer">Time: 60</span>
-            </div>
+    <!-- GAME SCREEN -->
+    <div id="gameArea" style="display:none; margin-top:40px;">
 
-            <div id="wordDisplay" class="word-box">
-                <p id="word">Loading...</p>
-            </div>
+        <!-- Menu Button (Left Side) -->
+        <button id="menuBtn" class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-            <input type="text" id="typingInput" placeholder="Type here..." autocomplete="off">
+        <!-- 3D Glass Pause/Resume Button (Right Side) -->
+        <button id="pauseBtn" class="pause-glass-btn">
+            <i class="fa-solid fa-pause"></i>
+        </button>
 
-            <p id="message"></p>
+        <!-- Menu Panel -->
+        <div id="menuArea" style="display:none;">
 
-            <div class="controls">
-                <button id="restartBtn" class="btn">Restart</button>
-                <button id="readStoryBtn" class="btn" style="display: none;">Read Full Tip</button>
-            </div>
+            <button id="homeBtn">🏠 Home</button>
+
+            <button id="resumeBtn">▶ Resume</button>
+
+            <hr style="margin:12px 0; border: 0.5px solid rgba(255,255,255,0.2);">
+
+            <h4 style="margin-bottom:8px;">⏱ Game Time</h4>
+
+            <label>
+                <input type="radio" name="menuGameTime" value="15">
+                15 Seconds
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuGameTime" value="30">
+                30 Seconds
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuGameTime" value="60" checked>
+                60 Seconds
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuGameTime" value="120">
+                120 Seconds
+            </label>
+
+            <hr style="margin:12px 0; border: 0.5px solid rgba(255,255,255,0.2);">
+
+            <h4 style="margin-bottom:8px;">📖 Category</h4>
+
+            <label>
+                <input type="radio" name="menuStoryCategory" value="funny" checked>
+                😂 Funny
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuStoryCategory" value="horror">
+                👻 Horror
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="menuStoryCategory" value="adventure">
+                🏕 Adventure
+            </label>
+
         </div>
 
-        <!-- In-Game Menu Modal -->
-        <div id="menuArea" class="modal" style="display: none;">
+        <button id="restartBtn">Restart Game</button>
+
+        <p id="word">apple</p>
+
+        <p id="score">Score: 0</p>
+
+        <p id="timer">Time: 60</p>
+
+        <p id="message"></p>
+
+        <input
+            type="text"
+            id="typingInput"
+            placeholder="Type here..."
+            autocomplete="off"
+        >
+
+        <!-- Read Full Story Button -->
+        <br>
+        <button id="readStoryBtn" style="margin-top: 20px; display: none;">📖 Read Full Story</button>
+
+        <!-- Story Modal Overlay -->
+        <div id="storyModal" class="modal-overlay" style="display: none;">
             <div class="modal-content">
-                <h2>Game Settings</h2>
-                
-                <div class="options-group">
-                    <h3>Category:</h3>
-                    <label><input type="radio" name="menuStoryCategory" value="lifehacks"> Life Hacks</label>
-                    <label><input type="radio" name="menuStoryCategory" value="productivity"> Productivity</label>
-                    <label><input type="radio" name="menuStoryCategory" value="health"> Health & Mind</label>
-                </div>
-
-                <div class="options-group">
-                    <h3>Timer:</h3>
-                    <label><input type="radio" name="menuGameTime" value="15"> 15s</label>
-                    <label><input type="radio" name="menuGameTime" value="30"> 30s</label>
-                    <label><input type="radio" name="menuGameTime" value="60"> 60s</label>
-                </div>
-
-                <button id="resumeBtn" class="btn">Resume</button>
-                <button id="homeBtn" class="btn secondary">Main Menu</button>
-            </div>
-        </div>
-
-        <!-- Read Full Tip Modal -->
-        <div id="storyModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h2>Full Life Tip</h2>
+                <span id="closeModalBtn" class="close-btn">&times;</span>
+                <h3>📖 Full Story</h3>
+                <hr style="margin: 15px 0; border: 0.5px solid rgba(255,255,255,0.2);">
                 <p id="fullStoryText"></p>
-                <button id="closeModalBtn" class="btn">Close</button>
             </div>
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
