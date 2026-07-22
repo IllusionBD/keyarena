@@ -29,7 +29,27 @@ const typingInput = document.getElementById("typingInput");
 
 wordElement.textContent = words[currentWord];
 
+function resetGame() {
 
+    currentWord = 0;
+
+    score = 0;
+
+    timeLeft = 30;
+
+    scoreElement.textContent = "Score: 0";
+
+    timerElement.textContent = "Time: 30";
+
+    wordElement.textContent = words[currentWord];
+
+    messageElement.textContent = "";
+
+    typingInput.disabled = false;
+
+    typingInput.value = "";
+
+}
 function startTimer() {
 
     timer = setInterval(function () {
