@@ -62,6 +62,7 @@ const stories = {
 };
 
 let words = [];
+let currentFullStoryArray = []; // Store full story text
 let currentWord = 0;
 let score = 0;
 let timeLeft = 60;
@@ -97,6 +98,11 @@ const menuArea = document.getElementById("menuArea");
 const homeBtn = document.getElementById("homeBtn");
 const resumeBtn = document.getElementById("resumeBtn");
 
+const readStoryBtn = document.getElementById("readStoryBtn");
+const storyModal = document.getElementById("storyModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const fullStoryText = document.getElementById("fullStoryText");
+
 function getSelectedTime() {
     let selectedTime = 60;
     timeOptions.forEach(function(option){
@@ -121,6 +127,8 @@ function getSelectedCategory(){
 function prepareStoryWords(category, time) {
     const categoryStories = stories[category];
     const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
+
+    currentFullStoryArray = randomStory;
 
     let wordCount;
     if (time <= 15) {
@@ -171,6 +179,7 @@ function resetGame(){
 
     typingInput.disabled = false;
     typingInput.value = "";
+    readStoryBtn.style.display = "none";
     
     updatePauseBtnIcon();
 }
@@ -187,6 +196,7 @@ function startTimer(){
             wordElement.textContent = "Time Over! ⏰";
             messageElement.textContent = "Final Score: " + score;
             typingInput.disabled = true;
+            readStoryBtn.style.display = "inline-block";
         }
     }, 1000);
 }
@@ -205,6 +215,7 @@ typingInput.addEventListener("input", function () {
             wordElement.textContent = "Story Complete! 📖";
             messageElement.textContent = "Final Score: " + score;
             typingInput.disabled = true;
+            readStoryBtn.style.display = "inline-block";
         }
         typingInput.value = "";
     } else {
@@ -325,4 +336,24 @@ homeBtn.addEventListener("click", function () {
     gameArea.style.display = "none";
     startScreen.style.display = "block";
     menuArea.style.display = "none";
+});
+
+// ==================================
+// Read Full Story Modal Logic
+// ==================================
+
+readStoryBtn.addEventListener("click", function () {
+    const formattedStory = currentFullStoryArray.join(" ");
+    fullStoryText.textContent = formattedStory;
+    storyModal.style.display = "flex";
+});
+
+closeModalBtn.addEventListener("click", function () {
+    storyModal.style.display = "none";
+});
+
+window.addEventListener("click", function (e) {
+    if (e.target === storyModal) {
+        storyModal.style.display = "none";
+    }
 });
