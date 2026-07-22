@@ -25,9 +25,10 @@ body {
 }
 
 h1 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     color: #ffffff;
     margin-bottom: 0.5rem;
+    letter-spacing: 1px;
 }
 
 p {
@@ -38,9 +39,9 @@ p {
 /* Options & Radio Buttons Alignment */
 .options-group {
     background-color: #334155;
-    padding: 1rem;
+    padding: 1.2rem;
     border-radius: 10px;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
 }
 
 .options-group h3 {
@@ -52,9 +53,9 @@ p {
 .options-group label {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    margin: 5px 12px;
-    font-size: 0.95rem;
+    gap: 8px;
+    margin: 5px 15px;
+    font-size: 1rem;
     cursor: pointer;
     color: #e2e8f0;
 }
@@ -62,7 +63,7 @@ p {
 .options-group input[type="radio"] {
     accent-color: #3b82f6;
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 /* Buttons Styling */
