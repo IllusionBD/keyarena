@@ -1,21 +1,49 @@
-const words = [
-    "apple",
-    "joynal",
-    "banana",
-    "orange",
-    "keyboard",
-    "computer",
-    "mouse",
-    "monitor",
-    "typing",
-    "battle",
-    "winner"
-];
+const stories = {
+
+    funny: [
+        "the",
+        "cat",
+        "ate",
+        "my",
+        "burger",
+        "and",
+        "ran",
+        "away",
+        "laughing"
+    ],
+
+    horror: [
+        "dark",
+        "night",
+        "ghost",
+        "was",
+        "behind",
+        "the",
+        "door",
+        "silently"
+    ],
+
+    adventure: [
+        "we",
+        "crossed",
+        "the",
+        "river",
+        "and",
+        "found",
+        "hidden",
+        "treasure"
+    ]
+
+};
+
+let words = stories.funny;
 
 let currentWord = 0;
 let score = 0;
 let timeLeft = 60;
 let timer;
+
+
 
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
@@ -34,8 +62,10 @@ const settingsBtn = document.getElementById("settingsBtn");
 const settingsArea = document.getElementById("settingsArea");
 
 const timeOptions = document.getElementsByName("gameTime");
+const categoryOptions = document.getElementsByName("storyCategory");
 
 wordElement.textContent = words[currentWord];
+
 
 
 // ==========================
@@ -46,9 +76,9 @@ function getSelectedTime() {
 
     let selectedTime = 60;
 
-    timeOptions.forEach(function (option) {
+    timeOptions.forEach(function(option){
 
-        if (option.checked) {
+        if(option.checked){
 
             selectedTime = Number(option.value);
 
@@ -61,11 +91,36 @@ function getSelectedTime() {
 }
 
 
+
+// ==========================
+// Get Selected Category
+// ==========================
+
+function getSelectedCategory(){
+
+    let selectedCategory = "funny";
+
+    categoryOptions.forEach(function(option){
+
+        if(option.checked){
+
+            selectedCategory = option.value;
+
+        }
+
+    });
+
+    return selectedCategory;
+
+}
+
+
+
 // ==========================
 // Reset Game
 // ==========================
 
-function resetGame() {
+function resetGame(){
 
     clearInterval(timer);
 
@@ -86,34 +141,37 @@ function resetGame() {
 }
 
 
+
 // ==========================
 // Timer
 // ==========================
 
-function startTimer() {
+function startTimer(){
 
     clearInterval(timer);
 
-    timer = setInterval(function () {
+    timer = setInterval(function(){
 
         timeLeft--;
 
         timerElement.textContent = "Time: " + timeLeft;
 
-        if (timeLeft <= 0) {
+        if(timeLeft <= 0){
 
             clearInterval(timer);
 
             wordElement.textContent = "Time Over! ⏰";
+
             messageElement.textContent = "Final Score: " + score;
 
             typingInput.disabled = true;
 
         }
 
-    }, 1000);
+    },1000);
 
 }
+
 
 
 // ==========================
@@ -140,7 +198,8 @@ typingInput.addEventListener("input", function () {
 
             clearInterval(timer);
 
-            wordElement.textContent = "Game Over! 🎮";
+            wordElement.textContent = "Story Complete! 📖";
+
             messageElement.textContent = "Final Score: " + score;
 
             typingInput.disabled = true;
@@ -164,12 +223,14 @@ typingInput.addEventListener("input", function () {
 
 startBtn.addEventListener("click", function () {
 
+    const selectedCategory = getSelectedCategory();
+
+    words = stories[selectedCategory];
+
     resetGame();
 
     startScreen.style.display = "none";
     gameArea.style.display = "block";
-
-    restartBtn.style.display = "inline-block";
 
     typingInput.focus();
 
@@ -183,6 +244,10 @@ startBtn.addEventListener("click", function () {
 // ==========================
 
 restartBtn.addEventListener("click", function () {
+
+    const selectedCategory = getSelectedCategory();
+
+    words = stories[selectedCategory];
 
     resetGame();
 
