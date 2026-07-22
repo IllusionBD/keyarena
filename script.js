@@ -275,3 +275,48 @@ settingsBtn.addEventListener("click", function () {
     }
 
 });
+
+
+// ==========================
+// Game Menu
+// ==========================
+
+const menuBtn = document.getElementById("menuBtn");
+const menuArea = document.getElementById("menuArea");
+
+const homeBtn = document.getElementById("homeBtn");
+const resumeBtn = document.getElementById("resumeBtn");
+
+menuBtn.addEventListener("click", function () {
+
+    if (menuArea.style.display === "block") {
+
+        menuArea.style.display = "none";
+
+    } else {
+
+        menuArea.style.display = "block";
+
+    }
+
+});
+
+resumeBtn.addEventListener("click", function () {
+
+    menuArea.style.display = "none";
+
+    typingInput.focus();
+
+});
+
+homeBtn.addEventListener("click", function () {
+
+    clearInterval(timer);
+
+    gameArea.style.display = "none";
+
+    startScreen.style.display = "block";
+
+    menuArea.style.display = "none";
+
+});
