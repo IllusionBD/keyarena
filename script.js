@@ -15,6 +15,7 @@ let currentWord = 0;
 let score = 0;
 
 const wordElement = document.getElementById("word");
+const scoreElement = document.getElementById("score");
 wordElement.textContent = words[currentWord];
 
 const startBtn = document.getElementById("startBtn");
@@ -26,6 +27,7 @@ typingInput.addEventListener("input", function () {
 
     if (typingInput.value === words[currentWord]) {
     score++;
+        scoreElement.textContent = "Score: " + score;
         currentWord++;
 
         if (currentWord < words.length) {
