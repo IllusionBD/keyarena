@@ -17,6 +17,7 @@ let score = 0;
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
+
 wordElement.textContent = words[currentWord];
 
 const startBtn = document.getElementById("startBtn");
@@ -26,27 +27,27 @@ const typingInput = document.getElementById("typingInput");
 
 typingInput.addEventListener("input", function () {
 
-  if (typingInput.value === words[currentWord]) {
+    if (typingInput.value === words[currentWord]) {
 
-    messageElement.textContent = "Correct! 🎉";
+        messageElement.textContent = "Correct! 🎉";
 
-    score++;
+        score++;
 
-    scoreElement.textContent = "Score: " + score;
+        scoreElement.textContent = "Score: " + score;
 
-    currentWord++;
+        currentWord++;
 
         if (currentWord < words.length) {
             wordElement.textContent = words[currentWord];
         }
 
         typingInput.value = "";
+
+    } else {
+
+        messageElement.textContent = "Keep trying! ❌";
+
     }
-    else {
-
-    messageElement.textContent = "Keep trying! ❌";
-
-}
 
 });
 
