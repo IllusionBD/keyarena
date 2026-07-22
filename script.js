@@ -37,6 +37,7 @@ const typingInput = document.getElementById("typingInput");
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsArea = document.getElementById("settingsArea");
 
+
 const timeOptions = document.getElementsByName("gameTime");
 
 
@@ -47,9 +48,9 @@ wordElement.textContent = words[currentWord];
 
 
 
-// Get selected time from settings
+// Get selected time
 
-function getSelectedTime() {
+function getSelectedTime(){
 
 
     let selectedTime = 60;
@@ -80,8 +81,7 @@ function getSelectedTime() {
 
 
 
-
-function resetGame() {
+function resetGame(){
 
 
     clearInterval(timer);
@@ -97,21 +97,16 @@ function resetGame() {
 
     scoreElement.textContent = "Score: 0";
 
-
     timerElement.textContent = "Time: " + timeLeft;
 
-
     wordElement.textContent = words[currentWord];
-
 
     messageElement.textContent = "";
 
 
     typingInput.disabled = false;
 
-
     typingInput.value = "";
-
 
 }
 
@@ -119,9 +114,7 @@ function resetGame() {
 
 
 
-
-
-function startTimer() {
+function startTimer(){
 
 
     clearInterval(timer);
@@ -141,7 +134,6 @@ function startTimer() {
         if(timeLeft <= 0){
 
 
-
             clearInterval(timer);
 
 
@@ -155,13 +147,10 @@ function startTimer() {
             typingInput.disabled = true;
 
 
-
         }
 
 
-
     },1000);
-
 
 
 }
@@ -200,7 +189,6 @@ typingInput.addEventListener("input", function(){
             wordElement.textContent = words[currentWord];
 
 
-
         }else{
 
 
@@ -216,13 +204,11 @@ typingInput.addEventListener("input", function(){
             typingInput.disabled = true;
 
 
-
         }
 
 
 
         typingInput.value = "";
-
 
 
     }else{
@@ -234,7 +220,6 @@ typingInput.addEventListener("input", function(){
     }
 
 
-
 });
 
 
@@ -245,12 +230,13 @@ typingInput.addEventListener("input", function(){
 
 
 
+
+// Start Game
+
 startBtn.addEventListener("click", function(){
 
 
-
     resetGame();
-
 
 
     gameArea.style.display = "block";
@@ -262,13 +248,10 @@ startBtn.addEventListener("click", function(){
     restartBtn.style.display = "inline-block";
 
 
-
     typingInput.focus();
 
 
-
     startTimer();
-
 
 
 });
@@ -282,27 +265,18 @@ startBtn.addEventListener("click", function(){
 
 
 
-restartBtn.addEventListener("click", function(){
+// Restart Game
 
+restartBtn.addEventListener("click", function(){
 
 
     resetGame();
 
 
-
-    gameArea.style.display = "block";
-
-
-    restartBtn.style.display = "inline-block";
-
-
-
     typingInput.focus();
 
 
-
     startTimer();
-
 
 
 });
@@ -315,7 +289,8 @@ restartBtn.addEventListener("click", function(){
 
 
 
-// Settings Button
+
+// Settings Toggle
 
 if(settingsBtn && settingsArea){
 
@@ -323,29 +298,22 @@ if(settingsBtn && settingsArea){
     settingsBtn.addEventListener("click", function(){
 
 
-
         if(settingsArea.style.display === "block"){
-
 
 
             settingsArea.style.display = "none";
 
 
-
         }else{
-
 
 
             settingsArea.style.display = "block";
 
 
-
         }
 
 
-
     });
-
 
 
 }
