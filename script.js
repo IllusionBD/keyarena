@@ -12,6 +12,7 @@ const words = [
 ];
 
 let currentWord = 0;
+let score = 0;
 
 const wordElement = document.getElementById("word");
 wordElement.textContent = words[currentWord];
@@ -24,7 +25,7 @@ const typingInput = document.getElementById("typingInput");
 typingInput.addEventListener("input", function () {
 
     if (typingInput.value === words[currentWord]) {
-
+    score++;
         currentWord++;
 
         if (currentWord < words.length) {
