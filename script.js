@@ -25,18 +25,57 @@ const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
 const timerElement = document.getElementById("timer");
 
+
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
+
 
 const gameArea = document.getElementById("gameArea");
 const typingInput = document.getElementById("typingInput");
 
+
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsArea = document.getElementById("settingsArea");
+
+const timeOptions = document.getElementsByName("gameTime");
 
 
 
 wordElement.textContent = words[currentWord];
+
+
+
+
+
+// Get selected time from settings
+
+function getSelectedTime() {
+
+
+    let selectedTime = 60;
+
+
+    timeOptions.forEach(function(option){
+
+
+        if(option.checked){
+
+
+            selectedTime = Number(option.value);
+
+
+        }
+
+
+    });
+
+
+    return selectedTime;
+
+
+}
+
+
 
 
 
@@ -52,24 +91,31 @@ function resetGame() {
 
     score = 0;
 
-    timeLeft = 60;
+    timeLeft = getSelectedTime();
 
 
 
     scoreElement.textContent = "Score: 0";
 
-    timerElement.textContent = "Time: 60";
+
+    timerElement.textContent = "Time: " + timeLeft;
+
 
     wordElement.textContent = words[currentWord];
 
+
     messageElement.textContent = "";
 
+
     typingInput.disabled = false;
+
 
     typingInput.value = "";
 
 
 }
+
+
 
 
 
@@ -82,7 +128,7 @@ function startTimer() {
 
 
 
-    timer = setInterval(function () {
+    timer = setInterval(function(){
 
 
         timeLeft--;
@@ -92,10 +138,12 @@ function startTimer() {
 
 
 
-        if (timeLeft <= 0) {
+        if(timeLeft <= 0){
+
 
 
             clearInterval(timer);
+
 
 
             wordElement.textContent = "Time Over! ⏰";
@@ -107,10 +155,13 @@ function startTimer() {
             typingInput.disabled = true;
 
 
+
         }
 
 
+
     },1000);
+
 
 
 }
@@ -120,12 +171,13 @@ function startTimer() {
 
 
 
-typingInput.addEventListener("input", function () {
+
+
+typingInput.addEventListener("input", function(){
 
 
 
-    if (typingInput.value === words[currentWord]) {
-
+    if(typingInput.value === words[currentWord]){
 
 
         messageElement.textContent = "Correct! 🎉";
@@ -142,20 +194,17 @@ typingInput.addEventListener("input", function () {
 
 
 
-        if (currentWord < words.length) {
-
+        if(currentWord < words.length){
 
 
             wordElement.textContent = words[currentWord];
 
 
 
-        } else {
-
+        }else{
 
 
             clearInterval(timer);
-
 
 
             wordElement.textContent = "Game Over! 🎮";
@@ -167,6 +216,7 @@ typingInput.addEventListener("input", function () {
             typingInput.disabled = true;
 
 
+
         }
 
 
@@ -175,15 +225,14 @@ typingInput.addEventListener("input", function () {
 
 
 
-    } else {
-
+    }else{
 
 
         messageElement.textContent = "Keep trying! ❌";
 
 
-
     }
+
 
 
 });
@@ -195,7 +244,8 @@ typingInput.addEventListener("input", function () {
 
 
 
-startBtn.addEventListener("click", function () {
+
+startBtn.addEventListener("click", function(){
 
 
 
@@ -212,7 +262,9 @@ startBtn.addEventListener("click", function () {
     restartBtn.style.display = "inline-block";
 
 
+
     typingInput.focus();
+
 
 
     startTimer();
@@ -228,7 +280,9 @@ startBtn.addEventListener("click", function () {
 
 
 
-restartBtn.addEventListener("click", function () {
+
+
+restartBtn.addEventListener("click", function(){
 
 
 
@@ -242,7 +296,9 @@ restartBtn.addEventListener("click", function () {
     restartBtn.style.display = "inline-block";
 
 
+
     typingInput.focus();
+
 
 
     startTimer();
@@ -258,16 +314,17 @@ restartBtn.addEventListener("click", function () {
 
 
 
+
 // Settings Button
 
-if (settingsBtn && settingsArea) {
+if(settingsBtn && settingsArea){
 
 
-    settingsBtn.addEventListener("click", function () {
+    settingsBtn.addEventListener("click", function(){
 
 
 
-        if (settingsArea.style.display === "block") {
+        if(settingsArea.style.display === "block"){
 
 
 
@@ -275,7 +332,7 @@ if (settingsBtn && settingsArea) {
 
 
 
-        } else {
+        }else{
 
 
 
@@ -288,6 +345,7 @@ if (settingsBtn && settingsArea) {
 
 
     });
+
 
 
 }
