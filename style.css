@@ -1,310 +1,176 @@
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background: #0f172a;
-    color: white;
-    font-family: Arial, sans-serif;
+    background-color: #0f172a;
+    color: #f8fafc;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container {
-    position: relative;
-    width: 600px;
+    background-color: #1e293b;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
     text-align: center;
 }
 
 h1 {
-    font-size: 64px;
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
 }
 
 p {
-    font-size: 24px;
-    color: #cbd5e1;
-    margin-bottom: 40px;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
 }
 
-button {
-    background: #3b82f6;
-    color: #fff;
-    border: none;
-    padding: 15px 40px;
-    font-size: 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: .3s ease;
+/* Options & Radio Buttons Alignment */
+.options-group {
+    background-color: #334155;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
 }
 
-button:hover {
-    background: #2563eb;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(59, 130, 246, .35);
+.options-group h3 {
+    font-size: 1.1rem;
+    color: #38bdf8;
+    margin-bottom: 0.8rem;
 }
 
-/* ===========================
-   3D Settings Button
-=========================== */
-
-.settings-icon {
-    width: 55px;
-    height: 55px;
-    margin: 20px auto;
-    display: flex;
-    justify-content: center;
+.options-group label {
+    display: inline-flex;
     align-items: center;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #60a5fa, #2563eb);
-    color: #fff;
-    font-size: 24px;
+    gap: 6px;
+    margin: 5px 12px;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all .35s ease;
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, .35),
-        inset 0 2px 4px rgba(255, 255, 255, .35),
-        inset 0 -3px 6px rgba(0, 0, 0, .25);
-}
-
-.settings-icon:hover {
-    transform: translateY(-4px) scale(1.05);
-    background: linear-gradient(145deg, #3b82f6, #1d4ed8);
-    box-shadow:
-        0 18px 35px rgba(37, 99, 235, .45),
-        inset 0 2px 4px rgba(255, 255, 255, .35);
-}
-
-.settings-icon:active {
-    transform: scale(.95);
-}
-
-.settings-icon i {
-    transition: transform .5s ease;
-}
-
-.settings-icon:hover i {
-    transform: rotate(180deg);
-}
-
-/* ===========================
-   Settings Panel
-=========================== */
-
-#settingsArea {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, .08);
-    border: 1px solid rgba(255, 255, 255, .15);
-    backdrop-filter: blur(12px);
-}
-
-#settingsArea h3 {
-    margin-bottom: 15px;
-}
-
-#settingsArea label {
-    display: block;
-    margin: 10px 0;
-    font-size: 18px;
     color: #e2e8f0;
 }
 
-/* ==========================
-   Game Menu Design
-========================== */
-
-.menu-icon {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    width: 55px;
-    height: 55px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #60a5fa, #2563eb);
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, .35),
-        inset 0 2px 5px rgba(255, 255, 255, .3);
-    transition: .3s;
-}
-
-.menu-icon:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(59, 130, 246, .45);
-}
-
-/* Menu Box */
-
-#menuArea {
-    position: absolute;
-    top: 80px;
-    left: 15px;
-    width: 200px;
-    padding: 15px;
-    border-radius: 18px;
-    background: rgba(30, 41, 59, .95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, .45);
-    z-index: 10;
-    text-align: left;
-}
-
-/* Menu Buttons */
-
-#menuArea button {
-    width: 100%;
-    margin: 6px 0;
-    padding: 10px;
-    font-size: 15px;
-    border-radius: 12px;
-    background: #3b82f6;
-}
-
-#menuArea button:hover {
-    background: #2563eb;
-    transform: translateX(5px);
-}
-
-#menuArea label {
-    display: inline-block;
-    margin: 6px 0;
-    font-size: 15px;
-    color: #cbd5e1;
+.options-group input[type="radio"] {
+    accent-color: #3b82f6;
     cursor: pointer;
+    transform: scale(1.1);
 }
 
-/* ==================================
-   3D Glassmorphism Pause/Resume Button
-================================== */
-
-.pause-glass-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 55px;
-    height: 55px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    color: #ffffff;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05));
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow:
-        0 10px 20px rgba(0, 0, 0, 0.3),
-        inset 0 2px 3px rgba(255, 255, 255, 0.4),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.25);
-}
-
-.pause-glass-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.1));
-    border-color: rgba(255, 255, 255, 0.5);
-    box-shadow:
-        0 15px 30px rgba(59, 130, 246, 0.4),
-        inset 0 2px 5px rgba(255, 255, 255, 0.6);
-}
-
-.pause-glass-btn:active {
-    transform: translateY(1px) scale(0.95);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.pause-glass-btn i {
-    transition: transform 0.3s ease;
-}
-
-.pause-glass-btn:hover i {
-    transform: scale(1.15);
-}
-
-/* ==================================
-   Professional Glowing Typing Input
-================================== */
-
-#typingInput {
-    width: 80%;
-    max-width: 420px;
-    padding: 16px 24px;
-    font-size: 20px;
+/* Buttons Styling */
+.btn {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1rem;
     font-weight: 600;
-    text-align: center;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.07);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    outline: none;
-    backdrop-filter: blur(10px);
-    letter-spacing: 1px;
-    transition: all 0.35s ease;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 5px;
 }
 
-#typingInput::placeholder {
-    color: rgba(203, 213, 225, 0.6);
-    font-size: 18px;
-    font-weight: 400;
-}
-
-#typingInput:focus {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: #3b82f6;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
-                0 10px 30px rgba(0, 0, 0, 0.4),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+.btn:hover {
+    background-color: #2563eb;
     transform: translateY(-2px);
 }
 
-#typingInput:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: none;
+.btn.secondary {
+    background-color: #64748b;
 }
 
-/* ==================================
-   Read Full Story Modal Styles
-================================== */
-
-#readStoryBtn {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px);
-    font-size: 16px;
-    padding: 10px 20px;
+.btn.secondary:hover {
+    background-color: #475569;
 }
 
-#readStoryBtn:hover {
-    background: rgba(59, 130, 246, 0.4);
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.icon-btn:hover {
+    color: #38bdf8;
+}
+
+/* Game Area Styling */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #38bdf8;
+    margin-bottom: 1.5rem;
+}
+
+.word-box {
+    background-color: #0f172a;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.word-box p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #f1f5f9;
+    margin: 0;
+}
+
+#typingInput {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1.1rem;
+    border: 2px solid #334155;
+    border-radius: 8px;
+    background-color: #0f172a;
+    color: white;
+    outline: none;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#typingInput:focus {
     border-color: #3b82f6;
 }
 
-.modal-overlay {
+#message {
+    height: 25px;
+    font-weight: 600;
+    color: #4ade80;
+    margin-bottom: 1rem;
+}
+
+/* Modal Popup Styling */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -312,42 +178,23 @@ button:hover {
 }
 
 .modal-content {
-    position: relative;
-    width: 85%;
+    background-color: #1e293b;
+    padding: 2rem;
+    border-radius: 12px;
     max-width: 500px;
-    background: rgba(30, 41, 59, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    text-align: left;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.modal-content h3 {
-    font-size: 22px;
-    color: #60a5fa;
+.modal-content h2 {
+    color: #38bdf8;
+    margin-bottom: 1rem;
 }
 
-.modal-content p {
-    font-size: 18px;
-    line-height: 1.6;
+#fullStoryText {
     color: #e2e8f0;
-    margin-bottom: 0;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #cbd5e1;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.close-btn:hover {
-    color: #ef4444;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
 }
