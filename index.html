@@ -4,41 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>KeyArena</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    
+
 <div class="container">
+
 
     <h1>🎮 KeyArena</h1>
 
     <p>Type Faster. Fight Smarter.</p>
 
 
-    <!-- Start button (first screen) -->
-    <button id="startBtn">Start Game</button>
+    <button id="startBtn">
+        Start Game
+    </button>
 
 
-    <!-- Hidden until game starts -->
     <button id="restartBtn" style="display:none;">
         Restart Game
     </button>
 
 
+
     <div id="gameArea" style="display:none; margin-top:40px;">
+
 
         <h2>Typing Arena</h2>
 
+
         <p id="word">apple</p>
 
-        <p id="score">Score: 0</p>
 
-        <p id="timer">Time: 60</p>
+        <p id="score">
+            Score: 0
+        </p>
+
+
+        <p id="timer">
+            Time: 60
+        </p>
+
 
         <p id="message"></p>
+
 
 
         <input
@@ -47,13 +62,16 @@
             placeholder="Type here..."
         >
 
+
     </div>
 
 
 </div>
 
 
+
 <script src="script.js"></script>
+
 
 </body>
 
