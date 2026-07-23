@@ -1,7 +1,3 @@
-
-// ==========================================
-// STORIES DATA
-// ==========================================
 // Stories Data
 const stories = {
     lifehacks: [
@@ -14,10 +10,8 @@ const stories = {
     health: [
         ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight"]
     ]
-}; 
-// ==========================================
-// GAME VARIABLES
-// ==========================================
+};
+
 let words = [];
 let currentFullStoryArray = [];
 let currentWord = 0;
@@ -27,9 +21,6 @@ let timer = null;
 let isPaused = false;
 
 // Helper Functions to Show/Hide Elements
-// ==========================================
-// HELPER FUNCTIONS
-// ==========================================
 function showElement(el) {
     if (el) el.classList.remove("hidden-element");
 }
@@ -38,11 +29,7 @@ function hideElement(el) {
     if (el) el.classList.add("hidden-element");
 }
 
-
 // DOM Elements
-// ==========================================
-// DOM ELEMENTS
-// ==========================================
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
@@ -52,11 +39,9 @@ const gameArea = document.getElementById("gameArea");
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 const typingInput = document.getElementById("typingInput");
-
 const timeOptions = document.getElementsByName("gameTime");
 const menuTimeOptions = document.getElementsByName("menuGameTime");
 const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
-
 const pauseBtn = document.getElementById("pauseBtn");
 const menuBtn = document.getElementById("menuBtn");
 const menuArea = document.getElementById("menuArea");
@@ -66,17 +51,13 @@ const readStoryBtn = document.getElementById("readStoryBtn");
 const storyModal = document.getElementById("storyModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const fullStoryText = document.getElementById("fullStoryText");
-
 const toggleTimerBtn = document.getElementById("toggleTimerBtn");
 const timerOptionsContainer = document.getElementById("timerOptionsContainer");
 const selectedTimeDisplay = document.getElementById("selectedTimeDisplay");
 const customTimeInput = document.getElementById("customTimeInput");
-
 const toggleMenuTimerBtn = document.getElementById("toggleMenuTimerBtn");
 const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsContainer");
 const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
-const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
-
 const aboutBtn = document.getElementById("aboutBtn");
 const aboutModal = document.getElementById("aboutModal");
 const closeAboutModalBtn = document.getElementById("closeAboutModalBtn");
@@ -108,32 +89,13 @@ if (closeAboutModalBtn) {
     };
 }
 
-// Fixed & Improved getSelectedTime Function
-// ==========================================
-// GAME SETTINGS
-// ==========================================
 function getSelectedTime() {
-    // 1. Check custom inputs
-    if (menuCustomTimeInput && Number(menuCustomTimeInput.value) > 0) {
-        return Number(menuCustomTimeInput.value);
-    }
-    if (customTimeInput && Number(customTimeInput.value) > 0) {
-        return Number(customTimeInput.value);
-    }
-
-    // 2. Check in-game menu time radio buttons
-    let selectedMenuTime = null;
-    menuTimeOptions.forEach(option => {
-        if (option.checked) selectedMenuTime = Number(option.value);
-    });
-    if (selectedMenuTime) return selectedMenuTime;
-
-    // 3. Check start screen radio buttons
-    let selectedStartScreenTime = 60;
+    if (customTimeInput && Number(customTimeInput.value) > 0) return Number(customTimeInput.value);
+    let selectedTime = 60;
     timeOptions.forEach(option => {
-        if (option.checked) selectedStartScreenTime = Number(option.value);
+        if (option.checked) selectedTime = Number(option.value);
     });
-    return selectedStartScreenTime;
+    return selectedTime;
 }
 
 function getSelectedCategory() {
@@ -144,90 +106,23 @@ function getSelectedCategory() {
     return selectedCategory;
 }
 
-// Synchronize inputs & labels for both Start Screen and Menu Screen
-function updateAllTimerDisplays(val) {
-    if (selectedTimeDisplay) selectedTimeDisplay.textContent = val + "s";
-    if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = val + "s";
-}
-
-// In-Game Menu Time Changes
-menuTimeOptions.forEach(option => {
-    option.addEventListener("change", (e) => {
-        if (menuCustomTimeInput) menuCustomTimeInput.value = "";
-        if (customTimeInput) customTimeInput.value = "";
-        
-        const newTime = Number(e.target.value);
-        updateAllTimerDisplays(newTime);
-
-        timeOptions.forEach(startOption => {
-            startOption.checked = (Number(startOption.value) === newTime);
-        });
-    });
-});
-
-// Start Screen Time Changes
-timeOptions.forEach(option => {
-    option.addEventListener("change", (e) => {
-        if (customTimeInput) customTimeInput.value = "";
-        if (menuCustomTimeInput) menuCustomTimeInput.value = "";
-
-        const newTime = Number(e.target.value);
-        updateAllTimerDisplays(newTime);
-
-        menuTimeOptions.forEach(menuOption => {
-            menuOption.checked = (Number(menuOption.value) === newTime);
-        });
-    });
-});
-
-// Custom Input Handlers
-if (customTimeInput) {
-    customTimeInput.addEventListener("input", (e) => {
-        const val = e.target.value;
-        if (val) {
-            updateAllTimerDisplays(val);
-            timeOptions.forEach(opt => opt.checked = false);
-            menuTimeOptions.forEach(opt => opt.checked = false);
-            if (menuCustomTimeInput) menuCustomTimeInput.value = val;
-        }
-    });
-}
-
-if (menuCustomTimeInput) {
-    menuCustomTimeInput.addEventListener("input", (e) => {
-        const val = e.target.value;
-        if (val) {
-            updateAllTimerDisplays(val);
-            timeOptions.forEach(opt => opt.checked = false);
-            menuTimeOptions.forEach(opt => opt.checked = false);
-            if (customTimeInput) customTimeInput.value = val;
-        }
-    });
-}
-// ==========================================
-// GAME FUNCTIONS
-// ==========================================
-
 function resetGame() {
     clearInterval(timer);
     isPaused = false;
     const selectedCategory = getSelectedCategory();
     timeLeft = getSelectedTime();
-
+    
     const categoryStories = stories[selectedCategory] || stories.lifehacks;
     const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
     currentFullStoryArray = randomStory;
     words = randomStory;
-
+    
     currentWord = 0;
     score = 0;
     if (scoreElement) scoreElement.textContent = "Score: 0";
     if (timerElement) timerElement.textContent = "Time: " + timeLeft;
     if (wordElement) wordElement.textContent = words[currentWord] || "";
     if (messageElement) messageElement.textContent = "";
-    // ==========================================
-// GAME EVENT LISTENERS
-// ==========================================
     if (typingInput) {
         typingInput.disabled = false;
         typingInput.value = "";
@@ -251,17 +146,8 @@ function startTimer() {
     }, 1000);
 }
 
-if (typingInput.value.trim() === words[currentWord]) {
-
-    messageElement.textContent = "Correct! 🎉";
-
-    // বাকি আগের কোড...
-
-} else {
-
-    messageElement.textContent = "Wrong! ❌";
-
-}
+if (typingInput) {
+    typingInput.addEventListener("input", () => {
         if (typingInput.value.trim() === words[currentWord]) {
             messageElement.textContent = "Correct! 🎉";
             score++;
@@ -272,15 +158,15 @@ if (typingInput.value.trim() === words[currentWord]) {
                 wordElement.textContent = words[currentWord];
             } else {
                 messageElement.textContent = "Story Completed! Loading next... 📖";
-
+                
                 const selectedCategory = getSelectedCategory();
                 const categoryStories = stories[selectedCategory] || stories.lifehacks;
                 const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
-
+                
                 words = randomStory;
                 currentWord = 0;
                 currentFullStoryArray = randomStory;
-
+                
                 if (wordElement) wordElement.textContent = words[currentWord];
             }
             typingInput.value = "";
@@ -337,21 +223,11 @@ if (menuBtn) {
 if (resumeBtn) {
     resumeBtn.onclick = () => {
         hideElement(menuArea);
-        
-        // Dynamic check if time was changed from menu while paused
-        const selectedTime = getSelectedTime();
-        if (timeLeft > selectedTime) {
-            timeLeft = selectedTime;
-        }
-        if (timerElement) timerElement.textContent = "Time: " + timeLeft;
-
-        if (timeLeft > 0) {
+        if (isPaused && timeLeft > 0) {
             startTimer();
             isPaused = false;
-            if (typingInput) {
-                typingInput.disabled = false;
-                typingInput.focus();
-            }
+            typingInput.disabled = false;
+            typingInput.focus();
         }
     };
 }
