@@ -64,13 +64,12 @@ const storyModal = document.getElementById("storyModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const fullStoryText = document.getElementById("fullStoryText");
 
-// Start Screen Custom Timer DOM Elements
+// Custom Timer DOM Elements
 const toggleTimerBtn = document.getElementById("toggleTimerBtn");
 const timerOptionsContainer = document.getElementById("timerOptionsContainer");
 const selectedTimeDisplay = document.getElementById("selectedTimeDisplay");
 const customTimeInput = document.getElementById("customTimeInput");
 
-// Menu Modal Custom Timer DOM Elements
 const toggleMenuTimerBtn = document.getElementById("toggleMenuTimerBtn");
 const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsContainer");
 const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
@@ -80,6 +79,25 @@ const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
 const aboutBtn = document.getElementById("aboutBtn");
 const aboutModal = document.getElementById("aboutModal");
 const closeAboutModalBtn = document.getElementById("closeAboutModalBtn");
+
+// --- Real Game (Fighting Mode) Variables & Elements ---
+const realGameBtn = document.getElementById("realGameBtn");
+const fightModal = document.getElementById("fightModal");
+const closeFightModalBtn = document.getElementById("closeFightModalBtn");
+const startFightBtn = document.getElementById("startFightBtn");
+
+const playerHpBar = document.getElementById("playerHpBar");
+const enemyHpBar = document.getElementById("enemyHpBar");
+const targetKeyDisplay = document.getElementById("targetKey");
+const fightMessage = document.getElementById("fightMessage");
+const playerChar = document.getElementById("playerChar");
+const enemyChar = document.getElementById("enemyChar");
+
+let playerHp = 100;
+let enemyHp = 100;
+let currentTargetKey = "";
+let isFighting = false;
+let fightKeyTimeout;
 
 // Toggle Start Screen Timer
 if (toggleTimerBtn) {
@@ -95,7 +113,7 @@ if (toggleMenuTimerBtn) {
     });
 }
 
-// About Modal Event Listeners
+// About Modal
 if (aboutBtn) {
     aboutBtn.addEventListener("click", function () {
         menuArea.style.display = "none";
@@ -383,12 +401,126 @@ closeModalBtn.addEventListener("click", function () {
     storyModal.style.display = "none";
 });
 
+// --- Real Game (Fighting Logic) ---
+
+if (realGameBtn) {
+    realGameBtn.addEventListener("click", function () {
+        menuArea.style.display = "none";
+        fightModal.style.display = "flex";
+        resetFight();
+    });
+}
+
+if (closeFightModalBtn) {
+    closeFightModalBtn.addEventListener("click", function () {
+        fightModal.style.display = "none";
+        isFighting = false;
+        clearTimeout(fightKeyTimeout);
+        menuArea.style.display = "block";
+    });
+}
+
+function resetFight() {
+    playerHp = 100;
+    enemyHp = 100;
+    playerHpBar.style.width = "100%";
+    enemyHpBar.style.width = "100%";
+    targetKeyDisplay.textContent = "?";
+    fightMessage.textContent = "Click 'Start Fight' to Begin!";
+    isFighting = false;
+    clearTimeout(fightKeyTimeout);
+}
+
+function spawnNextKey() {
+    if (!isFighting) return;
+
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    currentTargetKey = alphabet[Math.floor(Math.random() * alphabet.length)];
+    targetKeyDisplay.textContent = currentTargetKey;
+
+    // Timeout if player fails to press key in 1.8 seconds
+    clearTimeout(fightKeyTimeout);
+    fightKeyTimeout = setTimeout(() => {
+        if (isFighting) {
+            enemyAttack();
+            spawnNextKey();
+        }
+    }, 1800);
+}
+
+function playerAttack() {
+    playerChar.classList.add("hit-left");
+    setTimeout(() => playerChar.classList.remove("hit-left"), 150);
+
+    enemyHp -= 15;
+    if (enemyHp < 0) enemyHp = 0;
+    enemyHpBar.style.width = enemyHp + "%";
+    fightMessage.textContent = "💥 Nice Attack! Enemy took hit!";
+
+    if (enemyHp === 0) {
+        fightMessage.textContent = "🏆 VICTORY! You defeated the monster!";
+        isFighting = false;
+        targetKeyDisplay.textContent = "🎉";
+        clearTimeout(fightKeyTimeout);
+    }
+}
+
+function enemyAttack() {
+    enemyChar.classList.add("hit-right");
+    setTimeout(() => enemyChar.classList.remove("hit-right"), 150);
+
+    playerHp -= 15;
+    if (playerHp < 0) playerHp = 0;
+    playerHpBar.style.width = playerHp + "%";
+    fightMessage.textContent = "⚡ Too Slow! Enemy attacked you!";
+
+    if (playerHp === 0) {
+        fightMessage.textContent = "💀 GAME OVER! You were defeated!";
+        isFighting = false;
+        targetKeyDisplay.textContent = "☠️";
+        clearTimeout(fightKeyTimeout);
+    }
+}
+
+startFightBtn.addEventListener("click", function () {
+    resetFight();
+    isFighting = true;
+    fightMessage.textContent = "Fight Started! Press keys fast!";
+    spawnNextKey();
+});
+
+// Global Keyboard Listener for Fight Mode
+window.addEventListener("keydown", function (e) {
+    if (isFighting && fightModal.style.display === "flex") {
+        const pressedKey = e.key.toUpperCase();
+        if (pressedKey === currentTargetKey) {
+            clearTimeout(fightKeyTimeout);
+            playerAttack();
+            if (enemyHp > 0) {
+                setTimeout(spawnNextKey, 400);
+            }
+        } else if (/^[A-Z]$/.test(pressedKey)) {
+            clearTimeout(fightKeyTimeout);
+            enemyAttack();
+            if (playerHp > 0) {
+                setTimeout(spawnNextKey, 400);
+            }
+        }
+    }
+});
+
 window.addEventListener("click", function (e) {
     if (e.target === storyModal) {
         storyModal.style.display = "none";
     }
     if (e.target === aboutModal) {
         aboutModal.style.display = "none";
+        menuArea.style.display = "block";
+    }
+    if (e.target === fightModal) {
+        fightModal.style.display = "none";
+        isFighting = false;
+        clearTimeout(fightKeyTimeout);
         menuArea.style.display = "block";
     }
 });
