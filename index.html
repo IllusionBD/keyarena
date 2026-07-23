@@ -91,9 +91,47 @@
                 </div>
 
                 <button id="resumeBtn" class="btn">Resume</button>
+                <button id="realGameBtn" class="btn" style="background: #ef4444; margin-top: 10px; width: 100%;">🔥 Real Game (Fight)</button>
+                
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
                     <button id="aboutBtn" class="btn secondary" style="flex: 1;">About</button>
                     <button id="homeBtn" class="btn secondary" style="flex: 1;">Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real Game (Fighting Arena) Modal -->
+        <div id="fightModal" class="modal" style="display: none;">
+            <div class="modal-content fight-container">
+                <h2>⚔️ Real Arena Fight</h2>
+                
+                <div class="health-bars">
+                    <div class="hp-box">
+                        <span>Player (You)</span>
+                        <div class="bar-bg"><div id="playerHpBar" class="hp-fill"></div></div>
+                    </div>
+                    <div class="hp-box">
+                        <span>Enemy Monster</span>
+                        <div class="bar-bg"><div id="enemyHpBar" class="hp-fill enemy-fill"></div></div>
+                    </div>
+                </div>
+
+                <div class="arena">
+                    <div id="playerChar" class="char"><i class="fa-solid fa-user-ninja"></i></div>
+                    
+                    <div class="prompt-box">
+                        <span class="instruction">PRESS KEY:</span>
+                        <div id="targetKey" class="key-display">?</div>
+                    </div>
+
+                    <div id="enemyChar" class="char enemy"><i class="fa-solid fa-dragon"></i></div>
+                </div>
+
+                <p id="fightMessage">Press the correct key to attack!</p>
+
+                <div class="fight-controls">
+                    <button id="startFightBtn" class="btn">Start Fight</button>
+                    <button id="closeFightModalBtn" class="btn secondary">Exit</button>
                 </div>
             </div>
         </div>
