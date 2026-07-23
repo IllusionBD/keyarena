@@ -20,7 +20,16 @@ let timeLeft = 60;
 let timer = null;
 let isPaused = false;
 
-// DOM Elements - Main Game
+// Helper Functions to Show/Hide Elements
+function showElement(el) {
+    if (el) el.classList.remove("hidden-element");
+}
+
+function hideElement(el) {
+    if (el) el.classList.add("hidden-element");
+}
+
+// DOM Elements
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
@@ -49,43 +58,35 @@ const customTimeInput = document.getElementById("customTimeInput");
 const toggleMenuTimerBtn = document.getElementById("toggleMenuTimerBtn");
 const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsContainer");
 const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
-const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
 const aboutBtn = document.getElementById("aboutBtn");
 const aboutModal = document.getElementById("aboutModal");
 const closeAboutModalBtn = document.getElementById("closeAboutModalBtn");
 
-// Event Handlers for UI Toggle
+// UI Toggles
 if (toggleTimerBtn) {
     toggleTimerBtn.onclick = () => {
-        timerOptionsContainer.style.display = timerOptionsContainer.style.display === "none" ? "block" : "none";
+        timerOptionsContainer.classList.toggle("hidden-element");
     };
 }
 
 if (toggleMenuTimerBtn) {
     toggleMenuTimerBtn.onclick = () => {
-        menuTimerOptionsContainer.style.display = menuTimerOptionsContainer.style.display === "none" ? "block" : "none";
+        menuTimerOptionsContainer.classList.toggle("hidden-element");
     };
 }
 
 if (aboutBtn) {
     aboutBtn.onclick = () => {
-        menuArea.style.display = "none";
-        aboutModal.style.display = "flex";
+        hideElement(menuArea);
+        showElement(aboutModal);
     };
 }
 
 if (closeAboutModalBtn) {
     closeAboutModalBtn.onclick = () => {
-        aboutModal.style.display = "none";
-        menuArea.style.display = "block";
+        hideElement(aboutModal);
+        showElement(menuArea);
     };
-}
-
-function syncTimeSelection(timeVal) {
-    timeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
-    menuTimeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
-    if (selectedTimeDisplay) selectedTimeDisplay.textContent = timeVal + "s";
-    if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = timeVal + "s";
 }
 
 function getSelectedTime() {
@@ -126,7 +127,7 @@ function resetGame() {
         typingInput.disabled = false;
         typingInput.value = "";
     }
-    if (readStoryBtn) readStoryBtn.style.display = "none";
+    hideElement(readStoryBtn);
     if (pauseBtn) pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
 }
 
@@ -140,7 +141,7 @@ function startTimer() {
             if (wordElement) wordElement.textContent = "Time Over! ⏰";
             if (messageElement) messageElement.textContent = "Final Score: " + score;
             if (typingInput) typingInput.disabled = true;
-            if (readStoryBtn) readStoryBtn.style.display = "inline-block";
+            showElement(readStoryBtn);
         }
     }, 1000);
 }
@@ -160,7 +161,7 @@ if (typingInput) {
                 wordElement.textContent = "Story Complete! 📖";
                 messageElement.textContent = "Final Score: " + score;
                 typingInput.disabled = true;
-                readStoryBtn.style.display = "inline-block";
+                showElement(readStoryBtn);
             }
             typingInput.value = "";
         }
@@ -170,8 +171,8 @@ if (typingInput) {
 if (startBtn) {
     startBtn.onclick = () => {
         resetGame();
-        startScreen.style.display = "none";
-        gameArea.style.display = "block";
+        hideElement(startScreen);
+        showElement(gameArea);
         typingInput.focus();
         startTimer();
     };
@@ -206,7 +207,7 @@ if (pauseBtn) {
 
 if (menuBtn) {
     menuBtn.onclick = () => {
-        menuArea.style.display = "block";
+        showElement(menuArea);
         clearInterval(timer);
         isPaused = true;
         if (typingInput) typingInput.disabled = true;
@@ -215,7 +216,7 @@ if (menuBtn) {
 
 if (resumeBtn) {
     resumeBtn.onclick = () => {
-        menuArea.style.display = "none";
+        hideElement(menuArea);
         if (isPaused && timeLeft > 0) {
             startTimer();
             isPaused = false;
@@ -228,25 +229,25 @@ if (resumeBtn) {
 if (homeBtn) {
     homeBtn.onclick = () => {
         clearInterval(timer);
-        gameArea.style.display = "none";
-        startScreen.style.display = "block";
-        menuArea.style.display = "none";
+        hideElement(gameArea);
+        hideElement(menuArea);
+        showElement(startScreen);
     };
 }
 
 if (readStoryBtn) {
     readStoryBtn.onclick = () => {
         fullStoryText.textContent = currentFullStoryArray.join(" ");
-        storyModal.style.display = "flex";
+        showElement(storyModal);
     };
 }
 
 if (closeModalBtn) {
-    closeModalBtn.onclick = () => storyModal.style.display = "none";
+    closeModalBtn.onclick = () => hideElement(storyModal);
 }
 
 // ==========================================
-// REAL GAME MODE LOGIC (SAFE & ISOLATED)
+// REAL GAME MODE LOGIC
 // ==========================================
 const realGameModeBtn = document.getElementById("realGameModeBtn");
 const realGameModal = document.getElementById("realGameModal");
@@ -276,8 +277,8 @@ const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 if (realGameModeBtn) {
     realGameModeBtn.onclick = () => {
-        menuArea.style.display = "none";
-        realGameModal.style.display = "flex";
+        hideElement(menuArea);
+        showElement(realGameModal);
         resetFightState();
     };
 }
@@ -285,7 +286,7 @@ if (realGameModeBtn) {
 if (closeRealGameBtn) {
     closeRealGameBtn.onclick = () => {
         endFight();
-        realGameModal.style.display = "none";
+        hideElement(realGameModal);
     };
 }
 
@@ -300,13 +301,13 @@ function resetFightState() {
     if (targetKeyElement) targetKeyElement.textContent = "?";
     if (comboDisplay) comboDisplay.textContent = "Combo: 0x";
     if (fightMessage) fightMessage.textContent = "Press Start to Fight!";
-    if (startFightBtn) startFightBtn.style.display = "inline-block";
+    showElement(startFightBtn);
 }
 
 if (startFightBtn) {
     startFightBtn.onclick = () => {
         resetFightState();
-        startFightBtn.style.display = "none";
+        hideElement(startFightBtn);
         isFightActive = true;
         fightMessage.textContent = "Get Ready!";
         nextKeyPrompt();
@@ -343,7 +344,6 @@ function nextKeyPrompt() {
     }, intervalStep);
 }
 
-// Keydown event listener for fighting arena
 window.addEventListener("keydown", (e) => {
     if (!isFightActive) return;
 
@@ -423,7 +423,7 @@ function fightWin() {
     if (fightMessage) fightMessage.textContent = "YOU WIN! Enemy Defeated! 🎉";
     if (startFightBtn) {
         startFightBtn.textContent = "Play Again";
-        startFightBtn.style.display = "inline-block";
+        showElement(startFightBtn);
     }
 }
 
@@ -433,7 +433,7 @@ function fightLose() {
     if (fightMessage) fightMessage.textContent = "GAME OVER! You were knocked out!";
     if (startFightBtn) {
         startFightBtn.textContent = "Try Again";
-        startFightBtn.style.display = "inline-block";
+        showElement(startFightBtn);
     }
 }
 
@@ -444,13 +444,13 @@ function endFight() {
 
 // Modal Click Outside Handlers
 window.onclick = (e) => {
-    if (e.target === storyModal) storyModal.style.display = "none";
+    if (e.target === storyModal) hideElement(storyModal);
     if (e.target === aboutModal) {
-        aboutModal.style.display = "none";
-        menuArea.style.display = "block";
+        hideElement(aboutModal);
+        showElement(menuArea);
     }
     if (e.target === realGameModal) {
         endFight();
-        realGameModal.style.display = "none";
+        hideElement(realGameModal);
     }
 };
