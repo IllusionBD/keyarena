@@ -1,3 +1,6 @@
+// ==========================================
+// STORIES DATA
+// ==========================================
 // Stories Data
 const stories = {
     lifehacks: [
@@ -11,7 +14,9 @@ const stories = {
         ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight"]
     ]
 };
-
+// ==========================================
+// GAME VARIABLES
+// ==========================================
 let words = [];
 let currentFullStoryArray = [];
 let currentWord = 0;
@@ -21,6 +26,9 @@ let timer = null;
 let isPaused = false;
 
 // Helper Functions to Show/Hide Elements
+// ==========================================
+// HELPER FUNCTIONS
+// ==========================================
 function showElement(el) {
     if (el) el.classList.remove("hidden-element");
 }
@@ -30,6 +38,9 @@ function hideElement(el) {
 }
 
 // DOM Elements
+// ==========================================
+// DOM ELEMENTS
+// ==========================================
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
