@@ -3,157 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KeyArena - Dual Mode Typing Game</title>
+    <title>KeyArena</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="game-container">
-        
-        <!-- Header -->
-        <header>
-            <div class="logo">
-                <h1>KeyArena</h1>
-            </div>
-            <div class="header-controls">
-                <button id="hamburgerBtn" class="hamburger-btn" title="Game Settings">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </header>
 
-        <!-- Main Navigation Menu Modal -->
-        <div id="settingsModal" class="modal" style="display: none;">
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="startScreen" class="screen">
+            <h1>KeyArena</h1>
+            <p>Type Faster. Fight Smarter!</p>
+
+            <div class="options-group">
+                <button id="toggleTimerBtn" class="btn secondary" style="margin-bottom: 10px; width: 100%;">
+                    Select Timer: <span id="selectedTimeDisplay">60s</span> <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                
+                <div id="timerOptionsContainer" style="display: none; margin-top: 10px;">
+                    <label><input type="radio" name="gameTime" value="15"> 15s</label>
+                    <label><input type="radio" name="gameTime" value="30"> 30s</label>
+                    <label><input type="radio" name="gameTime" value="60" checked> 60s</label>
+                    
+                    <div style="margin-top: 10px;">
+                        <span style="font-size: 0.9rem; color: #38bdf8;">Custom (s): </span>
+                        <input type="number" id="customTimeInput" placeholder="e.g. 12" min="5" max="300" style="padding: 5px; width: 70px; text-align: center; border-radius: 6px; border: 1px solid #38bdf8; background: #0f172a; color: white; outline: none;">
+                    </div>
+                </div>
+            </div>
+
+            <button id="startBtn" class="btn">Start Game</button>
+        </div>
+
+        <!-- Game Area -->
+        <div id="gameArea" class="screen" style="display: none;">
+            <div class="top-bar">
+                <button id="pauseBtn" class="icon-btn"><i class="fa-solid fa-pause"></i></button>
+                <button id="menuBtn" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+
+            <div class="status-bar">
+                <span id="score">Score: 0</span>
+                <span id="timer">Time: 60</span>
+            </div>
+
+            <div id="wordDisplay" class="word-box">
+                <p id="word">Loading...</p>
+            </div>
+
+            <input type="text" id="typingInput" placeholder="Type here..." autocomplete="off">
+
+            <p id="message"></p>
+
+            <div class="controls">
+                <button id="restartBtn" class="btn">Restart</button>
+                <button id="readStoryBtn" class="btn" style="display: none;">Read Full Story</button>
+            </div>
+        </div>
+
+        <!-- In-Game Menu Modal -->
+        <div id="menuArea" class="modal" style="display: none;">
             <div class="modal-content">
                 <h2>Game Settings</h2>
                 
-                <div class="setting-item">
-                    <label>Game Mode</label>
-                    <div class="mode-select-btns">
-                        <button id="normalModeBtn" class="btn mode-btn active">Standard</button>
-                        <button id="realGameBtn" class="btn mode-btn highlight">🔥 Real Game (Fight)</button>
-                    </div>
+                <div class="options-group">
+                    <h3>Category:</h3>
+                    <label><input type="radio" name="menuStoryCategory" value="lifehacks" checked> Life Hacks</label>
+                    <label><input type="radio" name="menuStoryCategory" value="productivity"> Productivity</label>
+                    <label><input type="radio" name="menuStoryCategory" value="health"> Health & Mind</label>
                 </div>
 
-                <div class="setting-item">
-                    <label>Difficulty</label>
-                    <div class="difficulty-btns">
-                        <button class="btn diff-btn active" data-diff="easy">Easy</button>
-                        <button class="btn diff-btn" data-diff="medium">Medium</button>
-                        <button class="btn diff-btn" data-diff="hard">Hard</button>
-                    </div>
-                </div>
-
-                <div class="menu-actions">
-                    <button id="resumeGameBtn" class="btn primary">Resume</button>
-                    <button id="aboutGameBtn" class="btn secondary">About</button>
-                    <button id="homeGameBtn" class="btn secondary">Home</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Normal Game Area -->
-        <div id="normalGameArea" class="game-area">
-            
-            <div class="stats-panel">
-                <div class="stat-box">
-                    <span class="stat-label">Category</span>
-                    <span id="currentCategory" class="stat-value">General Life</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Progress</span>
-                    <span id="storyProgress" class="stat-value">1 / 5</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Speed</span>
-                    <span id="wpmDisplay" class="stat-value">0 WPM</span>
-                </div>
-            </div>
-
-            <div class="display-box">
-                <div id="sentenceDisplay" class="text-display">Select a mode or press Start to play!</div>
-            </div>
-
-            <div class="input-area">
-                <input type="text" id="typingInput" placeholder="Type here..." autocomplete="off" disabled>
-            </div>
-
-            <div class="action-bar">
-                <button id="startBtn" class="btn primary">Start Game</button>
-                <button id="nextBtn" class="btn secondary" disabled>Next Tip</button>
-                <button id="readStoryBtn" class="btn secondary" style="display: none;">Read Full Story</button>
-            </div>
-
-        </div>
-
-        <!-- Real Game Arena Area -->
-        <div id="realGameArea" class="game-area" style="display: none;">
-            
-            <div class="arena-header">
-                <h2>⚔️ Real Arena Fight</h2>
-                <div class="timer-badge">Time: <span id="fightTimer">00:00</span></div>
-            </div>
-
-            <div class="arena-stage">
-                <!-- Player Box -->
-                <div class="character-box player-box">
-                    <div class="char-avatar" id="playerAvatar">🧑‍🎤</div>
-                    <div class="char-info">
-                        <span class="char-name">Player (You)</span>
-                        <div class="hp-bar-outer">
-                            <div id="playerHp" class="hp-bar-inner player-hp" style="width: 100%;"></div>
+                <div class="options-group">
+                    <button id="toggleMenuTimerBtn" class="btn secondary" style="margin-bottom: 10px; width: 100%;">
+                        Select Timer: <span id="selectedMenuTimeDisplay">60s</span> <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    
+                    <div id="menuTimerOptionsContainer" style="display: none; margin-top: 10px;">
+                        <label><input type="radio" name="menuGameTime" value="15"> 15s</label>
+                        <label><input type="radio" name="menuGameTime" value="30"> 30s</label>
+                        <label><input type="radio" name="menuGameTime" value="60"> 60s</label>
+                        
+                        <div style="margin-top: 10px;">
+                            <span style="font-size: 0.9rem; color: #38bdf8;">Custom (s): </span>
+                            <input type="number" id="menuCustomTimeInput" placeholder="e.g. 12" min="5" max="300" style="padding: 5px; width: 70px; text-align: center; border-radius: 6px; border: 1px solid #38bdf8; background: #0f172a; color: white; outline: none;">
                         </div>
-                        <span id="playerHpText" class="hp-text">100 / 100 HP</span>
                     </div>
                 </div>
 
-                <!-- Versus Divider -->
-                <div class="vs-badge">VS</div>
-
-                <!-- Enemy Box -->
-                <div class="character-box enemy-box">
-                    <div class="char-avatar" id="enemyAvatar">👾</div>
-                    <div class="char-info">
-                        <span class="char-name">Enemy Monster</span>
-                        <div class="hp-bar-outer">
-                            <div id="enemyHp" class="hp-bar-inner enemy-hp" style="width: 100%;"></div>
-                        </div>
-                        <span id="enemyHpText" class="hp-text">100 / 100 HP</span>
-                    </div>
+                <button id="resumeBtn" class="btn">Resume</button>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button id="aboutBtn" class="btn secondary" style="flex: 1;">About</button>
+                    <button id="homeBtn" class="btn secondary" style="flex: 1;">Home</button>
                 </div>
             </div>
-
-            <!-- Reaction Key Prompt Area -->
-            <div class="prompt-card">
-                <div class="prompt-label">PRESS KEY:</div>
-                <div id="targetKeyDisplay" class="target-key">-</div>
-                <div id="fightPromptMsg" class="fight-msg">Click 'Start Fight' to Begin!</div>
-            </div>
-
-            <div class="action-bar">
-                <button id="startFightBtn" class="btn primary highlight">Start Fight</button>
-                <button id="exitFightBtn" class="btn secondary">Exit</button>
-            </div>
-
         </div>
 
         <!-- About Modal -->
         <div id="aboutModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h2>About KeyArena</h2>
-                <p style="margin-top: 15px;">KeyArena is a dual-mode typing practice game designed to boost your typing speed and reflexes.</p>
-                <p>Learn useful life advice in standard mode or test your quick-draw typing reactions in the ⚔️ Real Arena Fight!</p>
-                <button id="closeAboutModalBtn" class="btn secondary" style="margin-top: 15px;">Close</button>
+            <div class="modal-content" style="max-height: 80vh; overflow-y: auto; text-align: left;">
+                <h2>🎮 About KeyArena</h2>
+                <p>KeyArena is a fast-paced typing game designed to boost your typing speed and accuracy through engaging micro-stories and daily life hacks.</p>
+                
+                <h3>🚀 Our Mission</h3>
+                <p>To make typing practice fun, effective, and interactive for everyday self-improvement.</p>
+                
+                <h3>✨ Features</h3>
+                <ul style="padding-left: 20px;">
+                    <li>⌨️ Real-time typing practice</li>
+                    <li>⏱️ Preset & custom countdown timers</li>
+                    <li>🏆 Instant score tracking</li>
+                    <li>📖 Category-based story progression</li>
+                    <li>📱 Fully responsive layout</li>
+                </ul>
+
+                <h3>🎯 How to Play</h3>
+                <ol style="padding-left: 20px;">
+                    <li>Select your favorite category & time duration.</li>
+                    <li>Click <b>Start Game</b> and type displayed words accurately.</li>
+                    <li>Beat the timer and complete the full story!</li>
+                </ol>
+
+                <h3>🛠 Technologies Used</h3>
+                <p>Built with <b>HTML5</b>, <b>CSS3</b>, and <b>JavaScript (ES6+)</b>.</p>
+
+                <h3>👨‍💻 Developer & Version</h3>
+                <p>Developed by <b>MHR AI Studio</b> | <i>Version 1.0</i></p>
+
+                <h3>🔮 What's Coming Next</h3>
+                <p>Leaderboards, Sound Effects, Difficulty Levels, and Multiplayer Mode!</p>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="closeAboutModalBtn" class="btn">Close</button>
+                </div>
             </div>
         </div>
 
-        <!-- Story Reader Modal -->
+        <!-- Read Full Story Modal -->
         <div id="storyModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <h2>Full Story</h2>
-                <p id="fullStoryText" style="text-align: left; margin: 20px 0; max-height: 200px; overflow-y: auto; line-height: 1.6;"></p>
-                <button id="closeModalBtn" class="btn secondary">Close</button>
+                <p id="fullStoryText"></p>
+                <button id="closeModalBtn" class="btn">Close</button>
             </div>
         </div>
 
