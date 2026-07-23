@@ -74,10 +74,20 @@
                 </div>
 
                 <div class="options-group">
-                    <h3>Timer:</h3>
-                    <label><input type="radio" name="menuGameTime" value="15"> 15s</label>
-                    <label><input type="radio" name="menuGameTime" value="30"> 30s</label>
-                    <label><input type="radio" name="menuGameTime" value="60"> 60s</label>
+                    <button id="toggleMenuTimerBtn" class="btn secondary" style="margin-bottom: 10px; width: 100%;">
+                        Select Timer: <span id="selectedMenuTimeDisplay">60s</span> <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    
+                    <div id="menuTimerOptionsContainer" style="display: none; margin-top: 10px;">
+                        <label><input type="radio" name="menuGameTime" value="15"> 15s</label>
+                        <label><input type="radio" name="menuGameTime" value="30"> 30s</label>
+                        <label><input type="radio" name="menuGameTime" value="60"> 60s</label>
+                        
+                        <div style="margin-top: 10px;">
+                            <span style="font-size: 0.9rem; color: #38bdf8;">Custom (s): </span>
+                            <input type="number" id="menuCustomTimeInput" placeholder="e.g. 12" min="5" max="300" style="padding: 5px; width: 70px; text-align: center; border-radius: 6px; border: 1px solid #38bdf8; background: #0f172a; color: white; outline: none;">
+                        </div>
+                    </div>
                 </div>
 
                 <button id="resumeBtn" class="btn">Resume</button>
