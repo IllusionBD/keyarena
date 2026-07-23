@@ -91,7 +91,50 @@
                 </div>
 
                 <button id="resumeBtn" class="btn">Resume</button>
-                <button id="homeBtn" class="btn secondary">Home</button>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button id="aboutBtn" class="btn secondary" style="flex: 1;">About</button>
+                    <button id="homeBtn" class="btn secondary" style="flex: 1;">Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Modal -->
+        <div id="aboutModal" class="modal" style="display: none;">
+            <div class="modal-content" style="max-height: 80vh; overflow-y: auto; text-align: left;">
+                <h2>🎮 About KeyArena</h2>
+                <p>KeyArena is a fast-paced typing game designed to boost your typing speed and accuracy through engaging micro-stories and daily life hacks.</p>
+                
+                <h3>🚀 Our Mission</h3>
+                <p>To make typing practice fun, effective, and interactive for everyday self-improvement.</p>
+                
+                <h3>✨ Features</h3>
+                <ul style="padding-left: 20px;">
+                    <li>⌨️ Real-time typing practice</li>
+                    <li>⏱️ Preset & custom countdown timers</li>
+                    <li>🏆 Instant score tracking</li>
+                    <li>📖 Category-based story progression</li>
+                    <li>📱 Fully responsive layout</li>
+                </ul>
+
+                <h3>🎯 How to Play</h3>
+                <ol style="padding-left: 20px;">
+                    <li>Select your favorite category & time duration.</li>
+                    <li>Click <b>Start Game</b> and type displayed words accurately.</li>
+                    <li>Beat the timer and complete the full story!</li>
+                </ol>
+
+                <h3>🛠 Technologies Used</h3>
+                <p>Built with <b>HTML5</b>, <b>CSS3</b>, and <b>JavaScript (ES6+)</b>.</p>
+
+                <h3>👨‍💻 Developer & Version</h3>
+                <p>Developed by <b>MHR AI Studio</b> | <i>Version 1.0</i></p>
+
+                <h3>🔮 What's Coming Next</h3>
+                <p>Leaderboards, Sound Effects, Difficulty Levels, and Multiplayer Mode!</p>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="closeAboutModalBtn" class="btn">Close</button>
+                </div>
             </div>
         </div>
 
