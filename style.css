@@ -1,201 +1,109 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* আপনার পূর্বের CSS এর সাথে নিচের অংশটি ফাইলের শেষে যোগ করবেন */
 
-body {
-    background-color: #0f172a;
-    color: #f8fafc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.container {
-    background-color: #1e293b;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+/* Fight Arena Custom Styles */
+.fight-container {
+    max-width: 500px;
     width: 90%;
-    max-width: 600px;
+}
+
+.health-bars {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.hp-box {
+    flex: 1;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    text-align: left;
+}
+
+.bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #334155;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.hp-fill {
+    width: 100%;
+    height: 100%;
+    background: #22c55e;
+    transition: width 0.3s ease;
+}
+
+.enemy-fill {
+    background: #ef4444;
+}
+
+.arena {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0f172a;
+    padding: 25px 15px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+    margin-bottom: 15px;
+}
+
+.char {
+    font-size: 3.5rem;
+    color: #38bdf8;
+    transition: transform 0.1s ease;
+}
+
+.char.enemy {
+    color: #f43f5e;
+}
+
+.prompt-box {
     text-align: center;
 }
 
-h1 {
-    font-size: 2.5rem;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
+.instruction {
+    font-size: 0.75rem;
+    color: #94a3b8;
     letter-spacing: 1px;
 }
 
-p {
-    color: #94a3b8;
-    margin-bottom: 1.5rem;
-}
-
-/* Options & Radio Buttons Alignment */
-.options-group {
-    background-color: #334155;
-    padding: 1.2rem;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.options-group h3 {
-    font-size: 1.1rem;
-    color: #38bdf8;
-    margin-bottom: 0.8rem;
-}
-
-.options-group label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 5px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #e2e8f0;
-}
-
-.options-group input[type="radio"] {
-    accent-color: #3b82f6;
-    cursor: pointer;
-    transform: scale(1.2);
-}
-
-/* Buttons Styling */
-.btn {
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 12px 28px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin: 5px;
-}
-
-.btn:hover {
-    background-color: #2563eb;
-    transform: translateY(-2px);
-}
-
-.btn.secondary {
-    background-color: #64748b;
-}
-
-.btn.secondary:hover {
-    background-color: #475569;
-}
-
-.icon-btn {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.icon-btn:hover {
-    color: #38bdf8;
-}
-
-/* Game Area Styling */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.status-bar {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
+.key-display {
+    font-size: 2.8rem;
     font-weight: bold;
-    color: #38bdf8;
-    margin-bottom: 1.5rem;
-}
-
-.word-box {
-    background-color: #0f172a;
-    padding: 1.5rem;
+    color: #facc15;
+    background: #1e293b;
+    width: 65px;
+    height: 65px;
+    line-height: 65px;
     border-radius: 10px;
-    margin-bottom: 1.5rem;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 2px solid #facc15;
+    margin: 5px auto 0;
 }
 
-.word-box p {
-    font-size: 1.8rem;
+#fightMessage {
     font-weight: bold;
-    color: #f1f5f9;
-    margin: 0;
-}
-
-#typingInput {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1.1rem;
-    border: 2px solid #334155;
-    border-radius: 8px;
-    background-color: #0f172a;
-    color: white;
-    outline: none;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-#typingInput:focus {
-    border-color: #3b82f6;
-}
-
-#message {
-    height: 25px;
-    font-weight: 600;
-    color: #4ade80;
-    margin-bottom: 1rem;
-}
-
-/* Modal Popup Styling */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-}
-
-.modal-content {
-    background-color: #1e293b;
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.modal-content h2 {
+    min-height: 24px;
     color: #38bdf8;
-    margin-bottom: 1rem;
 }
 
-#fullStoryText {
-    color: #e2e8f0;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+.fight-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.fight-controls .btn {
+    flex: 1;
+}
+
+/* Hit Animations */
+.hit-left {
+    transform: translateX(30px) scale(1.1);
+}
+.hit-right {
+    transform: translateX(-30px) scale(1.1);
 }
