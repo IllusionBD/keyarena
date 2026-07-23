@@ -64,37 +64,82 @@ const storyModal = document.getElementById("storyModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const fullStoryText = document.getElementById("fullStoryText");
 
-// Custom Timer DOM Elements
+// Start Screen Custom Timer DOM Elements
 const toggleTimerBtn = document.getElementById("toggleTimerBtn");
 const timerOptionsContainer = document.getElementById("timerOptionsContainer");
 const selectedTimeDisplay = document.getElementById("selectedTimeDisplay");
 const customTimeInput = document.getElementById("customTimeInput");
 
-// Toggle Timer Options Visibility
+// Menu Modal Custom Timer DOM Elements
+const toggleMenuTimerBtn = document.getElementById("toggleMenuTimerBtn");
+const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsContainer");
+const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
+const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
+
+// Toggle Start Screen Timer
 if (toggleTimerBtn) {
     toggleTimerBtn.addEventListener("click", function () {
-        if (timerOptionsContainer.style.display === "none") {
-            timerOptionsContainer.style.display = "block";
-        } else {
-            timerOptionsContainer.style.display = "none";
+        timerOptionsContainer.style.display = timerOptionsContainer.style.display === "none" ? "block" : "none";
+    });
+}
+
+// Toggle Menu Modal Timer
+if (toggleMenuTimerBtn) {
+    toggleMenuTimerBtn.addEventListener("click", function () {
+        menuTimerOptionsContainer.style.display = menuTimerOptionsContainer.style.display === "none" ? "block" : "none";
+    });
+}
+
+// Sync Preset Selection - Start Screen
+timeOptions.forEach(opt => {
+    opt.addEventListener("change", function () {
+        if (customTimeInput) customTimeInput.value = "";
+        syncTimeSelection(opt.value);
+    });
+});
+
+// Custom Input - Start Screen
+if (customTimeInput) {
+    customTimeInput.addEventListener("input", function () {
+        if (customTimeInput.value > 0) {
+            timeOptions.forEach(opt => opt.checked = false);
+            menuTimeOptions.forEach(opt => opt.checked = false);
+            if (menuCustomTimeInput) menuCustomTimeInput.value = customTimeInput.value;
+            if (selectedTimeDisplay) selectedTimeDisplay.textContent = customTimeInput.value + "s";
+            if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = customTimeInput.value + "s";
         }
     });
 }
 
-// Update UI when a preset radio button is selected
-timeOptions.forEach(opt => {
-    opt.addEventListener("change", function () {
+// Sync Preset Selection - Menu Modal
+menuTimeOptions.forEach(function (option) {
+    option.addEventListener("change", function () {
         if (customTimeInput) customTimeInput.value = "";
-        if (selectedTimeDisplay) selectedTimeDisplay.textContent = opt.value + "s";
+        if (menuCustomTimeInput) menuCustomTimeInput.value = "";
+        syncTimeSelection(option.value);
+
+        menuTimerOptionsContainer.style.display = "none";
+        menuArea.style.display = "none";
+        resetGame();
+        typingInput.focus();
+        startTimer();
     });
 });
 
-// Update UI when custom input is typed
-if (customTimeInput) {
-    customTimeInput.addEventListener("input", function () {
-        if (customTimeInput.value > 0) {
-            if (selectedTimeDisplay) selectedTimeDisplay.textContent = customTimeInput.value + "s";
+// Custom Input - Menu Modal
+if (menuCustomTimeInput) {
+    menuCustomTimeInput.addEventListener("change", function () {
+        if (menuCustomTimeInput.value > 0) {
             timeOptions.forEach(opt => opt.checked = false);
+            menuTimeOptions.forEach(opt => opt.checked = false);
+            if (customTimeInput) customTimeInput.value = menuCustomTimeInput.value;
+            syncTimeSelection(menuCustomTimeInput.value);
+
+            menuTimerOptionsContainer.style.display = "none";
+            menuArea.style.display = "none";
+            resetGame();
+            typingInput.focus();
+            startTimer();
         }
     });
 }
@@ -102,6 +147,9 @@ if (customTimeInput) {
 function getSelectedTime() {
     if (customTimeInput && Number(customTimeInput.value) > 0) {
         return Number(customTimeInput.value);
+    }
+    if (menuCustomTimeInput && Number(menuCustomTimeInput.value) > 0) {
+        return Number(menuCustomTimeInput.value);
     }
 
     let selectedTime = 60;
@@ -138,6 +186,7 @@ function syncTimeSelection(timeVal) {
     timeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
     menuTimeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
     if (selectedTimeDisplay) selectedTimeDisplay.textContent = timeVal + "s";
+    if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = timeVal + "s";
 }
 
 function syncCategorySelection(category) {
@@ -267,20 +316,6 @@ menuBtn.addEventListener("click", function () {
         typingInput.disabled = true;
         pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
     }
-});
-
-menuTimeOptions.forEach(function (option) {
-    option.addEventListener("change", function () {
-        const selectedTime = Number(option.value);
-
-        if (customTimeInput) customTimeInput.value = "";
-        syncTimeSelection(selectedTime);
-
-        menuArea.style.display = "none";
-        resetGame();
-        typingInput.focus();
-        startTimer();
-    });
 });
 
 menuCategoryOptions.forEach(function (option) {
