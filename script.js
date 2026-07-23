@@ -1,16 +1,14 @@
-// ==========================================
-// EXISTING GAME CODE VARIABLES & LOGIC
-// ==========================================
+// Stories Data
 const stories = {
     lifehacks: [
-        ["drink", "a", "glass", "of", "water", "first", "thing", "in", "the", "morning", "it", "wakes", "up", "your", "organs", "boosts", "your", "metabolism", "and", "keeps", "you", "hydrated", "after", "hours", "of", "sleep", "this", "simple", "habit", "improves", "your", "overall", "energy", "levels", "throughout", "the", "entire", "day"],
-        ["always", "make", "your", "bed", "right", "after", "you", "wake", "up", "it", "gives", "you", "a", "small", "sense", "of", "accomplishment", "at", "the", "very", "start", "of", "your", "day", "a", "clean", "room", "also", "helps", "reduce", "mental", "stress", "and", "improves", "focus"]
+        ["drink", "a", "glass", "of", "water", "first", "thing", "in", "the", "morning"],
+        ["always", "make", "your", "bed", "right", "after", "you", "wake", "up"]
     ],
     productivity: [
-        ["focus", "on", "only", "one", "important", "task", "at", "a", "time", "multitasking", "reduces", "your", "efficiency", "and", "brain", "power", "give", "your", "full", "attention", "to", "a", "single", "goal", "and", "you", "will", "finish", "it", "much", "faster", "with", "fewer", "mistakes"]
+        ["focus", "on", "only", "one", "important", "task", "at", "a", "time"]
     ],
     health: [
-        ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight", "every", "morning", "sunlight", "helps", "regulate", "your", "sleep", "cycle", "boosts", "vitamin", "d", "levels", "and", "improves", "your", "overall", "mood", "naturally"]
+        ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight"]
     ]
 };
 
@@ -19,137 +17,68 @@ let currentFullStoryArray = [];
 let currentWord = 0;
 let score = 0;
 let timeLeft = 60;
-let timer;
+let timer = null;
 let isPaused = false;
 
-// DOM Elements
+// DOM Elements - Main Game
 const wordElement = document.getElementById("word");
 const scoreElement = document.getElementById("score");
 const messageElement = document.getElementById("message");
 const timerElement = document.getElementById("timer");
-
 const startScreen = document.getElementById("startScreen");
 const gameArea = document.getElementById("gameArea");
-
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 const typingInput = document.getElementById("typingInput");
-
 const timeOptions = document.getElementsByName("gameTime");
 const menuTimeOptions = document.getElementsByName("menuGameTime");
 const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
-
 const pauseBtn = document.getElementById("pauseBtn");
 const menuBtn = document.getElementById("menuBtn");
 const menuArea = document.getElementById("menuArea");
-
 const homeBtn = document.getElementById("homeBtn");
 const resumeBtn = document.getElementById("resumeBtn");
-
 const readStoryBtn = document.getElementById("readStoryBtn");
 const storyModal = document.getElementById("storyModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const fullStoryText = document.getElementById("fullStoryText");
-
 const toggleTimerBtn = document.getElementById("toggleTimerBtn");
 const timerOptionsContainer = document.getElementById("timerOptionsContainer");
 const selectedTimeDisplay = document.getElementById("selectedTimeDisplay");
 const customTimeInput = document.getElementById("customTimeInput");
-
 const toggleMenuTimerBtn = document.getElementById("toggleMenuTimerBtn");
 const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsContainer");
 const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
 const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
-
 const aboutBtn = document.getElementById("aboutBtn");
 const aboutModal = document.getElementById("aboutModal");
 const closeAboutModalBtn = document.getElementById("closeAboutModalBtn");
 
-// Event Listeners for Main Game
+// Event Handlers for UI Toggle
 if (toggleTimerBtn) {
-    toggleTimerBtn.addEventListener("click", function () {
+    toggleTimerBtn.onclick = () => {
         timerOptionsContainer.style.display = timerOptionsContainer.style.display === "none" ? "block" : "none";
-    });
+    };
 }
 
 if (toggleMenuTimerBtn) {
-    toggleMenuTimerBtn.addEventListener("click", function () {
+    toggleMenuTimerBtn.onclick = () => {
         menuTimerOptionsContainer.style.display = menuTimerOptionsContainer.style.display === "none" ? "block" : "none";
-    });
+    };
 }
 
 if (aboutBtn) {
-    aboutBtn.addEventListener("click", function () {
+    aboutBtn.onclick = () => {
         menuArea.style.display = "none";
         aboutModal.style.display = "flex";
-    });
+    };
 }
 
 if (closeAboutModalBtn) {
-    closeAboutModalBtn.addEventListener("click", function () {
+    closeAboutModalBtn.onclick = () => {
         aboutModal.style.display = "none";
         menuArea.style.display = "block";
-    });
-}
-
-timeOptions.forEach(opt => {
-    opt.addEventListener("change", function () {
-        if (customTimeInput) customTimeInput.value = "";
-        syncTimeSelection(opt.value);
-    });
-});
-
-if (customTimeInput) {
-    customTimeInput.addEventListener("input", function () {
-        if (customTimeInput.value > 0) {
-            timeOptions.forEach(opt => opt.checked = false);
-            menuTimeOptions.forEach(opt => opt.checked = false);
-            if (menuCustomTimeInput) menuCustomTimeInput.value = customTimeInput.value;
-            if (selectedTimeDisplay) selectedTimeDisplay.textContent = customTimeInput.value + "s";
-            if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = customTimeInput.value + "s";
-        }
-    });
-}
-
-menuTimeOptions.forEach(function (option) {
-    option.addEventListener("change", function () {
-        if (customTimeInput) customTimeInput.value = "";
-        if (menuCustomTimeInput) menuCustomTimeInput.value = "";
-        syncTimeSelection(option.value);
-
-        menuTimerOptionsContainer.style.display = "none";
-        menuArea.style.display = "none";
-        resetGame();
-        typingInput.focus();
-        startTimer();
-    });
-});
-
-function getSelectedTime() {
-    if (customTimeInput && Number(customTimeInput.value) > 0) return Number(customTimeInput.value);
-    if (menuCustomTimeInput && Number(menuCustomTimeInput.value) > 0) return Number(menuCustomTimeInput.value);
-
-    let selectedTime = 60;
-    timeOptions.forEach(function (option) {
-        if (option.checked) selectedTime = Number(option.value);
-    });
-    return selectedTime;
-}
-
-function getSelectedCategory() {
-    let selectedCategory = "lifehacks";
-    menuCategoryOptions.forEach(function (option) {
-        if (option.checked) selectedCategory = option.value;
-    });
-    return selectedCategory;
-}
-
-function prepareStoryWords(category, time) {
-    const categoryStories = stories[category];
-    const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
-    currentFullStoryArray = randomStory;
-    let wordCount = Math.min(time, randomStory.length);
-    return randomStory.slice(0, wordCount);
+    };
 }
 
 function syncTimeSelection(timeVal) {
@@ -159,145 +88,165 @@ function syncTimeSelection(timeVal) {
     if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = timeVal + "s";
 }
 
+function getSelectedTime() {
+    if (customTimeInput && Number(customTimeInput.value) > 0) return Number(customTimeInput.value);
+    let selectedTime = 60;
+    timeOptions.forEach(option => {
+        if (option.checked) selectedTime = Number(option.value);
+    });
+    return selectedTime;
+}
+
+function getSelectedCategory() {
+    let selectedCategory = "lifehacks";
+    menuCategoryOptions.forEach(option => {
+        if (option.checked) selectedCategory = option.value;
+    });
+    return selectedCategory;
+}
+
 function resetGame() {
     clearInterval(timer);
     isPaused = false;
     const selectedCategory = getSelectedCategory();
     timeLeft = getSelectedTime();
-    words = prepareStoryWords(selectedCategory, timeLeft);
+    
+    const categoryStories = stories[selectedCategory] || stories.lifehacks;
+    const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
+    currentFullStoryArray = randomStory;
+    words = randomStory;
+    
     currentWord = 0;
     score = 0;
-    scoreElement.textContent = "Score: 0";
-    timerElement.textContent = "Time: " + timeLeft;
-    wordElement.textContent = words[currentWord] || "";
-    messageElement.textContent = "";
-    typingInput.disabled = false;
-    typingInput.value = "";
-    readStoryBtn.style.display = "none";
-    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    if (scoreElement) scoreElement.textContent = "Score: 0";
+    if (timerElement) timerElement.textContent = "Time: " + timeLeft;
+    if (wordElement) wordElement.textContent = words[currentWord] || "";
+    if (messageElement) messageElement.textContent = "";
+    if (typingInput) {
+        typingInput.disabled = false;
+        typingInput.value = "";
+    }
+    if (readStoryBtn) readStoryBtn.style.display = "none";
+    if (pauseBtn) pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
 }
 
 function startTimer() {
     clearInterval(timer);
-    timer = setInterval(function () {
+    timer = setInterval(() => {
         timeLeft--;
-        timerElement.textContent = "Time: " + timeLeft;
+        if (timerElement) timerElement.textContent = "Time: " + timeLeft;
         if (timeLeft <= 0) {
             clearInterval(timer);
-            wordElement.textContent = "Time Over! ⏰";
-            messageElement.textContent = "Final Score: " + score;
-            typingInput.disabled = true;
-            readStoryBtn.style.display = "inline-block";
+            if (wordElement) wordElement.textContent = "Time Over! ⏰";
+            if (messageElement) messageElement.textContent = "Final Score: " + score;
+            if (typingInput) typingInput.disabled = true;
+            if (readStoryBtn) readStoryBtn.style.display = "inline-block";
         }
     }, 1000);
 }
 
-typingInput.addEventListener("input", function () {
-    if (typingInput.value === words[currentWord]) {
-        messageElement.textContent = "Correct! 🎉";
-        score++;
-        scoreElement.textContent = "Score: " + score;
-        currentWord++;
+if (typingInput) {
+    typingInput.addEventListener("input", () => {
+        if (typingInput.value.trim() === words[currentWord]) {
+            messageElement.textContent = "Correct! 🎉";
+            score++;
+            scoreElement.textContent = "Score: " + score;
+            currentWord++;
 
-        if (currentWord < words.length) {
-            wordElement.textContent = words[currentWord];
-        } else {
-            clearInterval(timer);
-            wordElement.textContent = "Story Complete! 📖";
-            messageElement.textContent = "Final Score: " + score;
-            typingInput.disabled = true;
-            readStoryBtn.style.display = "inline-block";
+            if (currentWord < words.length) {
+                wordElement.textContent = words[currentWord];
+            } else {
+                clearInterval(timer);
+                wordElement.textContent = "Story Complete! 📖";
+                messageElement.textContent = "Final Score: " + score;
+                typingInput.disabled = true;
+                readStoryBtn.style.display = "inline-block";
+            }
+            typingInput.value = "";
         }
-        typingInput.value = "";
-    } else {
-        messageElement.textContent = "Keep trying! ❌";
-    }
-});
+    });
+}
 
-startBtn.addEventListener("click", function () {
-    const selectedTime = getSelectedTime();
-    syncTimeSelection(selectedTime);
-    resetGame();
-    startScreen.style.display = "none";
-    gameArea.style.display = "block";
-    typingInput.focus();
-    startTimer();
-});
+if (startBtn) {
+    startBtn.onclick = () => {
+        resetGame();
+        startScreen.style.display = "none";
+        gameArea.style.display = "block";
+        typingInput.focus();
+        startTimer();
+    };
+}
 
-restartBtn.addEventListener("click", function () {
-    resetGame();
-    typingInput.focus();
-    startTimer();
-});
+if (restartBtn) {
+    restartBtn.onclick = () => {
+        resetGame();
+        typingInput.focus();
+        startTimer();
+    };
+}
 
-pauseBtn.addEventListener("click", function () {
-    if (!isPaused && timeLeft > 0) {
+if (pauseBtn) {
+    pauseBtn.onclick = () => {
+        if (!isPaused && timeLeft > 0) {
+            clearInterval(timer);
+            isPaused = true;
+            typingInput.disabled = true;
+            pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            messageElement.textContent = "Paused ⏸";
+        } else if (isPaused && timeLeft > 0) {
+            startTimer();
+            isPaused = false;
+            typingInput.disabled = false;
+            typingInput.focus();
+            pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            messageElement.textContent = "";
+        }
+    };
+}
+
+if (menuBtn) {
+    menuBtn.onclick = () => {
+        menuArea.style.display = "block";
         clearInterval(timer);
         isPaused = true;
-        typingInput.disabled = true;
-        pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-        messageElement.textContent = "Game Paused ⏸";
-    } else if (isPaused && timeLeft > 0) {
-        startTimer();
-        isPaused = false;
-        typingInput.disabled = false;
-        typingInput.focus();
-        pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-        messageElement.textContent = "";
-    }
-});
+        if (typingInput) typingInput.disabled = true;
+    };
+}
 
-menuBtn.addEventListener("click", function () {
-    if (menuArea.style.display === "block") {
+if (resumeBtn) {
+    resumeBtn.onclick = () => {
         menuArea.style.display = "none";
         if (isPaused && timeLeft > 0) {
             startTimer();
             isPaused = false;
             typingInput.disabled = false;
             typingInput.focus();
-            pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
-    } else {
-        menuArea.style.display = "block";
+    };
+}
+
+if (homeBtn) {
+    homeBtn.onclick = () => {
         clearInterval(timer);
-        isPaused = true;
-        typingInput.disabled = true;
-        pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-    }
-});
+        gameArea.style.display = "none";
+        startScreen.style.display = "block";
+        menuArea.style.display = "none";
+    };
+}
 
-resumeBtn.addEventListener("click", function () {
-    menuArea.style.display = "none";
-    if (isPaused && timeLeft > 0) {
-        startTimer();
-        isPaused = false;
-        typingInput.disabled = false;
-        typingInput.focus();
-        pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-        messageElement.textContent = "";
-    }
-});
+if (readStoryBtn) {
+    readStoryBtn.onclick = () => {
+        fullStoryText.textContent = currentFullStoryArray.join(" ");
+        storyModal.style.display = "flex";
+    };
+}
 
-homeBtn.addEventListener("click", function () {
-    clearInterval(timer);
-    isPaused = false;
-    gameArea.style.display = "none";
-    startScreen.style.display = "block";
-    menuArea.style.display = "none";
-});
-
-readStoryBtn.addEventListener("click", function () {
-    fullStoryText.textContent = currentFullStoryArray.join(" ");
-    storyModal.style.display = "flex";
-});
-
-closeModalBtn.addEventListener("click", function () {
-    storyModal.style.display = "none";
-});
-
+if (closeModalBtn) {
+    closeModalBtn.onclick = () => storyModal.style.display = "none";
+}
 
 // ==========================================
-// ⚔️ REAL GAME MODE LOGIC
+// REAL GAME MODE LOGIC (SAFE & ISOLATED)
 // ==========================================
 const realGameModeBtn = document.getElementById("realGameModeBtn");
 const realGameModal = document.getElementById("realGameModal");
@@ -319,24 +268,26 @@ let enemyHp = 100;
 let currentKey = "";
 let isFightActive = false;
 let keyTimerInterval = null;
-let currentKeyTimeLeft = 100; // Percentage
-let keyTimeDuration = 1500; // ms per key (Speed scales down)
+let currentKeyTimeLeft = 100;
+let keyTimeDuration = 1500;
 let comboCount = 0;
 
 const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// Open Arena Popup
-realGameModeBtn.addEventListener("click", function () {
-    menuArea.style.display = "none";
-    realGameModal.style.display = "flex";
-    resetFightState();
-});
+if (realGameModeBtn) {
+    realGameModeBtn.onclick = () => {
+        menuArea.style.display = "none";
+        realGameModal.style.display = "flex";
+        resetFightState();
+    };
+}
 
-// Close Arena Popup
-closeRealGameBtn.addEventListener("click", function () {
-    endFight();
-    realGameModal.style.display = "none";
-});
+if (closeRealGameBtn) {
+    closeRealGameBtn.onclick = () => {
+        endFight();
+        realGameModal.style.display = "none";
+    };
+}
 
 function resetFightState() {
     endFight();
@@ -344,35 +295,33 @@ function resetFightState() {
     enemyHp = 100;
     comboCount = 0;
     keyTimeDuration = 1500;
-    playerHpBar.style.width = "100%";
-    enemyHpBar.style.width = "100%";
-    targetKeyElement.textContent = "?";
-    comboDisplay.textContent = "Combo: 0x";
-    fightMessage.textContent = "Press Start to Fight!";
-    startFightBtn.style.display = "inline-block";
+    if (playerHpBar) playerHpBar.style.width = "100%";
+    if (enemyHpBar) enemyHpBar.style.width = "100%";
+    if (targetKeyElement) targetKeyElement.textContent = "?";
+    if (comboDisplay) comboDisplay.textContent = "Combo: 0x";
+    if (fightMessage) fightMessage.textContent = "Press Start to Fight!";
+    if (startFightBtn) startFightBtn.style.display = "inline-block";
 }
 
-startFightBtn.addEventListener("click", function () {
-    resetFightState();
-    startFightBtn.style.display = "none";
-    isFightActive = true;
-    fightMessage.textContent = "Get Ready!";
-    nextKeyPrompt();
-});
+if (startFightBtn) {
+    startFightBtn.onclick = () => {
+        resetFightState();
+        startFightBtn.style.display = "none";
+        isFightActive = true;
+        fightMessage.textContent = "Get Ready!";
+        nextKeyPrompt();
+    };
+}
 
 function nextKeyPrompt() {
     if (!isFightActive) return;
 
-    // Pick Random Alphabet
     currentKey = alphabets[Math.floor(Math.random() * alphabets.length)];
-    targetKeyElement.textContent = currentKey;
+    if (targetKeyElement) targetKeyElement.textContent = currentKey;
 
-    // Difficulty Scaling (Fast speed as combo increases)
-    keyTimeDuration = Math.max(700, 1500 - (comboCount * 50)); 
-
-    // Reset Progress Bar
+    keyTimeDuration = Math.max(700, 1500 - (comboCount * 40)); 
     currentKeyTimeLeft = 100;
-    keyTimerProgress.style.width = "100%";
+    if (keyTimerProgress) keyTimerProgress.style.width = "100%";
 
     clearInterval(keyTimerInterval);
     const intervalStep = 20; 
@@ -385,9 +334,8 @@ function nextKeyPrompt() {
         }
 
         currentKeyTimeLeft -= decrement;
-        keyTimerProgress.style.width = Math.max(0, currentKeyTimeLeft) + "%";
+        if (keyTimerProgress) keyTimerProgress.style.width = Math.max(0, currentKeyTimeLeft) + "%";
 
-        // Time's up! Player missed -> Enemy Attacks
         if (currentKeyTimeLeft <= 0) {
             clearInterval(keyTimerInterval);
             handleEnemyAttack("Time Over! Enemy hit you! 💥");
@@ -395,71 +343,72 @@ function nextKeyPrompt() {
     }, intervalStep);
 }
 
-// Global Keyboard Listener for Arena
-window.addEventListener("keydown", function (e) {
+// Keydown event listener for fighting arena
+window.addEventListener("keydown", (e) => {
     if (!isFightActive) return;
 
     const pressedKey = e.key.toUpperCase();
 
-    // Check if key is a letter A-Z
     if (alphabets.includes(pressedKey)) {
         clearInterval(keyTimerInterval);
 
         if (pressedKey === currentKey) {
             handlePlayerAttack();
         } else {
-            handleEnemyAttack("Wrong Key! Enemy counter-attacked! ⚔️");
+            handleEnemyAttack("Wrong Key! Enemy hit you! ⚔️");
         }
     }
 });
 
 function handlePlayerAttack() {
     comboCount++;
-    comboDisplay.textContent = "Combo: " + comboCount + "x";
+    if (comboDisplay) comboDisplay.textContent = "Combo: " + comboCount + "x";
 
     let damage = 10;
-    let isSuper = false;
-
-    // Combo Bonus
     if (comboCount % 4 === 0) {
-        damage = 25; // Super damage
-        isSuper = true;
-        fightMessage.textContent = "🔥 SUPER PUNCH!! " + damage + " Damage!";
+        damage = 25;
+        if (fightMessage) fightMessage.textContent = "🔥 SUPER PUNCH!! (" + damage + " Damage)";
     } else {
-        fightMessage.textContent = "Nice Hit! 🎉";
+        if (fightMessage) fightMessage.textContent = "Nice Hit! 🎉";
     }
 
-    // Animation
-    playerChar.classList.add("attack-player");
-    setTimeout(() => playerChar.classList.remove("attack-player"), 200);
+    if (playerChar) {
+        playerChar.classList.add("attack-player");
+        setTimeout(() => playerChar.classList.remove("attack-player"), 200);
+    }
 
-    enemyChar.classList.add("shake-damage");
-    setTimeout(() => enemyChar.classList.remove("shake-damage"), 300);
+    if (enemyChar) {
+        enemyChar.classList.add("shake-damage");
+        setTimeout(() => enemyChar.classList.remove("shake-damage"), 300);
+    }
 
     enemyHp = Math.max(0, enemyHp - damage);
-    enemyHpBar.style.width = enemyHp + "%";
+    if (enemyHpBar) enemyHpBar.style.width = enemyHp + "%";
 
     if (enemyHp <= 0) {
         fightWin();
     } else {
-        setTimeout(nextKeyPrompt, 200);
+        setTimeout(nextKeyPrompt, 250);
     }
 }
 
 function handleEnemyAttack(msg) {
     comboCount = 0;
-    comboDisplay.textContent = "Combo: 0x";
-    fightMessage.textContent = msg;
+    if (comboDisplay) comboDisplay.textContent = "Combo: 0x";
+    if (fightMessage) fightMessage.textContent = msg;
 
-    // Animation
-    enemyChar.classList.add("attack-enemy");
-    setTimeout(() => enemyChar.classList.remove("attack-enemy"), 200);
+    if (enemyChar) {
+        enemyChar.classList.add("attack-enemy");
+        setTimeout(() => enemyChar.classList.remove("attack-enemy"), 200);
+    }
 
-    playerChar.classList.add("shake-damage");
-    setTimeout(() => playerChar.classList.remove("shake-damage"), 300);
+    if (playerChar) {
+        playerChar.classList.add("shake-damage");
+        setTimeout(() => playerChar.classList.remove("shake-damage"), 300);
+    }
 
     playerHp = Math.max(0, playerHp - 15);
-    playerHpBar.style.width = playerHp + "%";
+    if (playerHpBar) playerHpBar.style.width = playerHp + "%";
 
     if (playerHp <= 0) {
         fightLose();
@@ -470,18 +419,22 @@ function handleEnemyAttack(msg) {
 
 function fightWin() {
     endFight();
-    targetKeyElement.textContent = "🏆";
-    fightMessage.textContent = "YOU WIN! Enemy Defeated! 🎉";
-    startFightBtn.textContent = "Play Again";
-    startFightBtn.style.display = "inline-block";
+    if (targetKeyElement) targetKeyElement.textContent = "🏆";
+    if (fightMessage) fightMessage.textContent = "YOU WIN! Enemy Defeated! 🎉";
+    if (startFightBtn) {
+        startFightBtn.textContent = "Play Again";
+        startFightBtn.style.display = "inline-block";
+    }
 }
 
 function fightLose() {
     endFight();
-    targetKeyElement.textContent = "💀";
-    fightMessage.textContent = "GAME OVER! You were knocked out!";
-    startFightBtn.textContent = "Try Again";
-    startFightBtn.style.display = "inline-block";
+    if (targetKeyElement) targetKeyElement.textContent = "💀";
+    if (fightMessage) fightMessage.textContent = "GAME OVER! You were knocked out!";
+    if (startFightBtn) {
+        startFightBtn.textContent = "Try Again";
+        startFightBtn.style.display = "inline-block";
+    }
 }
 
 function endFight() {
@@ -490,7 +443,7 @@ function endFight() {
 }
 
 // Modal Click Outside Handlers
-window.addEventListener("click", function (e) {
+window.onclick = (e) => {
     if (e.target === storyModal) storyModal.style.display = "none";
     if (e.target === aboutModal) {
         aboutModal.style.display = "none";
@@ -500,4 +453,4 @@ window.addEventListener("click", function (e) {
         endFight();
         realGameModal.style.display = "none";
     }
-});
+};
