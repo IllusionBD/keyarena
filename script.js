@@ -107,6 +107,9 @@ if (closeAboutModalBtn) {
 }
 
 // Fixed & Improved getSelectedTime Function
+// ==========================================
+// GAME SETTINGS
+// ==========================================
 function getSelectedTime() {
     // 1. Check custom inputs
     if (menuCustomTimeInput && Number(menuCustomTimeInput.value) > 0) {
@@ -199,6 +202,9 @@ if (menuCustomTimeInput) {
         }
     });
 }
+// ==========================================
+// GAME FUNCTIONS
+// ==========================================
 
 function resetGame() {
     clearInterval(timer);
@@ -217,6 +223,9 @@ function resetGame() {
     if (timerElement) timerElement.textContent = "Time: " + timeLeft;
     if (wordElement) wordElement.textContent = words[currentWord] || "";
     if (messageElement) messageElement.textContent = "";
+    // ==========================================
+// GAME EVENT LISTENERS
+// ==========================================
     if (typingInput) {
         typingInput.disabled = false;
         typingInput.value = "";
