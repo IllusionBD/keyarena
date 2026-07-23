@@ -151,17 +151,23 @@ if (typingInput) {
         if (typingInput.value.trim() === words[currentWord]) {
             messageElement.textContent = "Correct! 🎉";
             score++;
-            scoreElement.textContent = "Score: " + score;
+            if (scoreElement) scoreElement.textContent = "Score: " + score;
             currentWord++;
 
             if (currentWord < words.length) {
                 wordElement.textContent = words[currentWord];
             } else {
-                clearInterval(timer);
-                wordElement.textContent = "Story Complete! 📖";
-                messageElement.textContent = "Final Score: " + score;
-                typingInput.disabled = true;
-                showElement(readStoryBtn);
+                messageElement.textContent = "Story Completed! Loading next... 📖";
+                
+                const selectedCategory = getSelectedCategory();
+                const categoryStories = stories[selectedCategory] || stories.lifehacks;
+                const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
+                
+                words = randomStory;
+                currentWord = 0;
+                currentFullStoryArray = randomStory;
+                
+                if (wordElement) wordElement.textContent = words[currentWord];
             }
             typingInput.value = "";
         }
