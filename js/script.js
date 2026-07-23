@@ -148,27 +148,60 @@ function startTimer() {
 
 if (typingInput) {
     typingInput.addEventListener("input", () => {
-        if (typingInput.value.trim() === words[currentWord]) {
+
+        const typedText = typingInput.value.trim();
+        const targetWord = words[currentWord];
+
+        // Correct
+        if (typedText === targetWord) {
+
             messageElement.textContent = "Correct! 🎉";
+
             score++;
-            if (scoreElement) scoreElement.textContent = "Score: " + score;
+            scoreElement.textContent = "Score: " + score;
+
             currentWord++;
 
             if (currentWord < words.length) {
+
                 wordElement.textContent = words[currentWord];
+
             } else {
+
                 messageElement.textContent = "Story Completed! Loading next... 📖";
-                
+
                 const selectedCategory = getSelectedCategory();
                 const categoryStories = stories[selectedCategory] || stories.lifehacks;
-                const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
-                
+                const randomStory =
+                    categoryStories[Math.floor(Math.random() * categoryStories.length)];
+
                 words = randomStory;
                 currentWord = 0;
                 currentFullStoryArray = randomStory;
-                
-                if (wordElement) wordElement.textContent = words[currentWord];
+
+                wordElement.textContent = words[currentWord];
             }
+
+            typingInput.value = "";
+
+        }
+
+        // User is still typing correctly
+        else if (targetWord.startsWith(typedText)) {
+
+            messageElement.textContent = "";
+
+        }
+
+        // Wrong
+        else {
+
+            messageElement.textContent = "Wrong! ❌";
+
+        }
+
+    });
+}
             typingInput.value = "";
         }
     });
