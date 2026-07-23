@@ -10,7 +10,6 @@
 <body>
 
     <div class="container">
-        <!-- Start Screen -->
         <div id="startScreen" class="screen">
             <h1>KeyArena</h1>
             <p>Type Faster. Fight Smarter!</p>
@@ -35,7 +34,6 @@
             <button id="startBtn" class="btn">Start Game</button>
         </div>
 
-        <!-- Game Area -->
         <div id="gameArea" class="screen" style="display: none;">
             <div class="top-bar">
                 <button id="pauseBtn" class="icon-btn"><i class="fa-solid fa-pause"></i></button>
@@ -61,7 +59,6 @@
             </div>
         </div>
 
-        <!-- In-Game Menu Modal -->
         <div id="menuArea" class="modal" style="display: none;">
             <div class="modal-content">
                 <h2>Game Settings</h2>
@@ -91,6 +88,9 @@
                 </div>
 
                 <button id="resumeBtn" class="btn">Resume</button>
+                
+                <button id="realGameModeBtn" class="btn" style="width: 100%; margin-top: 10px; background-color: #ef4444;">🎮 Real Game Mode</button>
+                
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
                     <button id="aboutBtn" class="btn secondary" style="flex: 1;">About</button>
                     <button id="homeBtn" class="btn secondary" style="flex: 1;">Home</button>
@@ -98,47 +98,57 @@
             </div>
         </div>
 
-        <!-- About Modal -->
+        <div id="realGameModal" class="modal" style="display: none;">
+            <div class="modal-content" style="max-width: 550px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="color: #ef4444; margin: 0;">⚔️ Real Game Fighting Arena</h2>
+                    <button id="closeRealGameBtn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="health-container">
+                    <div class="hp-box">
+                        <span class="hp-label">PLAYER</span>
+                        <div class="hp-bar-outer"><div id="playerHpBar" class="hp-bar-inner player-hp"></div></div>
+                    </div>
+                    <div class="hp-box">
+                        <span class="hp-label">ENEMY</span>
+                        <div class="hp-bar-outer"><div id="enemyHpBar" class="hp-bar-inner enemy-hp"></div></div>
+                    </div>
+                </div>
+
+                <div class="fight-stage">
+                    <div id="playerChar" class="fighter player-char"><i class="fa-solid fa-user-ninja"></i></div>
+                    
+                    <div class="prompt-box">
+                        <div id="targetKey" class="target-key">?</div>
+                        <div class="key-timer-bar"><div id="keyTimerProgress" class="key-timer-inner"></div></div>
+                        <div id="comboDisplay" class="combo-text">Combo: 0x</div>
+                    </div>
+
+                    <div id="enemyChar" class="fighter enemy-char"><i class="fa-solid fa-robot"></i></div>
+                </div>
+
+                <div id="fightMessage" class="fight-status-msg">Press Start to Fight!</div>
+
+                <div style="margin-top: 15px;">
+                    <button id="startFightBtn" class="btn" style="background-color: #ef4444;">Start Arena</button>
+                </div>
+            </div>
+        </div>
+
         <div id="aboutModal" class="modal" style="display: none;">
             <div class="modal-content" style="max-height: 80vh; overflow-y: auto; text-align: left;">
                 <h2>🎮 About KeyArena</h2>
                 <p>KeyArena is a fast-paced typing game designed to boost your typing speed and accuracy through engaging micro-stories and daily life hacks.</p>
                 
                 <h3>🚀 Our Mission</h3>
-                <p>To make typing practice fun, effective, and interactive for everyday self-improvement.</p>
-                
-                <h3>✨ Features</h3>
-                <ul style="padding-left: 20px;">
-                    <li>⌨️ Real-time typing practice</li>
-                    <li>⏱️ Preset & custom countdown timers</li>
-                    <li>🏆 Instant score tracking</li>
-                    <li>📖 Category-based story progression</li>
-                    <li>📱 Fully responsive layout</li>
-                </ul>
-
-                <h3>🎯 How to Play</h3>
-                <ol style="padding-left: 20px;">
-                    <li>Select your favorite category & time duration.</li>
-                    <li>Click <b>Start Game</b> and type displayed words accurately.</li>
-                    <li>Beat the timer and complete the full story!</li>
-                </ol>
-
-                <h3>🛠 Technologies Used</h3>
-                <p>Built with <b>HTML5</b>, <b>CSS3</b>, and <b>JavaScript (ES6+)</b>.</p>
-
-                <h3>👨‍💻 Developer & Version</h3>
-                <p>Developed by <b>MHR AI Studio</b> | <i>Version 1.0</i></p>
-
-                <h3>🔮 What's Coming Next</h3>
-                <p>Leaderboards, Sound Effects, Difficulty Levels, and Multiplayer Mode!</p>
-
+                <p>To make typing practice fun, effective, and interactive for everyday self-improvement.</p>                
                 <div style="text-align: center; margin-top: 20px;">
                     <button id="closeAboutModalBtn" class="btn">Close</button>
                 </div>
             </div>
         </div>
 
-        <!-- Read Full Story Modal -->
         <div id="storyModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <h2>Full Story</h2>
