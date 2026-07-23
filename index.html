@@ -19,7 +19,7 @@
                     Select Timer: <span id="selectedTimeDisplay">60s</span> <i class="fa-solid fa-chevron-down"></i>
                 </button>
                 
-                <div id="timerOptionsContainer" style="display: none; margin-top: 10px;">
+                <div id="timerOptionsContainer" class="hidden-element" style="margin-top: 10px;">
                     <label><input type="radio" name="gameTime" value="15"> 15s</label>
                     <label><input type="radio" name="gameTime" value="30"> 30s</label>
                     <label><input type="radio" name="gameTime" value="60" checked> 60s</label>
@@ -34,7 +34,7 @@
             <button id="startBtn" class="btn">Start Game</button>
         </div>
 
-        <div id="gameArea" class="screen" style="display: none;">
+        <div id="gameArea" class="screen hidden-element">
             <div class="top-bar">
                 <button id="pauseBtn" class="icon-btn"><i class="fa-solid fa-pause"></i></button>
                 <button id="menuBtn" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
@@ -55,11 +55,11 @@
 
             <div class="controls">
                 <button id="restartBtn" class="btn">Restart</button>
-                <button id="readStoryBtn" class="btn" style="display: none;">Read Full Story</button>
+                <button id="readStoryBtn" class="btn hidden-element">Read Full Story</button>
             </div>
         </div>
 
-        <div id="menuArea" class="modal" style="display: none;">
+        <div id="menuArea" class="modal hidden-element">
             <div class="modal-content">
                 <h2>Game Settings</h2>
                 
@@ -75,7 +75,7 @@
                         Select Timer: <span id="selectedMenuTimeDisplay">60s</span> <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     
-                    <div id="menuTimerOptionsContainer" style="display: none; margin-top: 10px;">
+                    <div id="menuTimerOptionsContainer" class="hidden-element" style="margin-top: 10px;">
                         <label><input type="radio" name="menuGameTime" value="15"> 15s</label>
                         <label><input type="radio" name="menuGameTime" value="30"> 30s</label>
                         <label><input type="radio" name="menuGameTime" value="60"> 60s</label>
@@ -88,7 +88,6 @@
                 </div>
 
                 <button id="resumeBtn" class="btn">Resume</button>
-                
                 <button id="realGameModeBtn" class="btn" style="width: 100%; margin-top: 10px; background-color: #ef4444;">🎮 Real Game Mode</button>
                 
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
@@ -98,7 +97,7 @@
             </div>
         </div>
 
-        <div id="realGameModal" class="modal" style="display: none;">
+        <div id="realGameModal" class="modal hidden-element">
             <div class="modal-content" style="max-width: 550px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h2 style="color: #ef4444; margin: 0;">⚔️ Real Game Fighting Arena</h2>
@@ -136,7 +135,7 @@
             </div>
         </div>
 
-        <div id="aboutModal" class="modal" style="display: none;">
+        <div id="aboutModal" class="modal hidden-element">
             <div class="modal-content" style="max-height: 80vh; overflow-y: auto; text-align: left;">
                 <h2>🎮 About KeyArena</h2>
                 <p>KeyArena is a fast-paced typing game designed to boost your typing speed and accuracy through engaging micro-stories and daily life hacks.</p>
@@ -149,7 +148,7 @@
             </div>
         </div>
 
-        <div id="storyModal" class="modal" style="display: none;">
+        <div id="storyModal" class="modal hidden-element">
             <div class="modal-content">
                 <h2>Full Story</h2>
                 <p id="fullStoryText"></p>
