@@ -37,6 +37,7 @@ function hideElement(el) {
     if (el) el.classList.add("hidden-element");
 }
 
+
 // DOM Elements
 // ==========================================
 // DOM ELEMENTS
