@@ -146,14 +146,9 @@ function startTimer() {
     }, 1000);
 }
 
-// Typing Event Listener (Fixed syntax issue here)
 if (typingInput) {
     typingInput.addEventListener("input", () => {
-        const typedText = typingInput.value.trim();
-        const targetWord = words[currentWord];
-
-        // Correct Word
-        if (typedText === targetWord) {
+        if (typingInput.value.trim() === words[currentWord]) {
             messageElement.textContent = "Correct! 🎉";
             score++;
             if (scoreElement) scoreElement.textContent = "Score: " + score;
@@ -163,26 +158,18 @@ if (typingInput) {
                 wordElement.textContent = words[currentWord];
             } else {
                 messageElement.textContent = "Story Completed! Loading next... 📖";
-
+                
                 const selectedCategory = getSelectedCategory();
                 const categoryStories = stories[selectedCategory] || stories.lifehacks;
                 const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
-
+                
                 words = randomStory;
                 currentWord = 0;
                 currentFullStoryArray = randomStory;
-
-                wordElement.textContent = words[currentWord];
+                
+                if (wordElement) wordElement.textContent = words[currentWord];
             }
             typingInput.value = "";
-        }
-        // User is still typing correctly
-        else if (targetWord && targetWord.startsWith(typedText)) {
-            messageElement.textContent = "";
-        }
-        // Wrong Word
-        else {
-            messageElement.textContent = "Wrong! ❌";
         }
     });
 }
@@ -392,5 +379,84 @@ function handlePlayerAttack() {
     }
 
     if (playerChar) {
-        playerChar
-        
+        playerChar.classList.add("attack-player");
+        setTimeout(() => playerChar.classList.remove("attack-player"), 200);
+    }
+
+    if (enemyChar) {
+        enemyChar.classList.add("shake-damage");
+        setTimeout(() => enemyChar.classList.remove("shake-damage"), 300);
+    }
+
+    enemyHp = Math.max(0, enemyHp - damage);
+    if (enemyHpBar) enemyHpBar.style.width = enemyHp + "%";
+
+    if (enemyHp <= 0) {
+        fightWin();
+    } else {
+        setTimeout(nextKeyPrompt, 250);
+    }
+}
+
+function handleEnemyAttack(msg) {
+    comboCount = 0;
+    if (comboDisplay) comboDisplay.textContent = "Combo: 0x";
+    if (fightMessage) fightMessage.textContent = msg;
+
+    if (enemyChar) {
+        enemyChar.classList.add("attack-enemy");
+        setTimeout(() => enemyChar.classList.remove("attack-enemy"), 200);
+    }
+
+    if (playerChar) {
+        playerChar.classList.add("shake-damage");
+        setTimeout(() => playerChar.classList.remove("shake-damage"), 300);
+    }
+
+    playerHp = Math.max(0, playerHp - 15);
+    if (playerHpBar) playerHpBar.style.width = playerHp + "%";
+
+    if (playerHp <= 0) {
+        fightLose();
+    } else {
+        setTimeout(nextKeyPrompt, 400);
+    }
+}
+
+function fightWin() {
+    endFight();
+    if (targetKeyElement) targetKeyElement.textContent = "🏆";
+    if (fightMessage) fightMessage.textContent = "YOU WIN! Enemy Defeated! 🎉";
+    if (startFightBtn) {
+        startFightBtn.textContent = "Play Again";
+        showElement(startFightBtn);
+    }
+}
+
+function fightLose() {
+    endFight();
+    if (targetKeyElement) targetKeyElement.textContent = "💀";
+    if (fightMessage) fightMessage.textContent = "GAME OVER! You were knocked out!";
+    if (startFightBtn) {
+        startFightBtn.textContent = "Try Again";
+        showElement(startFightBtn);
+    }
+}
+
+function endFight() {
+    isFightActive = false;
+    clearInterval(keyTimerInterval);
+}
+
+// Modal Click Outside Handlers
+window.onclick = (e) => {
+    if (e.target === storyModal) hideElement(storyModal);
+    if (e.target === aboutModal) {
+        hideElement(aboutModal);
+        showElement(menuArea);
+    }
+    if (e.target === realGameModal) {
+        endFight();
+        hideElement(realGameModal);
+    }
+};
