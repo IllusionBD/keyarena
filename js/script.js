@@ -89,12 +89,41 @@ if (closeAboutModalBtn) {
     };
 }
 
+// Timer selection sync logic
+timeOptions.forEach(option => {
+    option.addEventListener("change", (e) => {
+        menuTimeOptions.forEach(menuOpt => {
+            if (menuOpt.value === e.target.value) menuOpt.checked = true;
+        });
+        if (selectedTimeDisplay) selectedTimeDisplay.textContent = e.target.value + "s";
+        if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = e.target.value + "s";
+    });
+});
+
+menuTimeOptions.forEach(option => {
+    option.addEventListener("change", (e) => {
+        timeOptions.forEach(startOpt => {
+            if (startOpt.value === e.target.value) startOpt.checked = true;
+        });
+        if (selectedTimeDisplay) selectedTimeDisplay.textContent = e.target.value + "s";
+        if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = e.target.value + "s";
+    });
+});
+
 function getSelectedTime() {
     if (customTimeInput && Number(customTimeInput.value) > 0) return Number(customTimeInput.value);
     let selectedTime = 60;
+    
+    // Check main options
     timeOptions.forEach(option => {
         if (option.checked) selectedTime = Number(option.value);
     });
+
+    // Check menu options (overrides if changed from menu)
+    menuTimeOptions.forEach(option => {
+        if (option.checked) selectedTime = Number(option.value);
+    });
+
     return selectedTime;
 }
 
@@ -146,7 +175,7 @@ function startTimer() {
     }, 1000);
 }
 
-// Typing Event Listener (Fixed syntax issue here)
+// Typing Event Listener
 if (typingInput) {
     typingInput.addEventListener("input", () => {
         const typedText = typingInput.value.trim();
