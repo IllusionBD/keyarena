@@ -1,374 +1,394 @@
 // Daily Life Improvement Data
-const lifeTipsData = [
-    {
-        category: "Habits",
-        tip: "Small daily improvements over time lead to stunning long-term results.",
-        story: "In 2003, British Cycling hired Dave Brailsford. He believed in the 1% margin of gains—improving everything by just 1%. Five years later, the team dominated the Olympics."
-    },
-    {
-        category: "Mindset",
-        tip: "Focus on what you can control and release what you cannot.",
-        story: "Stoic philosopher Epictetus was born a slave. He realized he could not control his body or master, but he had total control over his thoughts and responses."
-    },
-    {
-        category: "Health",
-        tip: "Prioritize sleep as it is the foundation of mental sharpness and vitality.",
-        story: "Scientists discovered that sleep acts as a brain-washing mechanism, removing toxins accumulated during waking hours to prevent cognitive decline."
-    },
-    {
-        category: "Productivity",
-        tip: "Complete your hardest task first thing in the morning.",
-        story: "Mark Twain famously said that if you eat a live frog first thing in the morning, nothing worse will happen to you the rest of the day. Do the hard work first!"
-    },
-    {
-        category: "Time",
-        tip: "Time is a non-renewable resource, guard it carefully.",
-        story: "Seneca wrote that people are frugal with money, but reckless with time—the only thing where it is right to be greedy."
-    }
-];
+const stories = {
+    lifehacks: [
+        ["drink", "a", "glass", "of", "water", "first", "thing", "in", "the", "morning", "it", "wakes", "up", "your", "organs", "boosts", "your", "metabolism", "and", "keeps", "you", "hydrated", "after", "hours", "of", "sleep", "this", "simple", "habit", "improves", "your", "overall", "energy", "levels", "throughout", "the", "entire", "day"],
+        ["always", "make", "your", "bed", "right", "after", "you", "wake", "up", "it", "gives", "you", "a", "small", "sense", "of", "accomplishment", "at", "the", "very", "start", "of", "your", "day", "a", "clean", "room", "also", "helps", "reduce", "mental", "stress", "and", "improves", "focus"],
+        ["if", "a", "task", "takes", "less", "than", "two", "minutes", "to", "do", "finish", "it", "immediately", "do", "not", "delay", "it", "putting", "away", "dishes", "or", "replying", "to", "an", "email", "right", "away", "prevents", "small", "chores", "from", "piling", "up", "later"],
+        ["take", "a", "short", "five", "minute", "walk", "every", "hour", "sitting", "for", "too", "long", "harms", "your", "posture", "and", "slows", "down", "blood", "circulation", "moving", "around", "refreshes", "your", "brain", "and", "keeps", "your", "body", "active", "and", "healthy"],
+        ["write", "down", "your", "thoughts", "in", "a", "journal", "before", "going", "to", "sleep", "releasing", "your", "worries", "onto", "paper", "clears", "your", "mind", "helps", "you", "sleep", "much", "faster", "and", "reduces", "late", "night", "overthinking", "and", "anxiety"]
+    ],
 
-// App State Variables
-let currentMode = "normal"; // "normal" or "real"
-let currentDiff = "easy";
-let currentTipIndex = 0;
-let startTime = null;
-let timerInterval = null;
+    productivity: [
+        ["focus", "on", "only", "one", "important", "task", "at", "a", "time", "multitasking", "reduces", "your", "efficiency", "and", "brain", "power", "give", "your", "full", "attention", "to", "a", "single", "goal", "and", "you", "will", "finish", "it", "much", "faster", "with", "fewer", "mistakes"],
+        ["use", "the", "twenty", "minute", "rule", "work", "with", "full", "focus", "for", "twenty", "five", "minutes", "then", "take", "a", "five", "minute", "break", "this", "technique", "keeps", "your", "mind", "fresh", "prevents", "burnout", "and", "boosts", "daily", "output"],
+        ["keep", "your", "phone", "in", "another", "room", "while", "working", "or", "studying", "constant", "notifications", "destroy", "your", "focus", "and", "train", "your", "brain", "to", "be", "distracted", "quiet", "environment", "leads", "to", "deep", "work", "and", "better", "results"],
+        ["plan", "your", "top", "three", "priorities", "the", "night", "before", "when", "you", "wake", "up", "you", "already", "know", "exactly", "what", "to", "do", "without", "wasting", "time", "thinking", "this", "gives", "you", "a", "clear", "roadmap", "for", "success"],
+        ["learn", "to", "say", "no", "to", "things", "that", "do", "not", "align", "with", "your", "goals", "your", "time", "and", "energy", "are", "limited", "protect", "them", "by", "focusing", "only", "on", "what", "truly", "matters", "for", "your", "future", "growth"]
+    ],
 
-// Real Game Arena State Variables
-let playerHp = 100;
-let enemyHp = 100;
-let currentTargetKey = "";
-let isFightActive = false;
-let fightTimerSec = 0;
-let fightInterval = null;
-let keyTimeout = null;
-let reactionTimeLimit = 2000; // default Easy mode reaction time in ms
+    health: [
+        ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight", "every", "morning", "sunlight", "helps", "regulate", "your", "sleep", "cycle", "boosts", "vitamin", "d", "levels", "and", "improves", "your", "overall", "mood", "naturally"],
+        ["practice", "deep", "breathing", "when", "you", "feel", "stressed", "inhale", "slowly", "for", "four", "seconds", "hold", "for", "four", "seconds", "and", "exhale", "slowly", "this", "instantly", "calms", "your", "nervous", "system", "and", "lowers", "heart", "rate"],
+        ["screen", "time", "before", "bed", "ruins", "your", "sleep", "quality", "turn", "off", "your", "phone", "and", "laptop", "at", "least", "thirty", "minutes", "before", "sleeping", "read", "a", "book", "instead", "to", "relax", "your", "eyes", "and", "mind"],
+        ["eating", "slowly", "and", "chewing", "your", "food", "properly", "improves", "digestion", "and", "prevents", "overeating", "it", "takes", "twenty", "minutes", "for", "your", "brain", "to", "realize", "your", "stomach", "is", "full", "enjoy", "every", "bite"],
+        ["regular", "stretching", "improves", "body", "flexibility", "and", "relieves", "muscle", "tension", "spend", "few", "minutes", "stretching", "your", "neck", "back", "and", "legs", "daily", "to", "prevent", "body", "pain", "from", "long", "hours", "of", "sitting"]
+    ]
+};
+
+let words = [];
+let currentFullStoryArray = [];
+let currentWord = 0;
+let score = 0;
+let timeLeft = 60;
+let timer;
+let isPaused = false;
 
 // DOM Elements
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const settingsModal = document.getElementById("settingsModal");
-const resumeGameBtn = document.getElementById("resumeGameBtn");
-const aboutGameBtn = document.getElementById("aboutGameBtn");
-const homeGameBtn = document.getElementById("homeGameBtn");
+const wordElement = document.getElementById("word");
+const scoreElement = document.getElementById("score");
+const messageElement = document.getElementById("message");
+const timerElement = document.getElementById("timer");
+
+const startScreen = document.getElementById("startScreen");
+const gameArea = document.getElementById("gameArea");
+
+const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
+
+const typingInput = document.getElementById("typingInput");
+
+const timeOptions = document.getElementsByName("gameTime");
+const menuTimeOptions = document.getElementsByName("menuGameTime");
+
+const menuCategoryOptions = document.getElementsByName("menuStoryCategory");
+
+const pauseBtn = document.getElementById("pauseBtn");
+const menuBtn = document.getElementById("menuBtn");
+const menuArea = document.getElementById("menuArea");
+
+const homeBtn = document.getElementById("homeBtn");
+const resumeBtn = document.getElementById("resumeBtn");
+
+const readStoryBtn = document.getElementById("readStoryBtn");
+const storyModal = document.getElementById("storyModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const fullStoryText = document.getElementById("fullStoryText");
+
+// Start Screen Custom Timer DOM Elements
+const toggleTimerBtn = document.getElementById("toggleTimerBtn");
+const timerOptionsContainer = document.getElementById("timerOptionsContainer");
+const selectedTimeDisplay = document.getElementById("selectedTimeDisplay");
+const customTimeInput = document.getElementById("customTimeInput");
+
+// Menu Modal Custom Timer DOM Elements
+const toggleMenuTimerBtn = document.getElementById("toggleMenuTimerBtn");
+const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsContainer");
+const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
+const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
+
+// About Modal Elements
+const aboutBtn = document.getElementById("aboutBtn");
 const aboutModal = document.getElementById("aboutModal");
 const closeAboutModalBtn = document.getElementById("closeAboutModalBtn");
 
-const normalModeBtn = document.getElementById("normalModeBtn");
-const realGameBtn = document.getElementById("realGameBtn");
-const diffBtns = document.querySelectorAll(".diff-btn");
-
-const normalGameArea = document.getElementById("normalGameArea");
-const realGameArea = document.getElementById("realGameArea");
-
-// Normal Game DOM
-const currentCategoryDisplay = document.getElementById("currentCategory");
-const storyProgressDisplay = document.getElementById("storyProgress");
-const wpmDisplay = document.getElementById("wpmDisplay");
-const sentenceDisplay = document.getElementById("sentenceDisplay");
-const typingInput = document.getElementById("typingInput");
-const startBtn = document.getElementById("startBtn");
-const nextBtn = document.getElementById("nextBtn");
-const readStoryBtn = document.getElementById("readStoryBtn");
-const storyModal = document.getElementById("storyModal");
-const fullStoryText = document.getElementById("fullStoryText");
-const closeModalBtn = document.getElementById("closeModalBtn");
-
-// Real Game DOM
-const playerHpBar = document.getElementById("playerHp");
-const enemyHpBar = document.getElementById("enemyHp");
-const playerHpText = document.getElementById("playerHpText");
-const enemyHpText = document.getElementById("enemyHpText");
-const fightTimer = document.getElementById("fightTimer");
-const targetKeyDisplay = document.getElementById("targetKeyDisplay");
-const fightPromptMsg = document.getElementById("fightPromptMsg");
-const startFightBtn = document.getElementById("startFightBtn");
-const exitFightBtn = document.getElementById("exitFightBtn");
-const playerAvatar = document.getElementById("playerAvatar");
-const enemyAvatar = document.getElementById("enemyAvatar");
-
-// Modal Controls
-hamburgerBtn.addEventListener("click", () => settingsModal.style.display = "flex");
-resumeGameBtn.addEventListener("click", () => settingsModal.style.display = "none");
-aboutGameBtn.addEventListener("click", () => {
-    settingsModal.style.display = "none";
-    aboutModal.style.display = "flex";
-});
-closeAboutModalBtn.addEventListener("click", () => aboutModal.style.display = "none");
-homeGameBtn.addEventListener("click", () => {
-    settingsModal.style.display = "none";
-    switchMode("normal");
-});
-
-// Mode Switching
-normalModeBtn.addEventListener("click", () => switchMode("normal"));
-realGameBtn.addEventListener("click", () => switchMode("real"));
-
-function switchMode(mode) {
-    currentMode = mode;
-    if (mode === "normal") {
-        normalModeBtn.classList.add("active");
-        realGameBtn.classList.remove("active");
-        normalGameArea.style.display = "flex";
-        realGameArea.style.display = "none";
-        resetNormalGame();
-    } else {
-        realGameBtn.classList.add("active");
-        normalModeBtn.classList.remove("active");
-        normalGameArea.style.display = "none";
-        realGameArea.style.display = "flex";
-        resetRealGame();
-    }
-    settingsModal.style.display = "none";
+// Toggle Start Screen Timer
+if (toggleTimerBtn) {
+    toggleTimerBtn.addEventListener("click", function () {
+        timerOptionsContainer.style.display = timerOptionsContainer.style.display === "none" ? "block" : "none";
+    });
 }
 
-// Difficulty Setting
-diffBtns.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        diffBtns.forEach(b => b.classList.remove("active"));
-        e.target.classList.add("active");
-        currentDiff = e.target.dataset.diff;
-        
-        // Adjust reaction time for Fight Mode based on difficulty
-        if (currentDiff === "easy") reactionTimeLimit = 2000;
-        if (currentDiff === "medium") reactionTimeLimit = 1300;
-        if (currentDiff === "hard") reactionTimeLimit = 800;
+// Toggle Menu Modal Timer
+if (toggleMenuTimerBtn) {
+    toggleMenuTimerBtn.addEventListener("click", function () {
+        menuTimerOptionsContainer.style.display = menuTimerOptionsContainer.style.display === "none" ? "block" : "none";
+    });
+}
+
+// About Modal Event Listeners
+if (aboutBtn) {
+    aboutBtn.addEventListener("click", function () {
+        menuArea.style.display = "none";
+        aboutModal.style.display = "flex";
+    });
+}
+
+if (closeAboutModalBtn) {
+    closeAboutModalBtn.addEventListener("click", function () {
+        aboutModal.style.display = "none";
+        menuArea.style.display = "block";
+    });
+}
+
+// Sync Preset Selection - Start Screen
+timeOptions.forEach(opt => {
+    opt.addEventListener("change", function () {
+        if (customTimeInput) customTimeInput.value = "";
+        syncTimeSelection(opt.value);
     });
 });
 
-/* ==========================================================================
-   NORMAL GAME LOGIC
-   ========================================================================== */
-
-function loadTip() {
-    const data = lifeTipsData[currentTipIndex];
-    currentCategoryDisplay.textContent = data.category;
-    storyProgressDisplay.textContent = `${currentTipIndex + 1} / ${lifeTipsData.length}`;
-    
-    // Render text characters
-    sentenceDisplay.innerHTML = "";
-    data.tip.split("").forEach(char => {
-        const span = document.createElement("span");
-        span.textContent = char;
-        sentenceDisplay.appendChild(span);
-    });
-    
-    typingInput.value = "";
-    readStoryBtn.style.display = "none";
-}
-
-startBtn.addEventListener("click", () => {
-    typingInput.disabled = false;
-    typingInput.focus();
-    startBtn.disabled = true;
-    startTime = new Date();
-    
-    // Highlight first character
-    if (sentenceDisplay.children.length > 0) {
-        sentenceDisplay.children[0].classList.add("current");
-    }
-});
-
-typingInput.addEventListener("input", () => {
-    const characters = sentenceDisplay.querySelectorAll("span");
-    const typedValues = typingInput.value.split("");
-    let allCorrect = true;
-
-    characters.forEach((charSpan, index) => {
-        const typedChar = typedValues[index];
-        charSpan.classList.remove("current");
-
-        if (typedChar == null) {
-            charSpan.classList.remove("correct", "incorrect");
-            allCorrect = false;
-        } else if (typedChar === charSpan.textContent) {
-            charSpan.classList.add("correct");
-            charSpan.classList.remove("incorrect");
-        } else {
-            charSpan.classList.add("incorrect");
-            charSpan.classList.remove("correct");
-            allCorrect = false;
+// Custom Input - Start Screen
+if (customTimeInput) {
+    customTimeInput.addEventListener("input", function () {
+        if (customTimeInput.value > 0) {
+            timeOptions.forEach(opt => opt.checked = false);
+            menuTimeOptions.forEach(opt => opt.checked = false);
+            if (menuCustomTimeInput) menuCustomTimeInput.value = customTimeInput.value;
+            if (selectedTimeDisplay) selectedTimeDisplay.textContent = customTimeInput.value + "s";
+            if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = customTimeInput.value + "s";
         }
     });
+}
 
-    if (typedValues.length < characters.length) {
-        characters[typedValues.length].classList.add("current");
+// Sync Preset Selection - Menu Modal
+menuTimeOptions.forEach(function (option) {
+    option.addEventListener("change", function () {
+        if (customTimeInput) customTimeInput.value = "";
+        if (menuCustomTimeInput) menuCustomTimeInput.value = "";
+        syncTimeSelection(option.value);
+
+        menuTimerOptionsContainer.style.display = "none";
+        menuArea.style.display = "none";
+        resetGame();
+        typingInput.focus();
+        startTimer();
+    });
+});
+
+// Custom Input - Menu Modal
+if (menuCustomTimeInput) {
+    menuCustomTimeInput.addEventListener("change", function () {
+        if (menuCustomTimeInput.value > 0) {
+            timeOptions.forEach(opt => opt.checked = false);
+            menuTimeOptions.forEach(opt => opt.checked = false);
+            if (customTimeInput) customTimeInput.value = menuCustomTimeInput.value;
+            syncTimeSelection(menuCustomTimeInput.value);
+
+            menuTimerOptionsContainer.style.display = "none";
+            menuArea.style.display = "none";
+            resetGame();
+            typingInput.focus();
+            startTimer();
+        }
+    });
+}
+
+function getSelectedTime() {
+    if (customTimeInput && Number(customTimeInput.value) > 0) {
+        return Number(customTimeInput.value);
+    }
+    if (menuCustomTimeInput && Number(menuCustomTimeInput.value) > 0) {
+        return Number(menuCustomTimeInput.value);
     }
 
-    // Check completion
-    if (typedValues.length === characters.length && allCorrect) {
+    let selectedTime = 60;
+    timeOptions.forEach(function (option) {
+        if (option.checked) {
+            selectedTime = Number(option.value);
+        }
+    });
+    return selectedTime;
+}
+
+function getSelectedCategory() {
+    let selectedCategory = "lifehacks";
+    menuCategoryOptions.forEach(function (option) {
+        if (option.checked) {
+            selectedCategory = option.value;
+        }
+    });
+    return selectedCategory;
+}
+
+function prepareStoryWords(category, time) {
+    const categoryStories = stories[category];
+    const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
+
+    currentFullStoryArray = randomStory;
+
+    let wordCount = Math.min(time, randomStory.length);
+
+    return randomStory.slice(0, wordCount);
+}
+
+function syncTimeSelection(timeVal) {
+    timeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
+    menuTimeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
+    if (selectedTimeDisplay) selectedTimeDisplay.textContent = timeVal + "s";
+    if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = timeVal + "s";
+}
+
+function syncCategorySelection(category) {
+    menuCategoryOptions.forEach(opt => opt.checked = (opt.value === category));
+}
+
+function updatePauseBtnIcon() {
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+}
+
+function resetGame() {
+    clearInterval(timer);
+    isPaused = false;
+
+    const selectedCategory = getSelectedCategory();
+    timeLeft = getSelectedTime();
+
+    words = prepareStoryWords(selectedCategory, timeLeft);
+
+    currentWord = 0;
+    score = 0;
+
+    scoreElement.textContent = "Score: 0";
+    timerElement.textContent = "Time: " + timeLeft;
+
+    wordElement.textContent = words[currentWord] || "";
+
+    messageElement.textContent = "";
+
+    typingInput.disabled = false;
+    typingInput.value = "";
+    readStoryBtn.style.display = "none";
+
+    updatePauseBtnIcon();
+}
+
+function startTimer() {
+    clearInterval(timer);
+
+    timer = setInterval(function () {
+        timeLeft--;
+        timerElement.textContent = "Time: " + timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            wordElement.textContent = "Time Over! ⏰";
+            messageElement.textContent = "Final Score: " + score;
+            typingInput.disabled = true;
+            readStoryBtn.style.display = "inline-block";
+        }
+    }, 1000);
+}
+
+typingInput.addEventListener("input", function () {
+    if (typingInput.value === words[currentWord]) {
+        messageElement.textContent = "Correct! 🎉";
+        score++;
+        scoreElement.textContent = "Score: " + score;
+        currentWord++;
+
+        if (currentWord < words.length) {
+            wordElement.textContent = words[currentWord];
+        } else {
+            clearInterval(timer);
+            wordElement.textContent = "Story Complete! 📖";
+            messageElement.textContent = "Final Score: " + score;
+            typingInput.disabled = true;
+            readStoryBtn.style.display = "inline-block";
+        }
+        typingInput.value = "";
+    } else {
+        messageElement.textContent = "Keep trying! ❌";
+    }
+});
+
+startBtn.addEventListener("click", function () {
+    const selectedTime = getSelectedTime();
+
+    syncTimeSelection(selectedTime);
+
+    resetGame();
+
+    startScreen.style.display = "none";
+    gameArea.style.display = "block";
+
+    typingInput.focus();
+    startTimer();
+});
+
+restartBtn.addEventListener("click", function () {
+    resetGame();
+    typingInput.focus();
+    startTimer();
+});
+
+pauseBtn.addEventListener("click", function () {
+    if (!isPaused && timeLeft > 0) {
+        clearInterval(timer);
+        isPaused = true;
         typingInput.disabled = true;
-        nextBtn.disabled = false;
-        readStoryBtn.style.display = "inline-block";
-        
-        // Calculate WPM
-        const timeTaken = (new Date() - startTime) / 60000; // in minutes
-        const wordCount = lifeTipsData[currentTipIndex].tip.split(" ").length;
-        const wpm = Math.round(wordCount / timeTaken);
-        wpmDisplay.textContent = `${wpm} WPM`;
+        pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+        messageElement.textContent = "Game Paused ⏸";
+    } else if (isPaused && timeLeft > 0) {
+        startTimer();
+        isPaused = false;
+        typingInput.disabled = false;
+        typingInput.focus();
+        pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        messageElement.textContent = "";
     }
 });
 
-nextBtn.addEventListener("click", () => {
-    currentTipIndex = (currentTipIndex + 1) % lifeTipsData.length;
-    loadTip();
-    startBtn.disabled = false;
-    nextBtn.disabled = true;
-    typingInput.disabled = true;
+menuBtn.addEventListener("click", function () {
+    if (menuArea.style.display === "block") {
+        menuArea.style.display = "none";
+        if (isPaused && timeLeft > 0) {
+            startTimer();
+            isPaused = false;
+            typingInput.disabled = false;
+            typingInput.focus();
+            pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        }
+    } else {
+        menuArea.style.display = "block";
+        clearInterval(timer);
+        isPaused = true;
+        typingInput.disabled = true;
+        pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+    }
 });
 
-readStoryBtn.addEventListener("click", () => {
-    fullStoryText.textContent = lifeTipsData[currentTipIndex].story;
+menuCategoryOptions.forEach(function (option) {
+    option.addEventListener("change", function () {
+        const selectedCategory = option.value;
+
+        syncCategorySelection(selectedCategory);
+
+        menuArea.style.display = "none";
+        resetGame();
+        typingInput.focus();
+        startTimer();
+    });
+});
+
+resumeBtn.addEventListener("click", function () {
+    menuArea.style.display = "none";
+
+    if (isPaused && timeLeft > 0) {
+        startTimer();
+        isPaused = false;
+        typingInput.disabled = false;
+        typingInput.focus();
+        pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        messageElement.textContent = "";
+    }
+});
+
+homeBtn.addEventListener("click", function () {
+    clearInterval(timer);
+    isPaused = false;
+
+    gameArea.style.display = "none";
+    startScreen.style.display = "block";
+    menuArea.style.display = "none";
+});
+
+readStoryBtn.addEventListener("click", function () {
+    const formattedStory = currentFullStoryArray.join(" ");
+    fullStoryText.textContent = formattedStory;
     storyModal.style.display = "flex";
 });
 
-closeModalBtn.addEventListener("click", () => storyModal.style.display = "none");
-
-function resetNormalGame() {
-    currentTipIndex = 0;
-    wpmDisplay.textContent = "0 WPM";
-    startBtn.disabled = false;
-    nextBtn.disabled = true;
-    typingInput.disabled = true;
-    loadTip();
-}
-
-/* ==========================================================================
-   REAL GAME (ARENA FIGHT) LOGIC
-   ========================================================================== */
-
-startFightBtn.addEventListener("click", startFight);
-exitFightBtn.addEventListener("click", resetRealGame);
-
-function startFight() {
-    isFightActive = true;
-    playerHp = 100;
-    enemyHp = 100;
-    fightTimerSec = 0;
-    updateHpDisplays();
-    
-    startFightBtn.disabled = true;
-    fightPromptMsg.textContent = "Fight Started! Press keys fast!";
-    
-    // Start Fight Timer
-    fightInterval = setInterval(() => {
-        fightTimerSec++;
-        let mins = Math.floor(fightTimerSec / 60).toString().padStart(2, '0');
-        let secs = (fightTimerSec % 60).toString().padStart(2, '0');
-        fightTimer.textContent = `${mins}:${secs}`;
-    }, 1000);
-
-    triggerNextKeyPrompt();
-}
-
-function triggerNextKeyPrompt() {
-    if (!isFightActive) return;
-
-    // Generate random key A-Z
-    const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    currentTargetKey = keys[Math.floor(Math.random() * keys.length)];
-    targetKeyDisplay.textContent = currentTargetKey;
-    
-    // Set timer for player response
-    clearTimeout(keyTimeout);
-    keyTimeout = setTimeout(() => {
-        // Player missed key / timed out -> Enemy Hits Player
-        playerHp -= 15;
-        fightPromptMsg.textContent = "⚡ Too Slow! Enemy attacked you!";
-        animateHit(playerAvatar, "hit-right");
-        updateHpDisplays();
-        checkFightEnd();
-
-        if (isFightActive) {
-            setTimeout(triggerNextKeyPrompt, 800);
-        }
-    }, reactionTimeLimit);
-}
-
-// Key listener for reaction fight
-window.addEventListener("keydown", (e) => {
-    if (!isFightActive || currentMode !== "real") return;
-
-    const pressedKey = e.key.toUpperCase();
-    
-    // Ignore non-alphabet keys
-    if (!/^[A-Z]$/.test(pressedKey)) return;
-
-    clearTimeout(keyTimeout);
-
-    if (pressedKey === currentTargetKey) {
-        // Player Hit Enemy
-        enemyHp -= 20;
-        fightPromptMsg.textContent = "💥 Nice Attack! Enemy took hit!";
-        animateHit(enemyAvatar, "hit-left");
-        updateHpDisplays();
-        checkFightEnd();
-
-        if (isFightActive) {
-            setTimeout(triggerNextKeyPrompt, 500);
-        }
-    } else {
-        // Wrong Key Hit -> Player takes small penalty
-        playerHp -= 10;
-        fightPromptMsg.textContent = "❌ Wrong Key! Counter attacked!";
-        animateHit(playerAvatar, "hit-right");
-        updateHpDisplays();
-        checkFightEnd();
-
-        if (isFightActive) {
-            setTimeout(triggerNextKeyPrompt, 600);
-        }
-    }
+closeModalBtn.addEventListener("click", function () {
+    storyModal.style.display = "none";
 });
 
-function updateHpDisplays() {
-    playerHp = Math.max(0, playerHp);
-    enemyHp = Math.max(0, enemyHp);
-
-    playerHpBar.style.width = `${playerHp}%`;
-    enemyHpBar.style.width = `${enemyHp}%`;
-
-    playerHpText.textContent = `${playerHp} / 100 HP`;
-    enemyHpText.textContent = `${enemyHp} / 100 HP`;
-}
-
-function animateHit(element, className) {
-    element.classList.add(className);
-    setTimeout(() => element.classList.remove(className), 200);
-}
-
-function checkFightEnd() {
-    if (enemyHp <= 0) {
-        endFight("🏆 VICTORY! You defeated the monster!");
-    } else if (playerHp <= 0) {
-        endFight("💀 GAME OVER! You were defeated!");
+window.addEventListener("click", function (e) {
+    if (e.target === storyModal) {
+        storyModal.style.display = "none";
     }
-}
-
-function endFight(message) {
-    isFightActive = false;
-    clearInterval(fightInterval);
-    clearTimeout(keyTimeout);
-    
-    targetKeyDisplay.textContent = "FINISHED";
-    fightPromptMsg.textContent = message;
-    startFightBtn.disabled = false;
-}
-
-function resetRealGame() {
-    isFightActive = false;
-    clearInterval(fightInterval);
-    clearTimeout(keyTimeout);
-    
-    playerHp = 100;
-    enemyHp = 100;
-    fightTimerSec = 0;
-    fightTimer.textContent = "00:00";
-    targetKeyDisplay.textContent = "-";
-    fightPromptMsg.textContent = "Click 'Start Fight' to Begin!";
-    startFightBtn.disabled = false;
-    
-    updateHpDisplays();
-}
-
-// Initial Load
-loadTip();
+    if (e.target === aboutModal) {
+        aboutModal.style.display = "none";
+        menuArea.style.display = "block";
+    }
+});
