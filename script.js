@@ -76,6 +76,11 @@ const menuTimerOptionsContainer = document.getElementById("menuTimerOptionsConta
 const selectedMenuTimeDisplay = document.getElementById("selectedMenuTimeDisplay");
 const menuCustomTimeInput = document.getElementById("menuCustomTimeInput");
 
+// About Modal Elements
+const aboutBtn = document.getElementById("aboutBtn");
+const aboutModal = document.getElementById("aboutModal");
+const closeAboutModalBtn = document.getElementById("closeAboutModalBtn");
+
 // Toggle Start Screen Timer
 if (toggleTimerBtn) {
     toggleTimerBtn.addEventListener("click", function () {
@@ -87,6 +92,21 @@ if (toggleTimerBtn) {
 if (toggleMenuTimerBtn) {
     toggleMenuTimerBtn.addEventListener("click", function () {
         menuTimerOptionsContainer.style.display = menuTimerOptionsContainer.style.display === "none" ? "block" : "none";
+    });
+}
+
+// About Modal Event Listeners
+if (aboutBtn) {
+    aboutBtn.addEventListener("click", function () {
+        menuArea.style.display = "none";
+        aboutModal.style.display = "flex";
+    });
+}
+
+if (closeAboutModalBtn) {
+    closeAboutModalBtn.addEventListener("click", function () {
+        aboutModal.style.display = "none";
+        menuArea.style.display = "block";
     });
 }
 
@@ -366,5 +386,9 @@ closeModalBtn.addEventListener("click", function () {
 window.addEventListener("click", function (e) {
     if (e.target === storyModal) {
         storyModal.style.display = "none";
+    }
+    if (e.target === aboutModal) {
+        aboutModal.style.display = "none";
+        menuArea.style.display = "block";
     }
 });
