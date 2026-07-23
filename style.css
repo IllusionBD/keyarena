@@ -308,3 +308,16 @@ p {
     max-height: 80vh;
     overflow-y: auto;
 }
+.center-text {
+    text-align: center;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.items-center {
+    align-items: center;
+}
