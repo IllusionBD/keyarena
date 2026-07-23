@@ -13,7 +13,7 @@ const stories = {
     health: [
         ["get", "at", "least", "fifteen", "minutes", "of", "natural", "sunlight"]
     ]
-};
+}; 
 // ==========================================
 // GAME VARIABLES
 // ==========================================
