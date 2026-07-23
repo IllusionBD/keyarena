@@ -89,13 +89,25 @@ if (closeAboutModalBtn) {
     };
 }
 
+// Updated getSelectedTime Function to sync start menu & in-game menu time options
 function getSelectedTime() {
-    if (customTimeInput && Number(customTimeInput.value) > 0) return Number(customTimeInput.value);
-    let selectedTime = 60;
-    timeOptions.forEach(option => {
-        if (option.checked) selectedTime = Number(option.value);
+    if (customTimeInput && Number(customTimeInput.value) > 0) {
+        return Number(customTimeInput.value);
+    }
+    
+    // Check in-game menu time radio buttons first
+    let selectedMenuTime = null;
+    menuTimeOptions.forEach(option => {
+        if (option.checked) selectedMenuTime = Number(option.value);
     });
-    return selectedTime;
+    if (selectedMenuTime) return selectedMenuTime;
+
+    // Check main start screen time radio buttons
+    let selectedStartScreenTime = 60;
+    timeOptions.forEach(option => {
+        if (option.checked) selectedStartScreenTime = Number(option.value);
+    });
+    return selectedStartScreenTime;
 }
 
 function getSelectedCategory() {
@@ -105,6 +117,35 @@ function getSelectedCategory() {
     });
     return selectedCategory;
 }
+
+// Sync menu time change with game timer
+menuTimeOptions.forEach(option => {
+    option.addEventListener("change", (e) => {
+        const newTime = Number(e.target.value);
+        timeLeft = newTime;
+        if (timerElement) timerElement.textContent = "Time: " + timeLeft;
+        if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = newTime + "s";
+        if (selectedTimeDisplay) selectedTimeDisplay.textContent = newTime + "s";
+        
+        // Sync start screen radio button selection
+        timeOptions.forEach(startOption => {
+            if (Number(startOption.value) === newTime) startOption.checked = true;
+        });
+    });
+});
+
+timeOptions.forEach(option => {
+    option.addEventListener("change", (e) => {
+        const newTime = Number(e.target.value);
+        if (selectedTimeDisplay) selectedTimeDisplay.textContent = newTime + "s";
+        if (selectedMenuTimeDisplay) selectedMenuTimeDisplay.textContent = newTime + "s";
+        
+        // Sync menu screen radio button selection
+        menuTimeOptions.forEach(menuOption => {
+            if (Number(menuOption.value) === newTime) menuOption.checked = true;
+        });
+    });
+});
 
 function resetGame() {
     clearInterval(timer);
