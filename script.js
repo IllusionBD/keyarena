@@ -64,20 +64,59 @@ const storyModal = document.getElementById("storyModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const fullStoryText = document.getElementById("fullStoryText");
 
+// Custom Timer DOM Elements
+const toggleTimerBtn = document.getElementById("toggleTimerBtn");
+const timerOptionsContainer = document.getElementById("timerOptionsContainer");
+const selectedTimeDisplay = document.getElementById("selectedTimeDisplay");
+const customTimeInput = document.getElementById("customTimeInput");
+
+// Toggle Timer Options Visibility
+if (toggleTimerBtn) {
+    toggleTimerBtn.addEventListener("click", function () {
+        if (timerOptionsContainer.style.display === "none") {
+            timerOptionsContainer.style.display = "block";
+        } else {
+            timerOptionsContainer.style.display = "none";
+        }
+    });
+}
+
+// Update UI when a preset radio button is selected
+timeOptions.forEach(opt => {
+    opt.addEventListener("change", function () {
+        if (customTimeInput) customTimeInput.value = "";
+        if (selectedTimeDisplay) selectedTimeDisplay.textContent = opt.value + "s";
+    });
+});
+
+// Update UI when custom input is typed
+if (customTimeInput) {
+    customTimeInput.addEventListener("input", function () {
+        if (customTimeInput.value > 0) {
+            if (selectedTimeDisplay) selectedTimeDisplay.textContent = customTimeInput.value + "s";
+            timeOptions.forEach(opt => opt.checked = false);
+        }
+    });
+}
+
 function getSelectedTime() {
+    if (customTimeInput && Number(customTimeInput.value) > 0) {
+        return Number(customTimeInput.value);
+    }
+
     let selectedTime = 60;
-    timeOptions.forEach(function(option){
-        if(option.checked){
+    timeOptions.forEach(function (option) {
+        if (option.checked) {
             selectedTime = Number(option.value);
         }
     });
     return selectedTime;
 }
 
-function getSelectedCategory(){
+function getSelectedCategory() {
     let selectedCategory = "lifehacks";
-    menuCategoryOptions.forEach(function(option){
-        if(option.checked){
+    menuCategoryOptions.forEach(function (option) {
+        if (option.checked) {
             selectedCategory = option.value;
         }
     });
@@ -90,16 +129,7 @@ function prepareStoryWords(category, time) {
 
     currentFullStoryArray = randomStory;
 
-    let wordCount;
-    if (time <= 15) {
-        wordCount = 12;
-    } else if (time <= 30) {
-        wordCount = 25;
-    } else if (time <= 60) {
-        wordCount = 45;
-    } else {
-        wordCount = randomStory.length;
-    }
+    let wordCount = Math.min(time, randomStory.length);
 
     return randomStory.slice(0, wordCount);
 }
@@ -107,6 +137,7 @@ function prepareStoryWords(category, time) {
 function syncTimeSelection(timeVal) {
     timeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
     menuTimeOptions.forEach(opt => opt.checked = (Number(opt.value) === Number(timeVal)));
+    if (selectedTimeDisplay) selectedTimeDisplay.textContent = timeVal + "s";
 }
 
 function syncCategorySelection(category) {
@@ -117,7 +148,7 @@ function updatePauseBtnIcon() {
     pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
 }
 
-function resetGame(){
+function resetGame() {
     clearInterval(timer);
     isPaused = false;
 
@@ -139,18 +170,18 @@ function resetGame(){
     typingInput.disabled = false;
     typingInput.value = "";
     readStoryBtn.style.display = "none";
-    
+
     updatePauseBtnIcon();
 }
 
-function startTimer(){
+function startTimer() {
     clearInterval(timer);
 
-    timer = setInterval(function(){
+    timer = setInterval(function () {
         timeLeft--;
         timerElement.textContent = "Time: " + timeLeft;
 
-        if(timeLeft <= 0){
+        if (timeLeft <= 0) {
             clearInterval(timer);
             wordElement.textContent = "Time Over! ⏰";
             messageElement.textContent = "Final Score: " + score;
@@ -238,10 +269,11 @@ menuBtn.addEventListener("click", function () {
     }
 });
 
-menuTimeOptions.forEach(function(option){
-    option.addEventListener("change", function(){
+menuTimeOptions.forEach(function (option) {
+    option.addEventListener("change", function () {
         const selectedTime = Number(option.value);
-        
+
+        if (customTimeInput) customTimeInput.value = "";
         syncTimeSelection(selectedTime);
 
         menuArea.style.display = "none";
@@ -251,10 +283,10 @@ menuTimeOptions.forEach(function(option){
     });
 });
 
-menuCategoryOptions.forEach(function(option){
-    option.addEventListener("change", function(){
+menuCategoryOptions.forEach(function (option) {
+    option.addEventListener("change", function () {
         const selectedCategory = option.value;
-        
+
         syncCategorySelection(selectedCategory);
 
         menuArea.style.display = "none";
@@ -266,7 +298,7 @@ menuCategoryOptions.forEach(function(option){
 
 resumeBtn.addEventListener("click", function () {
     menuArea.style.display = "none";
-    
+
     if (isPaused && timeLeft > 0) {
         startTimer();
         isPaused = false;
