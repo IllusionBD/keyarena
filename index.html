@@ -32,7 +32,7 @@
                     <label>Game Mode</label>
                     <div class="mode-select-btns">
                         <button id="normalModeBtn" class="btn mode-btn active">Standard</button>
-                        <button id="realGameBtn" class="btn mode-btn highlight">🔥 আসল খেলা (লড়াই)</button>
+                        <button id="realGameBtn" class="btn mode-btn highlight">🔥 Real Game (Fight)</button>
                     </div>
                 </div>
 
@@ -46,9 +46,9 @@
                 </div>
 
                 <div class="menu-actions">
-                    <button id="resumeGameBtn" class="btn primary">আবার শুরু</button>
-                    <button id="aboutGameBtn" class="btn secondary">গেম সম্পর্কে</button>
-                    <button id="homeGameBtn" class="btn secondary">হোম</button>
+                    <button id="resumeGameBtn" class="btn primary">Resume</button>
+                    <button id="aboutGameBtn" class="btn secondary">About</button>
+                    <button id="homeGameBtn" class="btn secondary">Home</button>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
         <div id="realGameArea" class="game-area" style="display: none;">
             
             <div class="arena-header">
-                <h2>⚔️ আসল লড়াই অ্যারেনা</h2>
+                <h2>⚔️ Real Arena Fight</h2>
                 <div class="timer-badge">Time: <span id="fightTimer">00:00</span></div>
             </div>
 
@@ -100,7 +100,7 @@
                 <div class="character-box player-box">
                     <div class="char-avatar" id="playerAvatar">🧑‍🎤</div>
                     <div class="char-info">
-                        <span class="char-name">খেলোয়াড় (আপনি)</span>
+                        <span class="char-name">Player (You)</span>
                         <div class="hp-bar-outer">
                             <div id="playerHp" class="hp-bar-inner player-hp" style="width: 100%;"></div>
                         </div>
@@ -115,7 +115,7 @@
                 <div class="character-box enemy-box">
                     <div class="char-avatar" id="enemyAvatar">👾</div>
                     <div class="char-info">
-                        <span class="char-name">শত্রু দানব</span>
+                        <span class="char-name">Enemy Monster</span>
                         <div class="hp-bar-outer">
                             <div id="enemyHp" class="hp-bar-inner enemy-hp" style="width: 100%;"></div>
                         </div>
@@ -126,14 +126,14 @@
 
             <!-- Reaction Key Prompt Area -->
             <div class="prompt-card">
-                <div class="prompt-label">বাটন চাপুন:</div>
+                <div class="prompt-label">PRESS KEY:</div>
                 <div id="targetKeyDisplay" class="target-key">-</div>
-                <div id="fightPromptMsg" class="fight-msg">'লড়াই শুরু' বাটনে ক্লিক করুন!</div>
+                <div id="fightPromptMsg" class="fight-msg">Click 'Start Fight' to Begin!</div>
             </div>
 
             <div class="action-bar">
-                <button id="startFightBtn" class="btn primary highlight">লড়াই শুরু</button>
-                <button id="exitFightBtn" class="btn secondary">বের হন</button>
+                <button id="startFightBtn" class="btn primary highlight">Start Fight</button>
+                <button id="exitFightBtn" class="btn secondary">Exit</button>
             </div>
 
         </div>
