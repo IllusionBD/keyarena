@@ -251,8 +251,17 @@ function startTimer() {
     }, 1000);
 }
 
-if (typingInput) {
-    typingInput.addEventListener("input", () => {
+if (typingInput.value.trim() === words[currentWord]) {
+
+    messageElement.textContent = "Correct! 🎉";
+
+    // বাকি আগের কোড...
+
+} else {
+
+    messageElement.textContent = "Wrong! ❌";
+
+}
         if (typingInput.value.trim() === words[currentWord]) {
             messageElement.textContent = "Correct! 🎉";
             score++;
