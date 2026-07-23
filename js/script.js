@@ -146,9 +146,14 @@ function startTimer() {
     }, 1000);
 }
 
+// Typing Event Listener (Fixed syntax issue here)
 if (typingInput) {
     typingInput.addEventListener("input", () => {
-        if (typingInput.value.trim() === words[currentWord]) {
+        const typedText = typingInput.value.trim();
+        const targetWord = words[currentWord];
+
+        // Correct Word
+        if (typedText === targetWord) {
             messageElement.textContent = "Correct! 🎉";
             score++;
             if (scoreElement) scoreElement.textContent = "Score: " + score;
@@ -158,18 +163,26 @@ if (typingInput) {
                 wordElement.textContent = words[currentWord];
             } else {
                 messageElement.textContent = "Story Completed! Loading next... 📖";
-                
+
                 const selectedCategory = getSelectedCategory();
                 const categoryStories = stories[selectedCategory] || stories.lifehacks;
                 const randomStory = categoryStories[Math.floor(Math.random() * categoryStories.length)];
-                
+
                 words = randomStory;
                 currentWord = 0;
                 currentFullStoryArray = randomStory;
-                
-                if (wordElement) wordElement.textContent = words[currentWord];
+
+                wordElement.textContent = words[currentWord];
             }
             typingInput.value = "";
+        }
+        // User is still typing correctly
+        else if (targetWord && targetWord.startsWith(typedText)) {
+            messageElement.textContent = "";
+        }
+        // Wrong Word
+        else {
+            messageElement.textContent = "Wrong! ❌";
         }
     });
 }
