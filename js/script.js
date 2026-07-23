@@ -180,11 +180,7 @@ if (typingInput) {
                 currentFullStoryArray = randomStory;
 
                 wordElement.textContent = words[currentWord];
-            }
-
-            typingInput.value = "";
-
-        }
+          
 
         // User is still typing correctly
         else if (targetWord.startsWith(typedText)) {
