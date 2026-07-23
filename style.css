@@ -1,201 +1,149 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* ==========================================
+   REAL GAME MODE - FIGHTING ARENA STYLES
+========================================== */
 
-body {
-    background-color: #0f172a;
-    color: #f8fafc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.container {
-    background-color: #1e293b;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 600px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 2.5rem;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-}
-
-p {
-    color: #94a3b8;
-    margin-bottom: 1.5rem;
-}
-
-/* Options & Radio Buttons Alignment */
-.options-group {
-    background-color: #334155;
-    padding: 1.2rem;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.options-group h3 {
-    font-size: 1.1rem;
-    color: #38bdf8;
-    margin-bottom: 0.8rem;
-}
-
-.options-group label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 5px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #e2e8f0;
-}
-
-.options-group input[type="radio"] {
-    accent-color: #3b82f6;
-    cursor: pointer;
-    transform: scale(1.2);
-}
-
-/* Buttons Styling */
-.btn {
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 12px 28px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin: 5px;
-}
-
-.btn:hover {
-    background-color: #2563eb;
-    transform: translateY(-2px);
-}
-
-.btn.secondary {
-    background-color: #64748b;
-}
-
-.btn.secondary:hover {
-    background-color: #475569;
-}
-
-.icon-btn {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.icon-btn:hover {
-    color: #38bdf8;
-}
-
-/* Game Area Styling */
-.top-bar {
+/* Health Bar Styling */
+.health-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
-.status-bar {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
+.hp-box {
+    flex: 1;
+}
+
+.hp-label {
+    font-size: 0.85rem;
     font-weight: bold;
-    color: #38bdf8;
-    margin-bottom: 1.5rem;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 4px;
 }
 
-.word-box {
+.hp-bar-outer {
     background-color: #0f172a;
-    padding: 1.5rem;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.word-box p {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #f1f5f9;
-    margin: 0;
-}
-
-#typingInput {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1.1rem;
     border: 2px solid #334155;
     border-radius: 8px;
-    background-color: #0f172a;
-    color: white;
-    outline: none;
-    text-align: center;
-    margin-bottom: 1rem;
+    height: 18px;
+    overflow: hidden;
 }
 
-#typingInput:focus {
-    border-color: #3b82f6;
-}
-
-#message {
-    height: 25px;
-    font-weight: 600;
-    color: #4ade80;
-    margin-bottom: 1rem;
-}
-
-/* Modal Popup Styling */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+.hp-bar-inner {
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
+    width: 100%;
+    transition: width 0.3s ease-in-out;
 }
 
-.modal-content {
-    background-color: #1e293b;
-    padding: 2rem;
+.player-hp {
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+}
+
+.enemy-hp {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+/* Stage Area */
+.fight-stage {
+    background-color: #0f172a;
     border-radius: 12px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border: 1px solid #334155;
+    margin-bottom: 15px;
+    min-height: 180px;
 }
 
-.modal-content h2 {
+/* Characters */
+.fighter {
+    font-size: 3.5rem;
+    transition: transform 0.15s ease;
+}
+
+.player-char {
     color: #38bdf8;
-    margin-bottom: 1rem;
 }
 
-#fullStoryText {
-    color: #e2e8f0;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+.enemy-char {
+    color: #ef4444;
+}
+
+/* Prompt Display */
+.prompt-box {
+    text-align: center;
+}
+
+.target-key {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #facc15;
+    background: #1e293b;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 12px;
+    border: 2px solid #38bdf8;
+    margin: 0 auto 8px auto;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.key-timer-bar {
+    width: 90px;
+    height: 6px;
+    background: #334155;
+    border-radius: 3px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.key-timer-inner {
+    height: 100%;
+    width: 100%;
+    background: #facc15;
+}
+
+.combo-text {
+    font-size: 0.85rem;
+    color: #38bdf8;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.fight-status-msg {
+    font-weight: 600;
+    color: #38bdf8;
+    height: 25px;
+}
+
+/* Animations & Shake Effects */
+.shake-damage {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); color: #ff0000; }
+    40%, 80% { transform: translateX(8px); }
+}
+
+.attack-player {
+    animation: attackRight 0.2s ease-in-out;
+}
+
+@keyframes attackRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(30px) scale(1.2); }
+}
+
+.attack-enemy {
+    animation: attackLeft 0.2s ease-in-out;
+}
+
+@keyframes attackLeft {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-30px) scale(1.2); }
 }
